@@ -53,4 +53,13 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['vehiculos']                                       =     'vehiculos_controller';
+$route['vehiculos']                                      =     'vehiculos_controller';
+
+$route['marca']                                          =     'marca_controller';
+$route['marca/nuevo']                                    =     'marca_controller/nuevo';
+$route['marca/guardar']                                  =     'marca_controller/guardar';
+$route['marca/editar/(:num)']                            =     'marca_controller/editar/$1';
+$route['marca/actualizar']                               =     'marca_controller/actualizar';
+$route['marca/borrar/(:num)']                            =     'marca_controller/borrar/$1';
+$route['marca/papelera']                                 =     'marca_controller/papelera';
+$route['marca/reactivar/(:num)']                         =     'marca_controller/papelera/$1';
