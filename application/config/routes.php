@@ -53,13 +53,40 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['vehiculos']                                      =     'vehiculos_controller';
+$route['vehiculos']                                         =     'vehiculos_controller';
 
-$route['marca']                                          =     'marca_controller';
-$route['marca/nuevo']                                    =     'marca_controller/nuevo';
-$route['marca/guardar']                                  =     'marca_controller/guardar';
-$route['marca/editar/(:num)']                            =     'marca_controller/editar/$1';
-$route['marca/actualizar']                               =     'marca_controller/actualizar';
-$route['marca/borrar/(:num)']                            =     'marca_controller/borrar/$1';
-$route['marca/papelera']                                 =     'marca_controller/papelera';
-$route['marca/reactivar/(:num)']                         =     'marca_controller/papelera/$1';
+$route['marca']                                             =     'marca_controller';
+$route['marca/nuevo']                                       =     'marca_controller/nuevo';
+$route['marca/guardar']                                     =     'marca_controller/guardar';
+$route['marca/editar/(:num)']                               =     'marca_controller/editar/$1';
+$route['marca/actualizar']                                  =     'marca_controller/actualizar';
+$route['marca/borrar/(:num)']                               =     'marca_controller/borrar/$1';
+$route['marca/papelera']                                    =     'marca_controller/papelera';
+$route['marca/reactivar/(:num)']                            =     'marca_controller/papelera/$1';
+
+$route['modelo']                                            =     'modelo_controller';
+$route['modelo/nuevo']                                      =     'modelo_controller/nuevo';
+$route['modelo/guardar']                                    =     'modelo_controller/guardar';
+$route['modelo/editar/(:num)']                              =     'modelo_controller/editar/$1';
+$route['modelo/actualizar']                                 =     'modelo_controller/actualizar';
+$route['modelo/borrar/(:num)']                              =     'modelo_controller/borrar/$1';
+$route['modelo/papelera']                                   =     'modelo_controller/papelera';
+$route['modelo/reactivar/(:num)']                           =     'modelo_controller/papelera/$1';
+
+$route['categoria']                                         =     'categoria_controller';
+$route['categoria/nuevo']                                   =     'categoria_controller/nuevo';
+$route['categoria/guardar']                                 =     'categoria_controller/guardar';
+$route['categoria/editar/(:num)']                           =     'categoria_controller/editar/$1';
+$route['categoria/actualizar']                              =     'categoria_controller/actualizar';
+$route['categoria/borrar/(:num)']                           =     'categoria_controller/borrar/$1';
+$route['categoria/papelera']                                =     'categoria_controller/papelera';
+$route['categoria/reactivar/(:num)']                        =     'categoria_controller/papelera/$1';
+
+$route['transmision']                                       =     'transmision_controller';
+$route['transmision/nuevo']                                 =     'transmision_controller/nuevo';
+$route['transmision/guardar']                               =     'transmision_controller/guardar';
+$route['transmision/editar/(:num)']                         =     'transmision_controller/editar/$1';
+$route['transmision/actualizar']                            =     'transmision_controller/actualizar';
+$route['transmision/borrar/(:num)']                         =     'transmision_controller/borrar/$1';
+$route['transmision/papelera']                              =     'transmision_controller/papelera';
+$route['transmision/reactivar/(:num)']                      =     'transmision_controller/papelera/$1';
