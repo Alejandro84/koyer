@@ -1,110 +1,108 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Transmision_controller extends CI_Controller{
+class Combustible_controller extends CI_Controller{
 
   public function __construct()
   {
      parent::__construct();
-      $this->load->model('transmision');
+      $this->load->model('combustible');
   }
 
   function index()
   {
-     $data['transmisiones'] = $this->transmision->getAll();
+     $data['combustibles'] = $this->combustible->getAll();
 
-     $this->load->view('transmision/listar', $data);
+     $this->load->view('combustible/listar', $data);
 
 
   }
 
   public function nuevo()
   {
-     $this->load->view('transmision/nuevo');
+     $this->load->view('combustible/nuevo');
   }
 
   public function guardar()
   {
-     $transmision = $this->input->post('transmision');
+     $combustible = $this->input->post('combustible');
 
-     if ( $transmision != null )
+     if ( $combustible != null )
         {
 
          $insert = array(
-                        'transmision' => $transmision
+                        'combustible' => $combustible
                      );
 
-           if ( ! $this->transmision->guardar( $insert ) )
+           if ( ! $this->combustible->guardar( $insert ) )
            {
               //$error = $this->db->_error_message();
               //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
-              redirect('transmision');
+              redirect('combustible');
            } else {
               //$mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);
-              redirect('transmision');
+              redirect('combustible');
            }
         } else {
            //$mensaje = '¡Debe rellenar todos los campos!';
            //$this->session->set_flashdata('error', $mensaje);
-           redirect('transmision');
+           redirect('combustible');
         }
 
   }
 
-  public function editar($id_transmision)
+  public function editar($id_combustible)
   {
-     $data['transmision'] = $this->transmision->getOne($id_transmision);
-     $this->load->view('transmision/editar', $data);
+     $data['combustible'] = $this->combustible->getOne($id_combustible);
+     $this->load->view('combustible/editar', $data);
   }
 
   public function actualizar()
   {
-     $id_transmision = $this->input->post('id_transmision');
-     $transmision = $this->input->post('transmision');
+     $id_combustible = $this->input->post('id_combustible');
+     $combustible = $this->input->post('combustible');
 
-     if ( $transmision != null )
+     if ( $combustible != null )
         {
 
          $insert = array(
-                        'transmision' => $transmision
+                        'combustible' => $combustible
                      );
 
-           if ( ! $this->transmision->actualizar( $insert , $id_transmision ) )
+           if ( ! $this->combustible->actualizar( $insert , $id_combustible ) )
            {
               $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
-              redirect('transmision/nuevo');
+              redirect('combustible/nuevo');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);
-              redirect('transmision');
+              redirect('combustible');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
            //$this->session->set_flashdata('error', $mensaje);
-           redirect('transmision/editar');
+           redirect('combustible/editar');
         }
-
   }
 
-  public function borrar($id_transmision)
+  public function borrar($id_combustible)
   {
-
-     if ( ! $this->transmision->borrar($id_transmision) )
+     if ( ! $this->combustible->borrar($id_combustible) )
          {
             //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
             // el flash data para mostrarlo en el listado
             //$this->session->set_flashdata('error', $mensaje );
-            redirect('transmision');
+            redirect('combustible');
          } else {
             // todo ok, creamos el mensaje y lo enviamos
-            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
-            redirect('transmision');
+            redirect('combustible');
          }
   }
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Transmision extends CI_Model{
+class Combustible extends CI_Model{
 
   public function __construct()
   {
@@ -12,7 +12,7 @@ class Transmision extends CI_Model{
    public function getAll()
   {
      $this->db->select('*');
-     $this->db->from('transmisiones');
+     $this->db->from('combustibles');
      $this->db->where('estado' , 1);
 
      $q = $this->db->get();
@@ -27,8 +27,8 @@ class Transmision extends CI_Model{
   public function getOne($id)
    {
        $this->db->select('*');
-       $this->db->from('transmisiones');
-       $this->db->where('id_transmision' , $id);
+       $this->db->from('combustibles');
+       $this->db->where('id_combustible' , $id);
 
        $q = $this->db->get();
 
@@ -46,17 +46,17 @@ class Transmision extends CI_Model{
 
    public function guardar( $data )
   {
-     $this->db->insert('transmisiones', $data ) ;
+     $this->db->insert('combustibles', $data ) ;
   }
 
 
    public function borrar( $id )
    {
 
-      $this->db->where( 'id_transmision', $id );
+      $this->db->where( 'id_combustible', $id );
       $estado = array ( 'estado' => 0 );
 
-      if ( ! $this->db->update('transmisiones', $estado ) )
+      if ( ! $this->db->update('combustibles', $estado ) )
       {
          return false;
 
@@ -70,9 +70,9 @@ class Transmision extends CI_Model{
    public function actualizar( $data, $id )
       {
 
-         $this->db->where( 'id_transmision', $id );
+         $this->db->where( 'id_combustible', $id );
 
-         if ( ! $this->db->update('transmisiones', $data ) )
+         if ( ! $this->db->update('combustibles', $data ) )
          {
             return false;
 

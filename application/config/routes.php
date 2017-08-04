@@ -90,3 +90,12 @@ $route['transmision/actualizar']                            =     'transmision_c
 $route['transmision/borrar/(:num)']                         =     'transmision_controller/borrar/$1';
 $route['transmision/papelera']                              =     'transmision_controller/papelera';
 $route['transmision/reactivar/(:num)']                      =     'transmision_controller/papelera/$1';
+
+$route['combustible']                                       =     'combustible_controller';
+$route['combustible/nuevo']                                 =     'combustible_controller/nuevo';
+$route['combustible/guardar']                               =     'combustible_controller/guardar';
+$route['combustible/editar/(:num)']                         =     'combustible_controller/editar/$1';
+$route['combustible/actualizar']                            =     'combustible_controller/actualizar';
+$route['combustible/borrar/(:num)']                         =     'combustible_controller/borrar/$1';
+$route['combustible/papelera']                              =     'combustible_controller/papelera';
+$route['combustible/reactivar/(:num)']                      =     'combustible_controller/papelera/$1';

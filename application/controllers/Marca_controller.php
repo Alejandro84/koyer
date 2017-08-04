@@ -27,13 +27,30 @@ class Marca_controller extends CI_Controller{
   {
      $marca = $this->input->post('marca');
 
-     $insert = array(
-               'marca' => $marca
-            );
+     if ( $marca != null )
+        {
 
-     $this->marca->guardar( $insert );
+         $insert = array(
+                        'marca' => $marca
+                     );
 
-      redirect('marca');
+           if ( ! $this->marca->guardar( $insert ) )
+           {
+              //$error = $this->db->_error_message();
+              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              //$this->session->set_flashdata('error',$mensaje);
+              redirect('marca');
+           } else {
+              //$mensaje = 'Sus datos han sido guardados exitosamente';
+              //$this->session->set_flashdata('success',$mensaje);
+              redirect('marca');
+           }
+        } else {
+           //$mensaje = '¡Debe rellenar todos los campos!';
+           //$this->session->set_flashdata('error', $mensaje);
+           redirect('marca');
+        }
+
   }
 
   public function editar($id_marca)
@@ -47,17 +64,45 @@ class Marca_controller extends CI_Controller{
      $id_marca = $this->input->post('id_marca');
      $marca = $this->input->post('marca');
 
-     $insert = array(
-               'marca' => $marca
-            );
+     if ( $marca != null )
+        {
 
-     $this->marca->actualizar( $insert , $id_marca );
-     redirect('marca');
+         $insert = array(
+                        'marca' => $marca
+                     );
+
+           if ( ! $this->marca->actualizar( $insert , $id_marca ) )
+           {
+              $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              //$this->session->set_flashdata('error',$mensaje);
+              redirect('marca/nuevo');
+           } else {
+              $mensaje = 'Sus datos han sido guardados exitosamente';
+              //$this->session->set_flashdata('success',$mensaje);
+              redirect('marca');
+           }
+        } else {
+           $mensaje = '¡Debe rellenar todos los campos!';
+           //$this->session->set_flashdata('error', $mensaje);
+           redirect('marca/editar');
+        }
   }
 
   public function borrar($id_marca)
   {
-     $data['marca'] = $this->marca->borrar($id_marca);
-     redirect('marca');
+     if ( ! $this->marca->borrar($id_marca) )
+         {
+            //$error = $this->db->_error_message();
+            $mensaje = 'No se pudo borrar el elemento: '.$error;
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('marca');
+         } else {
+            // todo ok, creamos el mensaje y lo enviamos
+            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('marca');
+         }
   }
 }

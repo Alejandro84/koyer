@@ -27,13 +27,30 @@ class Categoria_controller extends CI_Controller{
   {
      $categoria = $this->input->post('categoria');
 
-     $insert = array(
-               'categoria' => $categoria
-            );
+     if ( $categoria != null )
+        {
 
-     $this->categoria->guardar( $insert );
+         $insert = array(
+                        'categoria' => $categoria
+                     );
 
-      redirect('categoria');
+           if ( ! $this->categoria->guardar( $insert ) )
+           {
+              //$error = $this->db->_error_message();
+              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              //$this->session->set_flashdata('error',$mensaje);
+              redirect('categoria');
+           } else {
+              //$mensaje = 'Sus datos han sido guardados exitosamente';
+              //$this->session->set_flashdata('success',$mensaje);
+              redirect('categoria');
+           }
+        } else {
+           //$mensaje = '¡Debe rellenar todos los campos!';
+           //$this->session->set_flashdata('error', $mensaje);
+           redirect('categoria');
+        }
+
   }
 
   public function editar($id_categoria)
@@ -47,17 +64,45 @@ class Categoria_controller extends CI_Controller{
      $id_categoria = $this->input->post('id_categoria');
      $categoria = $this->input->post('categoria');
 
-     $insert = array(
-               'categoria' => $categoria
-            );
+     if ( $categoria != null )
+        {
 
-     $this->categoria->actualizar( $insert , $id_categoria );
-     redirect('categoria');
+         $insert = array(
+                        'categoria' => $categoria
+                     );
+
+           if ( ! $this->categoria->actualizar( $insert , $id_categoria ) )
+           {
+              $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              //$this->session->set_flashdata('error',$mensaje);
+              redirect('categoria/nuevo');
+           } else {
+              $mensaje = 'Sus datos han sido guardados exitosamente';
+              //$this->session->set_flashdata('success',$mensaje);
+              redirect('categoria');
+           }
+        } else {
+           $mensaje = '¡Debe rellenar todos los campos!';
+           //$this->session->set_flashdata('error', $mensaje);
+           redirect('categoria/editar');
+        }
   }
 
   public function borrar($id_categoria)
   {
-     $data['categoria'] = $this->categoria->borrar($id_categoria);
-     redirect('categoria');
+     if ( ! $this->categoria->borrar($id_categoria) )
+         {
+            //$error = $this->db->_error_message();
+            $mensaje = 'No se pudo borrar el elemento: '.$error;
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('categoria');
+         } else {
+            // todo ok, creamos el mensaje y lo enviamos
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('categoria');
+         }
   }
 }
