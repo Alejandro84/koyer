@@ -1,39 +1,116 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Vehiculo extends CI_Model{
 
+  public function __construct()
+  {
+    parent::__construct();
+
+  }
+
    public function getAll()
-   {
-      $this->db->select( '*' );
-      $this->db->from( 'wpsr_car_rental_items' );
-      $this->db->where( 'blog_id', 1 );
-      $this->db->order_by('manufacturer_id');
-      $q = $this->db->get();
+  {
+     $this->db->select('VE.*');
+     $this->db->select('MA.marca');
+     $this->db->select('MO.modelo');
+     $this->db->select('TR.transmision');
+     $this->db->select('CO.combustible');
+     $this->db->select('CA.categoria');
+     $this->db->select('TA.precio');
+     $this->db->from('vehiculos as VE');
+     $this->db->join('modelos as MO', 'VE.id_modelo = MO.id_modelo', 'left');
+     $this->db->join('marcas as MA', 'VE.id_marca = MA.id_marca', 'left');
+     $this->db->join('transmisiones as TR', 'VE.id_transmision = TR.id_transmision', 'left');
+     $this->db->join('combustibles as CO', 'VE.id_combustible = CO.id_combustible', 'left');
+     $this->db->join('categorias as CA', 'VE.id_categoria = CA.id_categoria', 'left');
+     $this->db->join('tarifas as TA', 'VE.id_tarifa = TA.id_tarifa', 'left');
+     $this->db->where('VE.estado' , 1);
 
-      if ( $q->num_rows() < 1 )
-      {
-         // si no hay, al menos 1 resultado, devolvemo falso, esto lo usamos en el view
-         return false;
-      } else {
-         // si las filas totales son 1 o más, devolvemos el objeto que entrega el metodo result()
-         // y esto es lo que queda en el $data['taxis'] = $this->taxi->getAll() en el controller
-         return $q->result();
-      }
-   }
 
-   public function getOne($id)
+     $q = $this->db->get();
+
+     if ($q->num_rows() < 1) {
+        return false;
+     } else {
+        return $q->result();
+     }
+  }
+
+  public function getOne($id)
    {
       $this->db->select('*');
-      $this->db->from('wpsr_car_rental_items');
-      $this->db->where('item_id', $id);
-      $q = $this->db->get();
-      if ( $q->num_rows() > 0 )
+      $this->db->from('modelos as mo');
+      $this->db->join('marcas as ma', 'mo.id_marca = ma.id_marca', 'left');
+      $this->db->where('id_modelo' , $id);
+
+       $q = $this->db->get();
+
+       if ( $q->num_rows() > 0 )
       {
          $resultado = $q->result();
          return $resultado[0];
+
       } else {
+
          return false;
+
       }
    }
+
+   public function guardar( $data )
+  {
+     $this->db->insert('modelos', $data ) ;
+  }
+
+
+   public function borrar( $id )
+   {
+
+      $this->db->where( 'id_modelo', $id );
+      $estado = array ( 'estado' => 0 );
+
+      if ( ! $this->db->update('modelos', $estado ) )
+      {
+         return false;
+
+      } else {
+
+         return true;
+
+      }
+   }
+
+   public function actualizar( $data, $id )
+      {
+
+         $this->db->where( 'id_modelo', $id );
+
+         if ( ! $this->db->update('modelos', $data ) )
+         {
+            return false;
+
+         } else {
+
+            return true;
+
+         }
+
+      }
+      public function getMarca()
+     {
+        $this->db->select('*');
+        $this->db->from('marcas');
+        $this->db->where('estado' , 1);
+
+
+        $q = $this->db->get();
+
+        if ($q->num_rows() < 1) {
+           return false;
+        } else {
+           return $q->result();
+        }
+     }
+
 }
-?>

@@ -53,7 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['vehiculos']                                         =     'vehiculos_controller';
+$route['vehiculo']                                         =     'vehiculos_controller';
 
 $route['marca']                                             =     'marca_controller';
 $route['marca/nuevo']                                       =     'marca_controller/nuevo';
