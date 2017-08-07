@@ -1,7 +1,7 @@
 <?php
    defined('BASEPATH') OR exit('No direct script access allowed');
 
-   class Vehiculos_controller extends CI_Controller{
+   class Vehiculo_controller extends CI_Controller{
 
       public function __construct()
       {
@@ -19,7 +19,27 @@
 
       public function nuevo()
       {
-         $this->load->view('vehiculo/nuevo');
+         $this->load->model('modelo');
+         $this->load->model('marca');
+         $this->load->model('combustible');
+         $this->load->model('transmision');
+         $this->load->model('categoria');
+         $this->load->model('tarifa');
+
+         $data = array(
+            'modelo' => $this->modelo->getAll(),
+            'marca' => $this->marca->getAll(),
+            'combustible' => $this->combustible->getAll(),
+            'transmision' => $this->transmision->getAll(),
+            'categoria' => $this->categoria->getAll(),
+            'tarifa' => $this->tarifa->getAll(),
+          );
+
+          //echo "<pre>";
+          //print_r($data);
+          //echo "</pre>";
+
+         $this->load->view('vehiculo/nuevo' , $data);
       }
 
       public function guardar()
