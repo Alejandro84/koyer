@@ -106,3 +106,12 @@ $route['combustible/actualizar']                            =     'combustible_c
 $route['combustible/borrar/(:num)']                         =     'combustible_controller/borrar/$1';
 $route['combustible/papelera']                              =     'combustible_controller/papelera';
 $route['combustible/reactivar/(:num)']                      =     'combustible_controller/papelera/$1';
+
+$route['mantenimiento']                                       =     'mantenimiento_controller';
+$route['mantenimiento/nuevo']                                 =     'mantenimiento_controller/nuevo';
+$route['mantenimiento/guardar']                               =     'mantenimiento_controller/guardar';
+$route['mantenimiento/editar/(:num)']                         =     'mantenimiento_controller/editar/$1';
+$route['mantenimiento/actualizar']                            =     'mantenimiento_controller/actualizar';
+$route['mantenimiento/borrar/(:num)']                         =     'mantenimiento_controller/borrar/$1';
+$route['mantenimiento/papelera']                              =     'mantenimiento_controller/papelera';
+$route['mantenimiento/reactivar/(:num)']                      =     'mantenimiento_controller/papelera/$1';
