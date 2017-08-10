@@ -1,6 +1,9 @@
-<br><br><br><br>
 <div class="container">
 
+   <div class="row">
+      <h1>Marcas <small>Editar</small></h1>
+   </div>
+   
    <div class="row">
 
       <form action="<?=site_url('marca/actualizar');?>" method="post" class="col-xs-4">

@@ -2,7 +2,6 @@
 <div class="container">
    <div class="row">
       <h1>Marcas <small>Nuevo</small></h1>
-
    </div>
    <div class="row">
 

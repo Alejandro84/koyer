@@ -17,7 +17,10 @@ class Mantenimiento_controller extends CI_Controller{
         'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
      );
 
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
      $this->load->view('mantenimiento/listar', $data);
+     $this->load->view('template/footer')
   }
 
   public function nuevo()
@@ -135,6 +138,34 @@ class Mantenimiento_controller extends CI_Controller{
             //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
             redirect('mantenimiento');
+         }
+  }
+  function papelera()
+  {
+     $data['marcas'] = $this->marca->getTrash();
+
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
+     $this->load->view('marca/papelera', $data);
+     $this->load->view('template/footer');
+
+
+  }
+
+  public function activar($id_marca)
+  {
+     if ( ! $this->marca->activar($id_marca) )
+         {
+            //$error = $this->db->_error_message();
+            $mensaje = 'No se pudo borrar el elemento: '.$error;
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('marca');
+         } else {
+            // todo ok, creamos el mensaje y lo enviamos
+            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('marca');
          }
   }
 }

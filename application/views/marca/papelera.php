@@ -1,7 +1,7 @@
 <div class="container">
 
    <div class="row">
-      <h1>Papelera</h1><h3>Marcas</h3>
+      <h1>Marcas <small>Papelera</small></h1>
    </div>
    <div class="row">
 

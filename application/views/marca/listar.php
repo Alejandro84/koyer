@@ -1,10 +1,9 @@
 <div class="container">
-   <div class="row">
-      <div class="col-xs-4">
-         <h1>Marcas</h1>   
-      </div>
 
+   <div class="row">
+      <h1>Marcas</h1>
    </div>
+
    <div class="row">
 
       <div class="col-xs-4">
