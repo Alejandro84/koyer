@@ -21,8 +21,7 @@
                      <td><?=$modelo->modelo;?></td>
                      <td><?=$modelo->marca;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
-                        <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="<?= site_url( 'modelo/activar/'.$modelo->id_modelo ); ?>" class="btn btn-warning">Activar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

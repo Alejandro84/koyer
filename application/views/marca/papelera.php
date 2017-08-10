@@ -1,32 +1,34 @@
 <div class="container">
 
    <div class="row">
+      <h1>Papelera</h1><h3>Marcas</h3>
+   </div>
+   <div class="row">
 
       <div class="col-xs-6">
 
          <table class="table table-striped">
+
             <thead>
                <th>ID</th>
-               <th>Modelo</th>
                <th>Marca</th>
                <th>Acciones</th>
 
             </thead>
             <tbody>
                <?php
-                  foreach ($modelos as $modelo):
+                  foreach ($marcas as $marca):
                ?>
                   <tr>
-                     <td><?=$modelo->id_modelo;?></td>
-                     <td><?=$modelo->modelo;?></td>
-                     <td><?=$modelo->marca;?></td>
+                     <td><?=$marca->id_marca;?></td>
+                     <td><?=$marca->marca;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
-                        <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="<?= site_url( 'marca/activar/'.$marca->id_marca ); ?>" class="btn btn-warning">Recuperar</a>
                      </td>
                   </tr>
                <? endforeach; ?>
             </tbody>
+
          </table>
 
       </div>

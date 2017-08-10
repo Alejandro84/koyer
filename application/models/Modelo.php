@@ -102,4 +102,38 @@ class Modelo extends CI_Model{
         }
      }
 
+     public function getTrash()
+     {
+         $this->db->select('*');
+         $this->db->from('modelos as mo');
+         $this->db->join('marcas as ma', 'mo.id_marca = ma.id_marca', 'left');
+         $this->db->where( 'mo.estado', 0);
+         $q = $this->db->get();
+
+        if ( $q->num_rows() < 1 )
+        {
+           return false;
+
+        } else {
+           return $q->result();
+        }
+     }
+
+     public function activar( $id )
+     {
+
+        $this->db->where( 'id_modelo', $id );
+        $estado = array ( 'estado' => 1 );
+
+        if ( ! $this->db->update('modelos', $estado ) )
+        {
+           return false;
+
+        } else {
+
+           return true;
+
+        }
+     }
+
 }

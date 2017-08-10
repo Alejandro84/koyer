@@ -60,7 +60,7 @@ $route['vehiculo/editar/(:num)']                            =     'vehiculo_cont
 $route['vehiculo/actualizar']                               =     'vehiculo_controller/actualizar';
 $route['vehiculo/borrar/(:num)']                            =     'vehiculo_controller/borrar/$1';
 $route['vehiculo/papelera']                                 =     'vehiculo_controller/papelera';
-$route['vehiculo/reactivar/(:num)']                         =     'vehiculo_controller/papelera/$1';
+$route['vehiculo/activar/(:num)']                           =     'vehiculo_controller/activar/$1';
 
 $route['marca']                                             =     'marca_controller';
 $route['marca/nuevo']                                       =     'marca_controller/nuevo';
@@ -69,7 +69,7 @@ $route['marca/editar/(:num)']                               =     'marca_control
 $route['marca/actualizar']                                  =     'marca_controller/actualizar';
 $route['marca/borrar/(:num)']                               =     'marca_controller/borrar/$1';
 $route['marca/papelera']                                    =     'marca_controller/papelera';
-$route['marca/reactivar/(:num)']                            =     'marca_controller/papelera/$1';
+$route['marca/activar/(:num)']                              =     'marca_controller/activar/$1';
 
 $route['modelo']                                            =     'modelo_controller';
 $route['modelo/nuevo']                                      =     'modelo_controller/nuevo';
@@ -78,7 +78,7 @@ $route['modelo/editar/(:num)']                              =     'modelo_contro
 $route['modelo/actualizar']                                 =     'modelo_controller/actualizar';
 $route['modelo/borrar/(:num)']                              =     'modelo_controller/borrar/$1';
 $route['modelo/papelera']                                   =     'modelo_controller/papelera';
-$route['modelo/reactivar/(:num)']                           =     'modelo_controller/papelera/$1';
+$route['modelo/activar/(:num)']                             =     'modelo_controller/activar/$1';
 
 $route['categoria']                                         =     'categoria_controller';
 $route['categoria/nuevo']                                   =     'categoria_controller/nuevo';
@@ -87,7 +87,7 @@ $route['categoria/editar/(:num)']                           =     'categoria_con
 $route['categoria/actualizar']                              =     'categoria_controller/actualizar';
 $route['categoria/borrar/(:num)']                           =     'categoria_controller/borrar/$1';
 $route['categoria/papelera']                                =     'categoria_controller/papelera';
-$route['categoria/reactivar/(:num)']                        =     'categoria_controller/papelera/$1';
+$route['categoria/activar/(:num)']                          =     'categoria_controller/activar/$1';
 
 $route['transmision']                                       =     'transmision_controller';
 $route['transmision/nuevo']                                 =     'transmision_controller/nuevo';
@@ -96,7 +96,7 @@ $route['transmision/editar/(:num)']                         =     'transmision_c
 $route['transmision/actualizar']                            =     'transmision_controller/actualizar';
 $route['transmision/borrar/(:num)']                         =     'transmision_controller/borrar/$1';
 $route['transmision/papelera']                              =     'transmision_controller/papelera';
-$route['transmision/reactivar/(:num)']                      =     'transmision_controller/papelera/$1';
+$route['transmision/activar/(:num)']                        =     'transmision_controller/activar/$1';
 
 $route['combustible']                                       =     'combustible_controller';
 $route['combustible/nuevo']                                 =     'combustible_controller/nuevo';
@@ -105,7 +105,7 @@ $route['combustible/editar/(:num)']                         =     'combustible_c
 $route['combustible/actualizar']                            =     'combustible_controller/actualizar';
 $route['combustible/borrar/(:num)']                         =     'combustible_controller/borrar/$1';
 $route['combustible/papelera']                              =     'combustible_controller/papelera';
-$route['combustible/reactivar/(:num)']                      =     'combustible_controller/papelera/$1';
+$route['combustible/activar/(:num)']                        =     'combustible_controller/activar/$1';
 
 $route['mantenimiento']                                       =     'mantenimiento_controller';
 $route['mantenimiento/nuevo']                                 =     'mantenimiento_controller/nuevo';
@@ -114,4 +114,4 @@ $route['mantenimiento/editar/(:num)']                         =     'mantenimien
 $route['mantenimiento/actualizar']                            =     'mantenimiento_controller/actualizar';
 $route['mantenimiento/borrar/(:num)']                         =     'mantenimiento_controller/borrar/$1';
 $route['mantenimiento/papelera']                              =     'mantenimiento_controller/papelera';
-$route['mantenimiento/reactivar/(:num)']                      =     'mantenimiento_controller/papelera/$1';
+$route['mantenimiento/activar/(:num)']                         =     'mantenimiento_controller/activar/$1';

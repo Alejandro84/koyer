@@ -18,8 +18,6 @@ class Categoria_controller extends CI_Controller{
      $this->load->view('categoria/listar', $data);
      $this->load->view('template/footer');
 
-
-
   }
 
   public function nuevo()
@@ -65,7 +63,7 @@ class Categoria_controller extends CI_Controller{
      $data['categoria'] = $this->categoria->getOne($id_categoria);
 
      $this->load->view('template/header');
-     //$this->load->view('template/alert');
+     $this->load->view('template/nav');
      $this->load->view('categoria/editar', $data);
      $this->load->view('template/footer');
 
@@ -113,6 +111,35 @@ class Categoria_controller extends CI_Controller{
          } else {
             // todo ok, creamos el mensaje y lo enviamos
             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('categoria');
+         }
+  }
+
+  function papelera()
+  {
+     $data['categorias'] = $this->categoria->getTrash();
+
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
+     $this->load->view('cateogria/papelera', $data);
+     $this->load->view('template/footer');
+
+
+  }
+
+  public function activar($id_categoria)
+  {
+     if ( ! $this->categoria->activar($id_categoria) )
+         {
+            //$error = $this->db->_error_message();
+            $mensaje = 'No se pudo borrar el elemento: '.$error;
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('categoria');
+         } else {
+            // todo ok, creamos el mensaje y lo enviamos
+            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
             redirect('categoria');
          }

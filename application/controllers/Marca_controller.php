@@ -13,14 +13,19 @@ class Marca_controller extends CI_Controller{
   {
      $data['marcas'] = $this->marca->getAll();
 
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
      $this->load->view('marca/listar', $data);
-
+     $this->load->view('template/footer');
 
   }
 
   public function nuevo()
   {
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
      $this->load->view('marca/nuevo');
+     $this->load->view('template/footer');
   }
 
   public function guardar()
@@ -56,7 +61,11 @@ class Marca_controller extends CI_Controller{
   public function editar($id_marca)
   {
      $data['marca'] = $this->marca->getOne($id_marca);
+
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
      $this->load->view('marca/editar', $data);
+     $this->load->view('template/footer');
   }
 
   public function actualizar()
@@ -92,6 +101,36 @@ class Marca_controller extends CI_Controller{
   public function borrar($id_marca)
   {
      if ( ! $this->marca->borrar($id_marca) )
+         {
+            //$error = $this->db->_error_message();
+            $mensaje = 'No se pudo borrar el elemento: '.$error;
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('marca');
+         } else {
+            // todo ok, creamos el mensaje y lo enviamos
+            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('marca');
+         }
+  }
+
+
+  function papelera()
+  {
+     $data['marcas'] = $this->marca->getTrash();
+
+     $this->load->view('template/header');
+     $this->load->view('template/nav');
+     $this->load->view('marca/papelera', $data);
+     $this->load->view('template/footer');
+
+
+  }
+
+  public function activar($id_marca)
+  {
+     if ( ! $this->marca->activar($id_marca) )
          {
             //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
