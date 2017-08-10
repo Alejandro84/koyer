@@ -78,10 +78,10 @@ class Vehiculo extends CI_Model{
    public function borrar( $id )
    {
 
-      $this->db->where( 'id_modelo', $id );
+      $this->db->where( 'id_vehiculo', $id );
       $estado = array ( 'estado' => 0 );
 
-      if ( ! $this->db->update('modelos', $estado ) )
+      if ( ! $this->db->update('vehiculos', $estado ) )
       {
          return false;
 

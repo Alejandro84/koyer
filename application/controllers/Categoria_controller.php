@@ -13,14 +13,21 @@ class Categoria_controller extends CI_Controller{
   {
      $data['categorias'] = $this->categoria->getAll();
 
+     $this->load->view('template/header');
+     //$this->load->view('template/alert');
      $this->load->view('categoria/listar', $data);
+     $this->load->view('template/footer');
+
 
 
   }
 
   public function nuevo()
   {
+     $this->load->view('template/header');
+     //$this->load->view('template/alert');
      $this->load->view('categoria/nuevo');
+     $this->load->view('template/footer');
   }
 
   public function guardar()
@@ -36,17 +43,17 @@ class Categoria_controller extends CI_Controller{
 
            if ( ! $this->categoria->guardar( $insert ) )
            {
-              //$error = $this->db->_error_message();
-              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
               redirect('categoria');
            } else {
-              //$mensaje = 'Sus datos han sido guardados exitosamente';
+              $mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);
               redirect('categoria');
            }
         } else {
-           //$mensaje = '¡Debe rellenar todos los campos!';
+           $mensaje = '¡Debe rellenar todos los campos!';
            //$this->session->set_flashdata('error', $mensaje);
            redirect('categoria');
         }
@@ -56,7 +63,12 @@ class Categoria_controller extends CI_Controller{
   public function editar($id_categoria)
   {
      $data['categoria'] = $this->categoria->getOne($id_categoria);
+
+     $this->load->view('template/header');
+     //$this->load->view('template/alert');
      $this->load->view('categoria/editar', $data);
+     $this->load->view('template/footer');
+
   }
 
   public function actualizar()
@@ -76,7 +88,7 @@ class Categoria_controller extends CI_Controller{
               $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
-              redirect('categoria/nuevo');
+              redirect('categoria');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);

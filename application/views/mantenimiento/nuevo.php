@@ -1,6 +1,6 @@
 <form action="<?=site_url('mantenimiento/guardar');?>" method="post">
 
-      <select class="" name="id_mantenimiento">
+      <select class="" name="id_tipo_mantenimiento">
          <?php foreach ($tipos_mantenimientos as $tipo_mantenimiento ):?>
             <option value="<?=$tipo_mantenimiento->id_tipo_mantenimiento;?>"><?=$tipo_mantenimiento->mantenimiento;?></option>
          <?php endforeach; ?>
