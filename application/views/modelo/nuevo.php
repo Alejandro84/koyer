@@ -1,14 +1,6 @@
 <div class="container">
-
-   <div class="row">
-
-      <h1>Modelos<small>Nuevo</small></h1>
-
-   </div>
-
-   <div class="row">
-
-      <form action="<?=site_url('modelo/guardar');?>" method="post" class="col-md-4 col-xs-4">
+   <div class="col-md-4">
+      <form action="<?=site_url('modelo/guardar');?>" method="post" >
          <div class="form-group">
             <label for="modelo">Modelo</label>
             <input type="text" name="modelo" value="" class="form-control">
@@ -26,7 +18,5 @@
 
             <input type="submit" name="" value="Guardar" class="btn btn-success">
       </form>
-
    </div>
-
 </div>

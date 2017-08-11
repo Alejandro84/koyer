@@ -4,7 +4,7 @@
    </div>
    <div class="row">
 
-      <div class="col-xs-6">
+      <div class="col-md-6">
 
          <table class="table table-striped">
             <thead>
@@ -32,7 +32,8 @@
          </table>
 
       </div>
-
+      <div>
+         <? $this->load->view('modelo/nuevo');?>
+      </div>
    </div>
-
 </div>

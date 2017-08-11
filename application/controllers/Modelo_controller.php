@@ -11,11 +11,15 @@ class Modelo_controller extends CI_Controller{
 
   function index()
   {
-     $data['modelos'] = $this->modelo->getAll();
+     $data = array(
+        'modelos' => $this->modelo->getAll(),
+        'marcas' => $this->modelo->getMarca()
+      );
 
-     $this->load->view('template/header');
+
+     $this->load->view('template/header', $data);
      $this->load->view('template/nav');
-     $this->load->view('modelo/listar', $data);
+     $this->load->view('modelo/listar');
      $this->load->view('template/footer');
   }
 
@@ -23,9 +27,9 @@ class Modelo_controller extends CI_Controller{
   {
      $data['marcas'] = $this->modelo->getMarca();
 
-     $this->load->view('template/header');
+     $this->load->view('template/header', $data);
      $this->load->view('template/nav');
-     $this->load->view('modelo/nuevo' , $data);
+     $this->load->view('modelo/nuevo');
      $this->load->view('template/footer');
 
   }
