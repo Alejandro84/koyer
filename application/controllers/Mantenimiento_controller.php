@@ -12,15 +12,22 @@ class Mantenimiento_controller extends CI_Controller{
 
   function index()
   {
+     $this->load->model('vehiculo');
+
      $data = array(
-        'mantenimientos' => $this->mantenimiento->getAll(),
-        'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
-     );
+     'vehiculos' => $this->vehiculo->getAll(),
+     'mantenimientos' => $this->mantenimiento->getAll(),
+     'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
+      );
+
+     //echo "<pre>";
+     //print_r($data);
+     //echo "</pre>";
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
      $this->load->view('mantenimiento/listar', $data);
-     $this->load->view('template/footer')
+     $this->load->view('template/footer');
   }
 
   public function nuevo()

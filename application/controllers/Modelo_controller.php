@@ -46,16 +46,16 @@ class Modelo_controller extends CI_Controller{
            if ( ! $this->modelo->guardar( $insert ) )
            {
               //$error = $this->db->_error_message();
-              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
               redirect('modelo');
            } else {
-              //$mensaje = 'Sus datos han sido guardados exitosamente';
+              $mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);
               redirect('modelo');
            }
         } else {
-           //$mensaje = '¡Debe rellenar todos los campos!';
+           $mensaje = '¡Debe rellenar todos los campos!';
            //$this->session->set_flashdata('error', $mensaje);
            redirect('modelo');
         }

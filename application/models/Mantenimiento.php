@@ -14,6 +14,7 @@ class Mantenimiento extends CI_Model{
      $this->db->select('*');
      $this->db->from('mantenimientos as MA');
      $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
+     $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
      $this->db->where('MA.estado' , 1);
 
 

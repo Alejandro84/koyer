@@ -8,22 +8,22 @@
 
             <thead>
                <th>ID</th>
-               <th>Modelo</th>
-               <th>Marca</th>
-               <th>Acciones</th>
+               <th>Mantenimiento</th>
+               <th>Costo</th>
+               <th>Vehiculo</th>
 
             </thead>
             <tbody>
                <?php
-                  foreach ($modelos as $modelo):
+                  foreach ($mantenimientos as $mantenimiento):
                ?>
                   <tr>
-                     <td><?=$modelo->id_modelo;?></td>
-                     <td><?=$modelo->modelo;?></td>
-                     <td><?=$modelo->marca;?></td>
+                     <td><?=$mantenimiento->id_mantenimiento;?></td>
+                     <td><?=$mantenimiento->mantenimiento;?></td>
+                     <td><?=$mantenimiento->costo;?></td>
+                     <td><?=$mantenimiento->patente;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" >Editar</a>
-                        <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" >Eliminar</a>
+                        <a class="btn btn-primary" href="<?= site_url( 'mantenimiento/editar/'.$mantenimiento->id_mantenimiento ); ?>" >Editar</a>
                      </td>
                   </tr>
                <? endforeach; ?>
