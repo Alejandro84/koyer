@@ -31,11 +31,11 @@
             </div>
 
             <div class="form-group">
-               <label for="">Tarifa:</label>
-               <select class="form-control" name="id_tarifa">
+               <label for="form-control">Categoria:</label>
+               <select class="form-control" name="id_categoria">
                   <option value="">Seleccione una opcion...</option>
-                  <?php foreach ($tarifa as $tarifa ):?>
-                     <option value="<?=$tarifa->id_tarifa;?>"><?=$tarifa->precio;?></option>
+                  <?php foreach ($categoria as $categoria ):?>
+                     <option value="<?=$categoria->id_categoria;?>"><?=$categoria->categoria;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -61,14 +61,15 @@
             </div>
 
             <div class="form-group">
-               <label for="form-control">Categoria:</label>
-               <select class="form-control" name="id_categoria">
+               <label for="">Tarifa:</label>
+               <select class="form-control" name="id_tarifa">
                   <option value="">Seleccione una opcion...</option>
-                  <?php foreach ($categoria as $categoria ):?>
-                     <option value="<?=$categoria->id_categoria;?>"><?=$categoria->categoria;?></option>
+                  <?php foreach ($tarifa as $tarifa ):?>
+                     <option value="<?=$tarifa->id_tarifa;?>"><?=$tarifa->precio;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
+
 
             <input type="submit" name="" value="Guardar" class="btn btn-success pull-right" >
 

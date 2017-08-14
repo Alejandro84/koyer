@@ -1,22 +1,50 @@
-<form action="<?=site_url('mantenimiento/guardar');?>" method="post">
 
-      <select class="" name="id_tipo_mantenimiento">
-         <?php foreach ($tipos_mantenimientos as $tipo_mantenimiento ):?>
-            <option value="<?=$tipo_mantenimiento->id_tipo_mantenimiento;?>"><?=$tipo_mantenimiento->mantenimiento;?></option>
-         <?php endforeach; ?>
-      </select>
+      <h1>Mantenimientos <small>Ingrese mantenimiento</small></h1>
 
-      <input type="number" name="costo" value="">
+      <form action="<?=site_url('mantenimiento/guardar');?>" method="post">
 
-      <select class="" name="id_vehiculo">
-         <?php foreach ($vehiculos as $vehiculo ):?>
-            <option value="<?=$vehiculo->id_vehiculo;?>"><?=$vehiculo->patente;?></option>
-         <?php endforeach; ?>
-      </select>
+         <div class="form-group">
+            <label for="">Tipo de Mantenimiento:</label>
+            <select class="form-control" name="id_tipo_mantenimiento">
+               <option value="">Elija una opción...</option>
+               <?php foreach ($tipos_mantenimientos as $tipo_mantenimiento ):?>
+                  <option value="<?=$tipo_mantenimiento->id_tipo_mantenimiento;?>"><?=$tipo_mantenimiento->mantenimiento;?></option>
+               <?php endforeach; ?>
+            </select>
+         </div>
 
-      <textarea name="comentario" rows="5" cols="40"></textarea>
+         <div class="form-group">
+            <label for="">Costo del mantenimiento:</label>
+            <input type="number" name="costo" value="" class="form-control">
+         </div>
 
-      <input type="text" name="fecha_mantencion" value="">
+         <div class="form-group">
+            <label for="">Vehiculo:</label>
+            <select class="form-control" name="id_vehiculo">
+               <option value="">Elija una opción...</option>
+               <?php foreach ($vehiculos as $vehiculo ):?>
+                  <option value="<?=$vehiculo->id_vehiculo;?>"> <b><?=$vehiculo->patente;?></b> <?=$vehiculo->modelo;?></option>
+               <?php endforeach; ?>
+            </select>
+         </div>
 
-      <input type="submit" name="" value="Guardar">
-</form>
+
+         <div class="form-group">
+            <label for="">Comentario:</label>
+            <textarea class="form-control" name="comentario" rows="3" cols="30"></textarea>
+         </div>
+
+
+         <div class="form-group">
+            <label for="">Fecha en que se hizo el mantenimiento:</label>
+             <div class='input-group date' id='fecha_mantencion'>
+                 <input type='text' name="fecha_mantencion" class="form-control" />
+                 <span class="input-group-addon">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                 </span>
+             </div>
+          </div>
+
+
+         <input class="btn btn-success pull-right" type="submit" name="" value="Guardar">
+      </form>
