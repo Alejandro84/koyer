@@ -118,23 +118,27 @@ class Modelo_controller extends CI_Controller{
          {
             //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
-            // el flash data para mostrarlo en el listado
             //$this->session->set_flashdata('error', $mensaje );
             redirect('modelo');
          } else {
-            // todo ok, creamos el mensaje y lo enviamos
-            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
             redirect('modelo');
          }
   }
   function papelera()
   {
-     $data['modelos'] = $this->modelo->getTrash();
+     //$data['modelos'] = $this->modelo->getTrash();
 
-     $this->load->view('template/header');
+     $this->load->model('marca');
+     $data = array(
+      'modelos' => $this->modelo->getTrash(),
+      'marcas' => $this->marca->getTrash()
+     );
+
+     $this->load->view('template/header', $data);
      $this->load->view('template/nav');
-     $this->load->view('modelo/papelera', $data);
+     $this->load->view('modelo/papelera');
      $this->load->view('template/footer');
 
 
@@ -146,12 +150,10 @@ class Modelo_controller extends CI_Controller{
          {
             //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
-            // el flash data para mostrarlo en el listado
             //$this->session->set_flashdata('error', $mensaje );
             redirect('modelo');
          } else {
-            // todo ok, creamos el mensaje y lo enviamos
-            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
             redirect('modelo');
          }

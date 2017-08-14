@@ -32,8 +32,17 @@
          </table>
 
       </div>
-      <div>
-         <? $this->load->view('modelo/nuevo');?>
+      <div class="col-md-6">
+         <div class="row">
+            <? $this->load->view('marca/nuevo');?>
+         </div>
+         <div class="row">
+            <? $this->load->view('modelo/nuevo');?>
+         </div>
+         <div class="row col-md-6 papelera">
+            <a class="btn btn-warning btn-lg btn-block" href="<?= site_url('modelo/papelera');?>" role="button">Papelera</a>
+         </div>
+
       </div>
    </div>
 </div>

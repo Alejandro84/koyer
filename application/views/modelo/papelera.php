@@ -1,11 +1,11 @@
 <div class="container">
    <div class="row">
-      <h1>Modelos <small>Papelera</small></h1>
+      <a class="btn btn-warning btn-lg" href="<?= site_url('modelo');?>" role="button">Volver</a>
    </div>
    <div class="row">
 
-      <div class="col-xs-6">
-
+      <div class="col-md-6">
+         <h1>Modelos <small>Papelera</small></h1>
          <table class="table table-striped">
             <thead>
                <th>ID</th>
@@ -23,13 +23,16 @@
                      <td><?=$modelo->modelo;?></td>
                      <td><?=$modelo->marca;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/activar/'.$modelo->id_modelo ); ?>" class="btn btn-warning">Activar</a>
+                        <a href="<?= site_url( 'modelo/activar/'.$modelo->id_modelo ); ?>" class="btn btn-warning">Recuperar</a>
                      </td>
                   </tr>
                <? endforeach; ?>
             </tbody>
          </table>
 
+      </div>
+      <div class="col-md-6">
+         <? $this->load->view('marca/papelera');?>
       </div>
 
    </div>

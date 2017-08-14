@@ -41,6 +41,7 @@ class Vehiculo_controller extends CI_Controller{
        );
 
        $this->load->view('template/header');
+       $this->load->view('template/nav');
        $this->load->view('vehiculo/nuevo', $data);
        $this->load->view('template/footer');
 
@@ -71,7 +72,7 @@ class Vehiculo_controller extends CI_Controller{
 
             if ( ! $this->vehiculo->guardar( $insert ) )
             {
-               $error = $this->db->_error_message();
+               //$error = $this->db->_error_message();
                $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
                //$this->session->set_flashdata('error',$mensaje);
                redirect('vehiculo');
@@ -108,7 +109,8 @@ class Vehiculo_controller extends CI_Controller{
        );
 
 
-      $this->load->view('template/header');
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
       $this->load->view('vehiculo/editar', $data);
       $this->load->view('template/footer');
    }
@@ -167,6 +169,33 @@ class Vehiculo_controller extends CI_Controller{
              redirect('vehiculo');
           } else {
              // todo ok, creamos el mensaje y lo enviamos
+             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+             //$this->session->set_flashdata('success', $mensaje );
+             redirect('vehiculo');
+          }
+   }
+
+   function papelera()
+   {
+
+      $data['vehiculos'] = $this->vehiculo->getTrash();
+
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('vehiculo/papelera', $data);
+      $this->load->view('template/footer');
+
+   }
+
+   public function activar($id_vehiculo)
+   {
+      if ( ! $this->vehiculo->activar($id_vehiculo) )
+          {
+             //$error = $this->db->_error_message();
+             $mensaje = 'No se pudo borrar el elemento: '.$error;
+             //$this->session->set_flashdata('error', $mensaje );
+             redirect('vehiculo');
+          } else {
              $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
              //$this->session->set_flashdata('success', $mensaje );
              redirect('vehiculo');

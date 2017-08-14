@@ -1,8 +1,7 @@
-<div class="container">
+<div class="container bloque">
 
    <div class="row">
-      <h1>Vehículos</h1>
-      <a href="<?=site_url('vehiculo/nuevo');?>" class="btn btn-success pull-right">Agregar Móvil</a></h1>
+      <h1>Vehículos</h1><a href="<?=site_url('vehiculos/nuevo');?>" class="btn btn-success pull-right">Agregar Móvil</a></h1>
    </div>
 
    <div class="row">
@@ -20,7 +19,6 @@
                <th>Categoria</th>
                <th>Combustible</th>
                <th>Precio</th>
-               <th>Estado</th>
                <th>Acciones</th>
 
             </thead>
@@ -36,7 +34,6 @@
                      <td><?=$vehiculo->transmision;?></td>
                      <td><?=$vehiculo->categoria;?></td>
                      <td><?=$vehiculo->combustible;?></td>
-                     <td><?=$vehiculo->estado_arriendo;?></td>
                      <td><?=$vehiculo->precio;?></td>
                      <td>
                         <a href="<?= site_url( 'vehiculo/editar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-primary">Editar</a>

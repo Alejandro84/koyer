@@ -44,16 +44,16 @@ class Marca_controller extends CI_Controller{
               //$error = $this->db->_error_message();
               //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               //$this->session->set_flashdata('error',$mensaje);
-              redirect('marca');
+              redirect('modelo');
            } else {
               //$mensaje = 'Sus datos han sido guardados exitosamente';
               //$this->session->set_flashdata('success',$mensaje);
-              redirect('marca');
+              redirect('modelo');
            }
         } else {
            //$mensaje = '¡Debe rellenar todos los campos!';
            //$this->session->set_flashdata('error', $mensaje);
-           redirect('marca');
+           redirect('modelo');
         }
 
   }

@@ -1,12 +1,5 @@
-<div class="container">
-
-   <div class="row">
-      <h1>Marcas <small>Papelera</small></h1>
-   </div>
-   <div class="row">
-
-      <div class="col-xs-6">
-
+<div class="col-xs-6">
+         <h1>Marcas <small>Papelera</small></h1>
          <table class="table table-striped">
 
             <thead>
@@ -32,7 +25,3 @@
          </table>
 
       </div>
-
-   </div>
-
-</div>
