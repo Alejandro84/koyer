@@ -17,7 +17,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenimientos <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="<?= site_url('/mantenimiento');?>">Ingresar Mantenimiento</a></li>
-                <li><a href="#">Generar reportes de mantenimiento</a></li>
+                <li><a href="<?= site_url('/mantenimiento/reporte');?>">Generar reportes de mantenimiento</a></li>
 
 
               </ul>

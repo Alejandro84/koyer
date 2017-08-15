@@ -44,7 +44,7 @@ class Mantenimiento_controller extends CI_Controller{
      $comentario = $this->input->post('comentario');
      $fecha_mantencion = $this->input->post('fecha_mantencion');
 
-     if ( $id_tipo_mantenimiento != null && $costo != null && $id_vehiculo != null && $comentario != null && $fecha_mantencion != null )
+     if ( $id_tipo_mantenimiento != null && $costo != null && $id_vehiculo != null && $fecha_mantencion != null )
         {
 
          $insert = array(
@@ -161,20 +161,41 @@ class Mantenimiento_controller extends CI_Controller{
 
   }
 
-  public function activar($id_marca)
+  public function activar($id_mantenimiento)
   {
-     if ( ! $this->marca->activar($id_marca) )
+     if ( ! $this->manteni->activar($id_mantenimiento) )
          {
             //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
             // el flash data para mostrarlo en el listado
             //$this->session->set_flashdata('error', $mensaje );
-            redirect('marca');
+            redirect('mantenimiento');
          } else {
             // todo ok, creamos el mensaje y lo enviamos
             //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
             //$this->session->set_flashdata('success', $mensaje );
-            redirect('marca');
+            redirect('mantenimiento');
          }
   }
+
+     function reporte()
+     {
+        $this->load->model('vehiculo');
+       $this->load->model('tipo_mantenimiento');
+
+       $data = array(
+       'vehiculos' => $this->vehiculo->getAll(),
+       'mantenimientos' => $this->mantenimiento->getAll(),
+       'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
+         );
+
+        $this->load->view('template/header');
+        $this->load->view('template/nav');
+        $this->load->view('mantenimiento/reporte', $data);
+        $this->load->view('template/footer');
+
+        //print('<pre>');
+        //print_r($data);
+        //print('</pre>');
+     }
 }
