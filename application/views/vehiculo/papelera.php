@@ -36,8 +36,8 @@
                      <td><?=$vehiculo->combustible;?></td>
                      <td><?=$vehiculo->precio;?></td>
                      <td>
-                        <a href="<?= site_url( 'vehiculo/editar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?= site_url( 'vehiculo/borrar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?= site_url( 'vehiculo/activar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-warning">Recuperar</a>
+                     </td>
                      </td>
                   </tr>
                <? endforeach; ?>

@@ -18,8 +18,8 @@ class Vehiculo extends CI_Model{
         $this->db->select('CO.combustible');
         $this->db->select('CA.categoria');
         $this->db->select('TA.precio');
-        $this->db->from('vehiculos as VE');
         $this->db->select('EA.estado_arriendo');
+        $this->db->from('vehiculos as VE');
         $this->db->join('modelos as MO', 'VE.id_modelo = MO.id_modelo', 'left');
         $this->db->join('marcas as MA', 'VE.id_marca = MA.id_marca', 'left');
         $this->db->join('transmisiones as TR', 'VE.id_transmision = TR.id_transmision', 'left');
@@ -146,10 +146,10 @@ class Vehiculo extends CI_Model{
 
    public function activar( $id )
    {
-      $this->db->where( 'id_modelo', $id );
+      $this->db->where( 'id_vehiculo', $id );
       $estado = array ( 'estado' => 1 );
 
-      if ( ! $this->db->update('modelos', $estado ) )
+      if ( ! $this->db->update('vehiculos', $estado ) )
       {
         return false;
 
