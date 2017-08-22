@@ -12,9 +12,11 @@ class Modelo extends CI_Model{
    public function getAll()
   {
      $this->db->select('*');
-     $this->db->from('modelos as mo');
-     $this->db->join('marcas as ma', 'mo.id_marca = ma.id_marca', 'left');
-     $this->db->where('mo.estado' , 1);
+     $this->db->select('TA.precio');
+     $this->db->from('modelos as MO');
+     $this->db->join('marcas as MA', 'MO.id_marca = MA.id_marca', 'left');
+     $this->db->join('tarifas as TA', 'TA.id_modelo = MO.id_modelo', 'left');
+     $this->db->where('MO.estado' , 1);
 
 
      $q = $this->db->get();

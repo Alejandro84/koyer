@@ -10,7 +10,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Pagina WEB</a></li>
+             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?= site_url('/reserva');?>">Reservas</a></li>
+                <li><a href="<?= site_url('/reserva/nuevo');?>">Nueva reserva</a></li>
+              </ul>
+            </li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehiculos <span class="caret"></span></a>
@@ -19,8 +25,6 @@
                 <li><a href="<?= site_url('/modelo');?>">Configuraciones</a></li>
               </ul>
             </li>
-
-            <li><a href="#contact"></a></li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenimientos <span class="caret"></span></a>

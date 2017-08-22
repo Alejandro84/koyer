@@ -36,7 +36,12 @@
                      <td><?=$vehiculo->transmision;?></td>
                      <td><?=$vehiculo->categoria;?></td>
                      <td><?=$vehiculo->combustible;?></td>
-                     <td><?=$vehiculo->estado_arriendo;?></td>
+                        <? if ($vehiculo->disponible == 1) {
+                           echo "<td>Disponible</td>";
+                        }else {
+                           echo "<td>En Arriendo</td>";
+                        }?>
+
                      <td><?=$vehiculo->precio;?></td>
                      <td>
                         <a href="<?= site_url( 'vehiculo/editar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-primary">Editar</a>

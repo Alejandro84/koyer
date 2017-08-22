@@ -80,6 +80,17 @@ $route['modelo/borrar/(:num)']                              =     'modelo_contro
 $route['modelo/papelera']                                   =     'modelo_controller/papelera';
 $route['modelo/activar/(:num)']                             =     'modelo_controller/activar/$1';
 
+$route['cliente']                                         =     'cliente_controller';
+$route['cliente/nuevo']                                   =     'cliente_controller/nuevo';
+$route['cliente/guardar']                                 =     'cliente_controller/guardar';
+$route['cliente/editar/(:num)']                           =     'cliente_controller/editar/$1';
+$route['cliente/buscar']                                  =     'cliente_controller/buscar';
+$route['cliente/busqueda/(:num)']                         =     'cliente_controller/busqueda/$1';
+$route['cliente/actualizar']                              =     'cliente_controller/actualizar';
+$route['cliente/borrar/(:num)']                           =     'cliente_controller/borrar/$1';
+$route['cliente/papelera']                                =     'cliente_controller/papelera';
+$route['cliente/activar/(:num)']                          =     'cliente_controller/activar/$1';
+
 $route['categoria']                                         =     'categoria_controller';
 $route['categoria/nuevo']                                   =     'categoria_controller/nuevo';
 $route['categoria/guardar']                                 =     'categoria_controller/guardar';
@@ -116,3 +127,13 @@ $route['mantenimiento/borrar/(:num)']                       =     'mantenimiento
 $route['mantenimiento/papelera']                            =     'mantenimiento_controller/papelera';
 $route['mantenimiento/activar/(:num)']                      =     'mantenimiento_controller/activar/$1';
 $route['mantenimiento/reporte']                             =     'mantenimiento_controller/reporte';
+
+$route['reserva']                                           =     'reserva_controller';
+$route['reserva/nuevo']                                     =     'reserva_controller/nuevo';
+$route['reserva/guardar']                                   =     'reserva_controller/guardar';
+$route['reserva/editar/(:num)']                             =     'reserva_controller/editar/$1';
+$route['reserva/actualizar']                                =     'reserva_controller/actualizar';
+$route['reserva/borrar/(:num)']                             =     'reserva_controller/borrar/$1';
+$route['reserva/papelera']                                  =     'reserva_controller/papelera';
+$route['reserva/activar/(:num)']                            =     'reserva_controller/activar/$1';
+$route['reserva/reporte']                                   =     'reserva_controller/reporte';

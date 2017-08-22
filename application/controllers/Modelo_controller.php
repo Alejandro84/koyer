@@ -13,9 +13,8 @@ class Modelo_controller extends CI_Controller{
   {
      $data = array(
         'modelos' => $this->modelo->getAll(),
-        'marcas' => $this->modelo->getMarca()
+        'marcas' => $this->modelo->getMarca(),
       );
-
 
      $this->load->view('template/header', $data);
      $this->load->view('template/nav');
@@ -69,9 +68,13 @@ class Modelo_controller extends CI_Controller{
   public function editar($id_modelo)
   {
       $this->load->model('marca');
+      $this->load->model('tarifa');
+
       $data = array(
-        'modelo' => $this->modelo->getOne($id_modelo),
-        'marca' => $this->marca->getAll()
+        'modelos' => $this->modelo->getOne($id_modelo),
+        'marcas' => $this->marca->getAll(),
+        'tarifas' => $this->tarifa->getAll()
+        
       );
 
       $this->load->view('template/header');

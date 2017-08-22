@@ -11,6 +11,7 @@
                <th>ID</th>
                <th>Modelo</th>
                <th>Marca</th>
+               <th>Precio</th>
                <th>Acciones</th>
 
             </thead>
@@ -22,6 +23,7 @@
                      <td><?=$modelo->id_modelo;?></td>
                      <td><?=$modelo->modelo;?></td>
                      <td><?=$modelo->marca;?></td>
+                     <td><?=$modelo->precio;?></td>
                      <td>
                         <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
                         <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
@@ -40,6 +42,7 @@
             <? $this->load->view('modelo/nuevo');?>
          </div>
          <div class="row col-md-6 papelera">
+            <br>
             <a class="btn btn-warning btn-lg btn-block" href="<?= site_url('modelo/papelera');?>" role="button">Papelera</a>
          </div>
 
