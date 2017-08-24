@@ -83,4 +83,29 @@ class Reserva extends CI_Model{
       }
 
    }
+
+   public function buscar($id_vehiculo, $fechas)
+   {
+      $fecha_entrega    =  $fechas['fecha_entrega'];
+      $fecha_devolucion =  $fechas['fecha_devolucion'];
+
+
+      $this->db->select('*');
+      $this->db->from('reservas');
+      $this->db->where('id_vehiculo', $id_vehiculo );
+      $this->db->where('( fecha_devolucion >="'.$fecha_entrega.'" or fecha_entrega >= "'. $fecha_entrega.'" or fecha_entrega >= "'. $fecha_devolucion.'")' ); // quiero sacarlo antes que lo devuelvan
+               //->or_where( ) // quiero sacarlo cuando alguien ya lo saco
+               //->or_where(); // quiero devolverlo cuando alquien ya lo tiene
+
+      $query = $this->db->get();
+
+      if ( $query->num_rows() > 0 )
+      {
+         // hay más de un resultado, por tanto estan chocando las fechas...
+         return $query->result();
+      } else {
+         return false;
+      }
+
+   }
 }

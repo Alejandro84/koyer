@@ -1,7 +1,3 @@
-<div class="row">
-   <? $this->load->view('cliente/buscar'); ?>
-</div>
-
 <form action="<?=site_url('cliente/guardar');?>" method="post">
 
 <h3>Datos de Cliente</h3>
