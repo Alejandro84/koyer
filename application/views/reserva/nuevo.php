@@ -60,7 +60,7 @@
 
             <div class="form-group">
                <label for="form-control">Lugar de devolucion</label>
-                  <select class="form-control" name="locacion_devolcuion">
+                  <select class="form-control" name="locacion_devolucion">
                      <option value="">Seleccione una opcion...</option>
                      <?php foreach ($locaciones as $locacion ):?>
                         <option value="<?=$locacion->id_locacion;?>"><?=$locacion->locacion;?></option>

@@ -41,8 +41,8 @@ class Reserva_controller extends CI_Controller{
 
    public function verificar()
    {
-      $this->output->enable_profiler(TRUE);
-      
+      //$this->output->enable_profiler(TRUE);
+      $this->load->model('locacion');
       $this->load->model('vehiculo');
 
       $autos = $this->vehiculo->getAll();
@@ -50,37 +50,61 @@ class Reserva_controller extends CI_Controller{
       $reserva_fecha_desde = $this->input->post('reserva-fecha_desde');
       $reserva_fecha_hasta = $this->input->post('reserva-fecha_hasta');
 
-      $reserva_fecha_desde = DateTime::createFromFormat( 'd/m/Y H:i', $reserva_fecha_desde );
-      $reserva_fecha_desde =  $reserva_fecha_desde->format( 'Y-m-d H:i:s' );
+      $locacion_entrega    =  $this->input->post('locacion_entrega');
+      $locacion_devolucion =  $this->input->post('locacion_devolucion');
 
-      $reserva_fecha_hasta = DateTime::createFromFormat( 'd/m/Y H:i', $reserva_fecha_hasta );
-      $reserva_fecha_hasta =  $reserva_fecha_hasta->format( 'Y-m-d H:i:s' );
-
-      // de: 22/11/2017 10:00
-      // a: 2017-10-01 12:00:00
       $data = array(
-         'fecha_entrega' => $reserva_fecha_desde ,
-         'fecha_devolucion' => $reserva_fecha_hasta
+         'fecha_desde' => $reserva_fecha_desde,
+         'fecha_hasta' => $reserva_fecha_hasta,
+         'locacion_entrega' => $locacion_entrega,
+         'locacion_devolucion' => $locacion_devolucion
       );
 
-      foreach ($autos as $auto) {
-         $id_auto = $auto->id_vehiculo;
-         $estado = $this->reserva->buscar($id_auto , $data);
 
-         $disponibles[] = array(
-            'info_auto' => $auto,
-            'estado' => $estado
+      if ($locacion_entrega != null && $locacion_devolucion != null && $reserva_fecha_desde != null && $reserva_fecha_hasta != null) {
+
+         $reserva_fecha_desde = DateTime::createFromFormat( 'd/m/Y H:i', $reserva_fecha_desde );
+         $reserva_fecha_desde =  $reserva_fecha_desde->format( 'Y-m-d H:i:s' );
+
+         $reserva_fecha_hasta = DateTime::createFromFormat( 'd/m/Y H:i', $reserva_fecha_hasta );
+         $reserva_fecha_hasta =  $reserva_fecha_hasta->format( 'Y-m-d H:i:s' );
+
+         // de: 22/11/2017 10:00
+         // a: 2017-10-01 12:00:00
+         $data = array(
+            'fecha_entrega' => $reserva_fecha_desde ,
+            'fecha_devolucion' => $reserva_fecha_hasta
          );
+
+         foreach ($autos as $auto) {
+            $id_auto = $auto->id_vehiculo;
+            $estado = $this->reserva->buscar($id_auto , $data);
+
+            $disponibles[] = array(
+               'info_auto' => $auto,
+               'estado' => $estado
+            );
+         }
+
+         $variables_vista = [
+            'disponibles'  => $disponibles,
+            'fecha_entrega' => $reserva_fecha_desde ,
+            'fecha_devolucion' => $reserva_fecha_hasta ,
+            'locacion_entrega' => $locacion_entrega,
+            'locacion_devolucion' => $locacion_devolucion,
+            'locaciones' => $this->locacion->getAll()
+         ];
+
+         $this->load->view('template/header', $variables_vista );
+         $this->load->view('template/nav');
+         $this->load->view('reserva/disponibles');
+         $this->load->view('template/footer');
+
+
+      }else {
+         $mensaje = "Debe rellenar todos los campos!";
+
       }
-      $variables_vista = [
-         'disponibles'  => $disponibles
-      ];
-
-      $this->load->view('template/header', $variables_vista );
-      $this->load->view('template/nav');
-      $this->load->view('reserva/disponibles');
-      $this->load->view('template/footer');
-
 
    }
 
