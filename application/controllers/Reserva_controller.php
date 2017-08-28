@@ -10,6 +10,7 @@ class Reserva_controller extends CI_Controller{
       parent::__construct();
 
       $this->load->model('reserva');
+      $this->load->model('cliente');
 
    }
 
@@ -77,12 +78,16 @@ class Reserva_controller extends CI_Controller{
          );
 
          foreach ($autos as $auto) {
+
             $id_auto = $auto->id_vehiculo;
             $estado = $this->reserva->buscar($id_auto , $data);
 
+            $ubicacion = $this->reserva->dondeEsta($auto->id_vehiculo , $reserva_fecha_desde);
+
             $disponibles[] = array(
                'info_auto' => $auto,
-               'estado' => $estado
+               'estado' => $estado,
+               'ubicacion' => $ubicacion
             );
          }
 
@@ -94,6 +99,10 @@ class Reserva_controller extends CI_Controller{
             'locacion_devolucion' => $locacion_devolucion,
             'locaciones' => $this->locacion->getAll()
          ];
+
+
+         //echo "<pre>";
+         //print_r($variables_vista);
 
          $this->load->view('template/header', $variables_vista );
          $this->load->view('template/nav');
@@ -107,6 +116,72 @@ class Reserva_controller extends CI_Controller{
       }
 
    }
+
+
+   public function ingresarCliente()
+   {
+      $this->load->model('locacion');
+      $this->load->model('vehiculo');
+      $this->load->model('impuesto');
+
+      $autos = $this->vehiculo->getAll();
+
+      $reserva_fecha_desde = $this->input->post('fecha_desde');
+      $reserva_fecha_hasta = $this->input->post('fecha_hasta');
+
+      $locacion_entrega    =  $this->input->post('locacion_entrega');
+      $locacion_devolucion =  $this->input->post('locacion_devolucion');
+
+      $vehiculo = $this->input->post('vehiculo');
+      $patente = $this->input->post('patente');
+
+
+      $data = array(
+         'vehiculo' => $this->vehiculo->getOne($vehiculo),
+         'fecha_entrega' => $reserva_fecha_desde ,
+         'fecha_devolucion' => $reserva_fecha_hasta ,
+         'locacion_entrega' => $locacion_entrega,
+         'locacion_devolucion' => $locacion_devolucion,
+         'locaciones' => $this->locacion->getAll(),
+         'impuestos' => $this->impuesto->getAll()
+      );
+
+      //echo "<pre>";
+      //print_r($data);
+
+      $this->load->view('template/header', $data );
+      $this->load->view('template/nav');
+      $this->load->view('cliente/buscar');
+      $this->load->view('template/footer');
+
+   }
+
+   public function buscar()
+   {
+      $rut_numero_busqueda           =  $this->input->post('rut_numero_busqueda');
+      $rut_cod_verificador_busqueda  =  $this->input->post('rut_cod_verificador_busqueda');
+
+      $rut = trim($rut_numero_busqueda).trim($rut_cod_verificador_busqueda);
+
+      $cliente = $this->cliente->buscar($rut);
+
+      if ( ! $cliente ) {
+         redirect('cliente/nuevo');
+      } else {
+         redirect('reserva/busqueda/'.$cliente->id_cliente);
+      }
+    }
+
+    public function busqueda($id_cliente)
+    {
+       $data['cliente'] = $this->cliente->getOne($id_cliente);
+
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('cliente/ver', $data);
+       $this->load->view('template/footer');
+
+    }
 
    public function guardar()
    {

@@ -108,4 +108,31 @@ class Reserva extends CI_Model{
       }
 
    }
+
+   public function dondeEsta( $id_vehiculo , $fecha_retiro)
+   {
+      $this->db->select( 'RE.id_reserva' );
+      $this->db->select( 'RE.id_vehiculo' );
+      $this->db->select( 'RE.locacion_devolucion' );
+      $this->db->select( 'LO.locacion' );
+      $this->db->from( 'reservas as RE' );
+      $this->db->join('locaciones as LO', 'RE.locacion_devolucion = LO.id_locacion', 'left');
+      $this->db->where('RE.id_vehiculo', $id_vehiculo );
+      $this->db->where('RE.fecha_devolucion <=', $fecha_retiro);
+      $this->db->order_by('RE.fecha_devolucion', 'desc' );
+      $this->db->limit(1);
+
+      $q = $this->db->get();
+
+      if ( $q->num_rows() > 0 )
+    {
+      $disponibles = $q->result();
+      return $disponibles[0];
+
+    } else {
+
+      return false;
+
+    }
+   }
 }
