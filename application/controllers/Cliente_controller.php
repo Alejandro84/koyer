@@ -99,30 +99,5 @@ class Cliente_controller extends CI_Controller{
         }
   }
 
-  public function buscar()
-  {
-     $rut_numero_busqueda           =  $this->input->post('rut_numero_busqueda');
-     $rut_cod_verificador_busqueda  =  $this->input->post('rut_cod_verificador_busqueda');
-
-     $rut = trim($rut_numero_busqueda).trim($rut_cod_verificador_busqueda);
-
-     $cliente = $this->cliente->buscar($rut);
-
-     if ( ! $cliente ) {
-        redirect('cliente/nuevo');
-     } else {
-        redirect('cliente/busqueda/'.$cliente->id_cliente);
-     }
-   }
-
-   public function busqueda($id_cliente)
-   {
-      $data['cliente'] = $this->cliente->getOne($id_cliente);
-
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('cliente/nuevo', $data);
-      $this->load->view('template/footer');
-
-   }
+  
 }

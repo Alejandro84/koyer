@@ -89,12 +89,6 @@ $route['impuesto/borrar/(:num)']          =     'impuesto_controller/borrar/$1';
 $route['impuesto/papelera']               =     'impuesto_controller/papelera';
 $route['impuesto/activar/(:num)']         =     'impuesto_controller/activar/$1';
 
-$route['cliente']                         =     'cliente_controller';
-$route['cliente/nuevo']                   =     'cliente_controller/nuevo';
-$route['cliente/guardar']                 =     'cliente_controller/guardar';
-$route['cliente/editar/(:num)']           =     'cliente_controller/editar/$1';
-$route['cliente/actualizar']              =     'cliente_controller/actualizar';
-
 $route['categoria']                       =     'categoria_controller';
 $route['categoria/nuevo']                 =     'categoria_controller/nuevo';
 $route['categoria/guardar']               =     'categoria_controller/guardar';
@@ -132,6 +126,12 @@ $route['mantenimiento/papelera']          =     'mantenimiento_controller/papele
 $route['mantenimiento/activar/(:num)']    =     'mantenimiento_controller/activar/$1';
 $route['mantenimiento/reporte']           =     'mantenimiento_controller/reporte';
 
+$route['cliente']                         =     'cliente_controller';
+$route['cliente/nuevo']                   =     'cliente_controller/nuevo';
+$route['cliente/guardar']                 =     'cliente_controller/guardar';
+$route['cliente/editar/(:num)']           =     'cliente_controller/editar/$1';
+$route['cliente/actualizar']              =     'cliente_controller/actualizar';
+
 $route['reserva']                         =     'reserva_controller';
 $route['reserva/nuevo']                   =     'reserva_controller/nuevo';
 $route['reserva/guardar']                 =     'reserva_controller/guardar';
@@ -143,3 +143,4 @@ $route['reserva/verificar']               =     'reserva_controller/verificar';
 $route['reserva/ingresar_cliente']        =     'reserva_controller/ingresarCliente';
 $route['reserva/buscar']                  =     'reserva_controller/buscar';
 $route['reserva/busqueda/(:num)']         =     'reserva_controller/busqueda/$1';
+$route['reserva/cliente_nuevo']           =     'reserva_controller/cliente_nuevo';

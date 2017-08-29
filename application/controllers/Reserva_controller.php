@@ -40,6 +40,16 @@ class Reserva_controller extends CI_Controller{
 
    }
 
+   public function cliente_nuevo()
+   {
+
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('reserva/cliente_nuevo');
+       $this->load->view('template/footer');
+
+   }
+
    public function verificar()
    {
       //$this->output->enable_profiler(TRUE);
@@ -146,12 +156,14 @@ class Reserva_controller extends CI_Controller{
          'impuestos' => $this->impuesto->getAll()
       );
 
+      //CREAR UNA COOCKIE DONDE GUARDE $DATA
+
       //echo "<pre>";
       //print_r($data);
 
       $this->load->view('template/header', $data );
       $this->load->view('template/nav');
-      $this->load->view('cliente/buscar');
+      $this->load->view('reserva/buscar');
       $this->load->view('template/footer');
 
    }
@@ -166,7 +178,7 @@ class Reserva_controller extends CI_Controller{
       $cliente = $this->cliente->buscar($rut);
 
       if ( ! $cliente ) {
-         redirect('cliente/nuevo');
+         redirect('reserva/cliente_nuevo');
       } else {
          redirect('reserva/busqueda/'.$cliente->id_cliente);
       }
