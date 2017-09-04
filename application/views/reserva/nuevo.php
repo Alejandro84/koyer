@@ -8,6 +8,8 @@
 
          <form action="<?=site_url('reserva/verificar');?>" method="post">
 
+         <? $this->load->view('template/alert'); ?>
+
          <div class="row">
 
             <div class="col-md-6">

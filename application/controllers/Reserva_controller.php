@@ -9,14 +9,19 @@ class Reserva_controller extends CI_Controller{
    {
       parent::__construct();
 
+      if ( ! $this->session->logueado ) {
+         redirect('login');
+      }
       $this->load->model('reserva');
       $this->load->model('cliente');
+      $this->load->model('vehiculo');
+      $this->load->model('impuesto');
 
    }
 
    public function index()
    {
-      $data['reservas'] = $this->reserva->getAll();
+      $data['reservas'] = $this->reserva->getDisponibles();
 
       $this->load->view('template/header');
       $this->load->view('template/nav');
@@ -40,21 +45,12 @@ class Reserva_controller extends CI_Controller{
 
    }
 
-   public function cliente_nuevo()
-   {
-
-       $this->load->view('template/header');
-       $this->load->view('template/nav');
-       $this->load->view('reserva/cliente_nuevo');
-       $this->load->view('template/footer');
-
-   }
-
    public function verificar()
    {
       //$this->output->enable_profiler(TRUE);
       $this->load->model('locacion');
       $this->load->model('vehiculo');
+      $this->load->model('extra');
 
       $autos = $this->vehiculo->getAll();
 
@@ -107,6 +103,7 @@ class Reserva_controller extends CI_Controller{
             'fecha_devolucion' => $reserva_fecha_hasta ,
             'locacion_entrega' => $locacion_entrega,
             'locacion_devolucion' => $locacion_devolucion,
+            'extras' => $this->extra->getAll(),
             'locaciones' => $this->locacion->getAll()
          ];
 
@@ -121,7 +118,9 @@ class Reserva_controller extends CI_Controller{
 
 
       }else {
-         $mensaje = "Debe rellenar todos los campos!";
+         $mensaje = '¡Debe rellenar todos los campos!';
+         $this->session->set_flashdata('error', $mensaje);
+         redirect('reserva/nuevo');
 
       }
 
@@ -130,9 +129,8 @@ class Reserva_controller extends CI_Controller{
 
    public function ingresarCliente()
    {
-      $this->load->model('locacion');
+
       $this->load->model('vehiculo');
-      $this->load->model('impuesto');
 
       $autos = $this->vehiculo->getAll();
 
@@ -143,25 +141,33 @@ class Reserva_controller extends CI_Controller{
       $locacion_devolucion =  $this->input->post('locacion_devolucion');
 
       $vehiculo = $this->input->post('vehiculo');
-      $patente = $this->input->post('patente');
 
+      $cantidades = $this->input->post('cantidad');
 
-      $data = array(
-         'vehiculo' => $this->vehiculo->getOne($vehiculo),
+      $extras = [];
+      $cantidades = $this->input->post('cantidad');
+
+      foreach ( $cantidades as $id_extra => $cantidad )
+      {
+          $extras[]   =   [
+             'id_extra'  => $id_extra,
+             'cantidad'  => $cantidad
+          ];
+      }
+      $arriendo = array(
+         'vehiculo' => $vehiculo,
+         'extra' => $extras,
          'fecha_entrega' => $reserva_fecha_desde ,
          'fecha_devolucion' => $reserva_fecha_hasta ,
          'locacion_entrega' => $locacion_entrega,
          'locacion_devolucion' => $locacion_devolucion,
-         'locaciones' => $this->locacion->getAll(),
-         'impuestos' => $this->impuesto->getAll()
       );
 
       //CREAR UNA COOCKIE DONDE GUARDE $DATA
+      $this->session->arriendo = $arriendo;
 
-      //echo "<pre>";
-      //print_r($data);
-
-      $this->load->view('template/header', $data );
+      //############################
+      $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/buscar');
       $this->load->view('template/footer');
@@ -170,10 +176,11 @@ class Reserva_controller extends CI_Controller{
 
    public function buscar()
    {
-      $rut_numero_busqueda           =  $this->input->post('rut_numero_busqueda');
-      $rut_cod_verificador_busqueda  =  $this->input->post('rut_cod_verificador_busqueda');
 
-      $rut = trim($rut_numero_busqueda).trim($rut_cod_verificador_busqueda);
+      $rut_busqueda           =  $this->input->post('rut_busqueda');
+      $caracteres = array('-',',', '.' );
+
+      $rut = str_replace($caracteres, '' , $rut_busqueda);
 
       $cliente = $this->cliente->buscar($rut);
 
@@ -184,26 +191,131 @@ class Reserva_controller extends CI_Controller{
       }
     }
 
+    public function clienteNuevo()
+   {
+
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('reserva/cliente_nuevo');
+       $this->load->view('template/footer');
+
+   }
+
     public function busqueda($id_cliente)
     {
        $data['cliente'] = $this->cliente->getOne($id_cliente);
 
        $this->load->view('template/header');
        $this->load->view('template/nav');
-       $this->load->view('cliente/ver', $data);
+       $this->load->view('reserva/ver', $data);
        $this->load->view('template/footer');
 
     }
 
+    public function clienteRegistrado()
+    {
+       $id_cliente = $this->input->post('id_cliente');
+
+       $mensaje = 'Sus datos han sido guardados exitosamente';
+       $this->session->set_flashdata('success',$mensaje);
+       $this->session->cliente = $id_cliente;
+       redirect('reserva/resumen');
+    }
+
+
+    public function guardarCliente()
+    {
+
+      $caracteres = array('-',',', '.' );
+
+      $rut                 =  $this->input->post('rut');
+      $nombre              =  $this->input->post('nombre');
+      $apellido            =  $this->input->post('apellido');
+      $direccion           =  $this->input->post('direccion');
+      $ciudad              =  $this->input->post('ciudad');
+      $fecha_nacimiento    =  $this->input->post('fecha_nacimiento');
+      $pais                =  $this->input->post('pais');
+      $telefono            =  $this->input->post('telefono');
+      $email               =  $this->input->post('email');
+
+      $rut = str_replace($caracteres, '' , $rut);
+
+
+   if ($rut != null && $nombre != null && $apellido != null && $direccion != null && $ciudad != null && $pais != null && $telefono != null && $email != null) {
+
+         $insert = array(
+            'rut' => $rut,
+            'nombre' => $nombre,
+            'apellido' => $apellido,
+            'direccion' => $direccion,
+            'ciudad' => $ciudad,
+            'pais' => $pais,
+            'telefono' => $telefono,
+            'email' => $email
+          );
+
+          if (! $this->cliente->guardar($insert)) {
+
+             $mensaje = 'Sus datos han sido guardados exitosamente';
+             $this->session->set_flashdata('success',$mensaje);
+             $cliente = $this->cliente->buscar($rut);
+             $this->session->cliente = $cliente->id_cliente;
+             redirect('reserva/resumen');
+
+            } else {
+               //$error = $this->db->_error_message();
+               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+               $this->session->set_flashdata('error',$mensaje);
+               redirect('reserva/cliente_nuevo');
+          }
+
+      }else {
+         $mensaje = '¡Debe rellenar todos los campos!';
+         $this->session->set_flashdata('error', $mensaje);
+         redirect('reserva/cliente_nuevo');
+      }
+    }
+
+
+    public function resumen()
+   {
+      $this->load->model('locacion');
+      $this->load->model('extra');
+
+      $fecha = date("Ymd");
+      $rand = strtoupper(substr(uniqid(sha1(time())),0,4));
+
+      $codigo = 'RK'. $fecha . $rand;
+
+      $data = array(
+         'codigo' => $codigo,
+         'arriendo' => $this->session->arriendo,
+         'cliente' => $this->session->cliente,
+         'locaciones' => $this->locacion->getAll(),
+         'vehiculo' => $this->vehiculo->getOne($this->session->arriendo['vehiculo']),
+         'datos_cliente' => $this->cliente->getOne($this->session->cliente),
+         'impuestos' => $this->impuesto->getAll(),
+         'extras' => $this->extra->getAll()
+      );
+
+      //echo "<pre>";
+      //print_r($data);
+      $this->load->view('template/header' , $data);
+      $this->load->view('template/nav');
+      $this->load->view('reserva/resumen');
+      $this->load->view('template/footer');
+
+   }
+
    public function guardar()
    {
-      $patente = $this->input->post('patente');
-      $id_modelo = $this->input->post('id_modelo');
-      $id_marca = $this->input->post('id_marca');
-      $id_transmision = $this->input->post('id_transmision');
-      $id_categoria = $this->input->post('id_categoria');
-      $id_combustible = $this->input->post('id_combustible');
-      $id_tarifa = $this->input->post('id_tarifa');
+      $patente          =  $this->input->post('patente');
+      $id_modelo        =  $this->input->post('id_modelo');
+      $id_marca         =  $this->input->post('id_marca');
+      $id_transmision   =  $this->input->post('id_transmision');
+      $id_categoria     =  $this->input->post('id_categoria');
+      $id_combustible   =  $this->input->post('id_combustible');
+      $id_tarifa        =  $this->input->post('id_tarifa');
 
       if ( $patente != null && $id_modelo != null && $id_marca != null && $id_transmision != null && $id_categoria != null && $id_combustible != null && $id_tarifa != null )
          {

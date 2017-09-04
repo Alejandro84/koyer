@@ -35,7 +35,7 @@
 
          <? foreach ( $disponibles as $auto ): ?>
             <? if ( $auto['estado'] === false ): ?>
-            <form action="<?=site_url('reserva/ingresar_cliente');?>" method="post">
+            <form action="<?=site_url('reserva/ingresar_cliente');?>" method="post" class="form-horizontal">
 
                <input type="text" name="fecha_desde" value="<?= $fecha_entrega ?>" hidden>
                <input type="text" name="fecha_hasta" value="<?= $fecha_devolucion ?>" hidden>
@@ -50,10 +50,18 @@
                      <h4>Precio: $<?=number_format( $auto['info_auto']->precio, 2, ',', '.');?></h4>
                      <h4>Patente: <?= $auto['info_auto']->patente;?></h4>
 
-                     <h4>Ubicacion Actual: <?= $auto['ubicacion']->locacion?></h4>
+                     <!--<h4>Ubicacion Actual: <?= $auto['ubicacion']->locacion?></h4>-->
+
+                     <?php foreach ($extras as $extra): ?>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-8 control-label"><?= $extra->extra;?></label>
+                            <div class="col-sm-4">
+                               <input type="number" name="cantidad[<?php echo $extra->id_extra?>]" class="form-control" id="inputEmail3" placeholder="Cantidad">
+                            </div>
+                        </div>
+                     <?php endforeach; ?>
 
                      <input type="text" name="vehiculo" value="<?=$auto['info_auto']->id_vehiculo;?>" hidden="">
-                     <input type="text" name="patente" value="<?=$auto['info_auto']->patente;?>" hidden="">
 
                   </div>
                   <input type="submit" class="btn btn-block btn-danger" value="Seleccionar">

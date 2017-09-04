@@ -1,6 +1,6 @@
 <div class="container">
 
-   <form action="<?=site_url('cliente/guardar');?>" method="post">
+   <form action="<?=site_url('reserva/cliente_registrado');?>" method="post">
 
    <h3>Datos de Cliente</h3>
 
@@ -11,7 +11,7 @@
 
             <div class="form-group">
                <label>Rut:</label>
-               <input type="text" class="form-control" name="rut_numero" value="<?= $cliente->rut;?>" readonly>
+               <input type="text" class="form-control" name="rut" value="<?= $cliente->rut;?>" readonly>
             </div>
 
          </div>
@@ -73,6 +73,7 @@
       </div>
 
    </div>
-   <input type="submit" value="Guardar" class="btn btn-success pull-right">
+   <input type="text" name="id_cliente" value="<?= $cliente->id_cliente;?>" hidden>
+   <input type="submit" value="Siguiente" class="btn btn-success pull-right">
    </form>
 </div>

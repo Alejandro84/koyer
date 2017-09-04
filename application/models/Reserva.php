@@ -66,7 +66,6 @@ class Reserva extends CI_Model{
      $this->db->join( 'extras as EX', 'RE.id_extra = EX.id_extra' , 'left' );
      $this->db->join( 'extras_reservas as EXR', 'RE.id_extra_reserva = EXR.id_extra_reserva' , 'left' );
      $this->db->join( 'estados_arriendos as EAR', 'RE.id_estado_arriendo = EAR.id_estado_arriendo' , 'left' );
-     $this->db->join( 'estados_pagados as EPA', 'RE.id_estado_pago = EPA.id_estado_pago' , 'left' );
      $this->db->where( 'RE.estados_arriendos', 1 );
 
      $q = $this->db->get();

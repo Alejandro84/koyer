@@ -4,37 +4,18 @@
       <hr>
    </div>
    <div class="row"><!--informacion de la reserva-->
+
       <div class="col-md-12">
          <h2>Datos de la reserva</h2>
          <div class="col-md-4">
-            <label for="">Fecha de Entrega:</label> <p><?= $fecha_entrega ?> </p>
-            <label for="">Fecha de Devolución:</label><p><?= $fecha_devolucion ?> </p>
+            <label for="">Código de la reserva:</label><p><?= $codigo ?> </p>
 
-         </div>
-
-         <div class="col-md-4">
-            <label for="">Lugar de Entrega:</label>
-               <?php foreach ($locaciones as $locacion): ?>
-                  <?php if ($locacion->id_locacion == $locacion_entrega): ?>
-                     <p><?= $locacion->locacion?></p>
-                  <?php endif; ?>
-               <?php endforeach; ?>
-
-            <label for="">Lugar de Devolucion:</label>
-            <?php foreach ($locaciones as $locacion): ?>
-               <?php if ($locacion->id_locacion == $locacion_devolucion): ?>
-                  <p><?= $locacion->locacion?></p>
-               <?php endif; ?>
-            <?php endforeach; ?>
-
-         </div>
-         <div class="col-md-4">
             <label for="">Dias de arriendo:</label>
 
             <?php  // lo primero es hacerlo objeto
 
-            $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $fecha_entrega ); // los parametros son, el formato de la fecha que estas metiendo y la fecha
-            $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $fecha_devolucion );
+            $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $arriendo['fecha_entrega'] ); // los parametros son, el formato de la fecha que estas metiendo y la fecha
+            $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $arriendo['fecha_devolucion'] );
 
             $fecha_entrega       = $fecha_entrega->getTimestamp();
             $fecha_devolucion    = $fecha_devolucion->getTimestamp();
@@ -48,7 +29,32 @@
             $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
             ?>
             <p><? echo $dias_arriendo; ?></p>
+
          </div>
+
+         <div class="col-md-4">
+            <label for="">Fecha de Entrega:</label> <p><?= $arriendo['fecha_entrega'] ?> </p>
+            <label for="">Fecha de Devolución:</label><p><?= $arriendo['fecha_devolucion'] ?> </p>
+
+         </div>
+
+         <div class="col-md-4">
+            <label for="">Lugar de Entrega:</label>
+               <?php foreach ($locaciones as $locacion): ?>
+                  <?php if ($locacion->id_locacion == $arriendo['locacion_entrega']): ?>
+                     <p><?= $locacion->locacion?></p>
+                  <?php endif; ?>
+               <?php endforeach; ?>
+
+            <label for="">Lugar de Devolucion:</label>
+            <?php foreach ($locaciones as $locacion): ?>
+               <?php if ($locacion->id_locacion == $arriendo['locacion_devolucion']): ?>
+                  <p><?= $locacion->locacion?></p>
+               <?php endif; ?>
+            <?php endforeach; ?>
+
+         </div>
+
       </div>
    </div>
 
@@ -88,6 +94,33 @@
 
 
       </div>
+   </div>
+
+   <div class="row"><!-- Informacio de los extras-->
+      <div class="col-md-6">
+         <h2>Extras</h2>
+         <table class="table">
+            <thead>
+               <th>Extra</th>
+               <th>Cantidad</th>
+            </thead>
+            <tbody>
+               <?php foreach ($arriendo['extra'] as $extra): ?>
+                  <?php if ( ! $extra['cantidad']  == 0 ): ?>
+                     <tr>
+                        <?php if ($extra->id_extra == $extras->id_extra): ?>
+                           <td><?= $extras->extra?></td>
+                        <?php endif; ?>
+                     </tr>
+                  <?php endif; ?>
+               <?php endforeach; ?>
+            </tbody>
+         </table>
+      </div>
+   </div>
+
+   <div class="row">
+
       <div class="col-md-12">
          <h2>Precios</h2>
          <hr>
@@ -106,7 +139,6 @@
             </tbody>
          </table>
       </div>
-
 
    </div>
 </div>

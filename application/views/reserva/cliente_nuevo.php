@@ -1,8 +1,8 @@
 <div class="container">
-   <form action="<?=site_url('cliente/guardar');?>" method="post">
+   <form action="<?=site_url('reserva/guardar_cliente');?>" method="post">
 
    <h3>Datos de Cliente</h3>
-
+   <? $this->load->view('template/alert'); ?>
    <div class="row">
 
       <div class="form-group">
@@ -10,10 +10,7 @@
 
             <div class="form-group">
                <label>Rut:</label>
-               <input type="text" class="form-control" name="rut_numero" >
-            </div>
-            <div class="form-group">
-               <input type="text" class="form-control" maxlength="1" name="rut_cod_verificador">
+               <input type="text" class="form-control" name="rut" >
             </div>
 
          </div>
@@ -37,10 +34,17 @@
 
    <div class="row">
 
-      <div class="form-group col-md-6">
-         <label for="">Fecha de nacimiento:</label>
-         <input type="text" name="fecha_nacimiento" class="form-control">
-      </div>
+
+         <div class="form-group col-md-6">
+            <label for="">Fecha de nacimiento:</label>
+            <div class='input-group date' id='reserva-fecha_desde'>
+               <input type='text' name='fecha_nacimiento' class="form-control">
+               <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+               </span>
+            </div>
+         </div>
+
 
       <div class="form-group col-md-6">
          <label for="">Direccion:</label>
@@ -71,9 +75,10 @@
 
       <div class="form-group col-md-6">
          <label for="">Correo electronico:</label>
-         <input type="email" name="email" class="form-control">
+         <input type="mail" name="email" class="form-control" id="exampleInputEmail1">
       </div>
 
+      <input type="submit" value="Guardar" class="btn btn-success pull-right">
    </div>
 
    </form>

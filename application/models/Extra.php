@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Marca extends CI_Model{
+class extra extends CI_Model{
 
    public function __construct()
    {
@@ -12,7 +12,7 @@ class Marca extends CI_Model{
    public function getAll()
    {
      $this->db->select('*');
-     $this->db->from('marcas');
+     $this->db->from('extras');
      $this->db->where('estado' , 1);
 
      $q = $this->db->get();
@@ -27,8 +27,8 @@ class Marca extends CI_Model{
    public function getOne($id)
    {
        $this->db->select('*');
-       $this->db->from('marcas');
-       $this->db->where('id_marca' , $id);
+       $this->db->from('extras');
+       $this->db->where('id_extra' , $id);
 
        $q = $this->db->get();
 
@@ -46,17 +46,17 @@ class Marca extends CI_Model{
 
    public function guardar( $data )
    {
-     $this->db->insert('marcas', $data ) ;
+     $this->db->insert('extras', $data ) ;
    }
 
 
    public function borrar( $id )
    {
 
-      $this->db->where( 'id_marca', $id );
+      $this->db->where( 'id_extra', $id );
       $estado = array ( 'estado' => 0 );
 
-      if ( ! $this->db->update('marcas', $estado ) )
+      if ( ! $this->db->update('extras', $estado ) )
       {
          return false;
 
@@ -70,9 +70,9 @@ class Marca extends CI_Model{
    public function actualizar( $data, $id )
    {
 
-      $this->db->where( 'id_marca', $id );
+      $this->db->where( 'id_extra', $id );
 
-      if ( ! $this->db->update('marcas', $data ) )
+      if ( ! $this->db->update('extras', $data ) )
       {
          return false;
 
@@ -89,7 +89,7 @@ class Marca extends CI_Model{
    {
 
       $this->db->select('*');
-      $this->db->from('marcas');
+      $this->db->from('extras');
       $this->db->where( 'estado', 0);
       $q = $this->db->get();
 
@@ -105,10 +105,10 @@ class Marca extends CI_Model{
    public function activar( $id )
    {
 
-      $this->db->where( 'id_marca', $id );
+      $this->db->where( 'id_extra', $id );
       $estado = array ( 'estado' => 1 );
 
-      if ( ! $this->db->update('marcas', $estado ) )
+      if ( ! $this->db->update('extras', $estado ) )
       {
          return false;
 
@@ -119,5 +119,6 @@ class Marca extends CI_Model{
       }
    }
 
+   
 
 }

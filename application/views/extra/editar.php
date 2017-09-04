@@ -1,0 +1,34 @@
+<div class="container">
+
+   <div class="row">
+      <h1>extras <small>Editar</small></h1>
+   </div>
+
+   <div class="row">
+      <? $this->load->view('template/alert'); ?>
+
+      <form action="<?=site_url('extra/actualizar');?>" method="post" class="col-xs-4">
+
+         <div class="form-group">
+            <label for="extra">Extra:</label>
+            <input type="text" name="extra" class="form-control" value="<?= $extra->extra;?>">
+         </div>
+         <div class="form-group">
+            <label for="extra">Precio:</label>
+            <input type="text" name="precio" class="form-control" value="<?= $extra->precio;?>">
+         </div>
+
+         <div class="form-group">
+            <label for="extra">Unidades:</label>
+            <input type="text" name="stock" class="form-control" value="<?= $extra->stock;?>">
+         </div>
+
+            <input type="text" name="id_extra" value="<?= $extra->id_extra;?>" hidden="true">
+
+            <input type="submit" name="" value="Guardar" class="btn btn-success">
+
+      </form>
+
+   </div>
+
+</div>

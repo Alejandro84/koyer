@@ -49,9 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'vehiculos_controller';
+$route['default_controller'] = 'login_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['login']                     =     'login_controller';
+$route['login/verificar']           =     'login_controller/verificar';
+$route['login/salir']               =     'login_controller/salir';
 
 $route['vehiculo']                        =     'vehiculo_controller';
 $route['vehiculo/nuevo']                  =     'vehiculo_controller/nuevo';
@@ -70,6 +74,15 @@ $route['marca/actualizar']                =     'marca_controller/actualizar';
 $route['marca/borrar/(:num)']             =     'marca_controller/borrar/$1';
 $route['marca/papelera']                  =     'marca_controller/papelera';
 $route['marca/activar/(:num)']            =     'marca_controller/activar/$1';
+
+$route['extra']                           =     'extra_controller';
+$route['extra/nuevo']                     =     'extra_controller/nuevo';
+$route['extra/guardar']                   =     'extra_controller/guardar';
+$route['extra/editar/(:num)']             =     'extra_controller/editar/$1';
+$route['extra/actualizar']                =     'extra_controller/actualizar';
+$route['extra/borrar/(:num)']             =     'extra_controller/borrar/$1';
+$route['extra/papelera']                  =     'extra_controller/papelera';
+$route['extra/activar/(:num)']            =     'extra_controller/activar/$1';
 
 $route['modelo']                          =     'modelo_controller';
 $route['modelo/nuevo']                    =     'modelo_controller/nuevo';
@@ -143,4 +156,6 @@ $route['reserva/verificar']               =     'reserva_controller/verificar';
 $route['reserva/ingresar_cliente']        =     'reserva_controller/ingresarCliente';
 $route['reserva/buscar']                  =     'reserva_controller/buscar';
 $route['reserva/busqueda/(:num)']         =     'reserva_controller/busqueda/$1';
-$route['reserva/cliente_nuevo']           =     'reserva_controller/cliente_nuevo';
+$route['reserva/cliente_nuevo']           =     'reserva_controller/clienteNuevo';
+$route['reserva/cliente_registrado']      =     'reserva_controller/clienteRegistrado';
+$route['reserva/guardar_cliente']         =     'reserva_controller/guardarCliente';

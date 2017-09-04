@@ -36,6 +36,20 @@
               </ul>
             </li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+
+             <li class="dropdown">
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido <?= $this->session->logueado->nombre.' '.$this->session->logueado->apellido;?> <span class="caret"></span></a>
+
+                <ul class="dropdown-menu">
+                   <li><a href="<?= site_url('admin/usuario/editar/'.$this->session->logueado->id_usuario); ?>">Mi perfil</a></li>
+                   <li><a href="<?= site_url('login/salir'); ?>">Cerrar sesión</a></li>
+                </ul>
+
+             </li>
+
+          </ul>
         </div><!--/.nav-collapse -->
     </nav>
 <?= site_url('/vehiculo');?>
