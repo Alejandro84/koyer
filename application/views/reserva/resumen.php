@@ -57,11 +57,58 @@
 
       </div>
    </div>
+   <hr>
+   <div class="row"><!--Informacion del cliente-->
+      <div class="col-md-12">
+         <h2>Datos del Cliente</h2>
+         <table class="table table-striped table-bordered">
 
+            <thead>
+               <th>RUT</th>
+               <th>Nombre</th>
+               <th>Apellido</th>
+            </thead>
+
+            <tbody>
+               <tr>
+                  <td><?=$datos_cliente->rut;?></td>
+                  <td><?=$datos_cliente->nombre;?></td>
+                  <td><?=$datos_cliente->apellido;?></td>
+               </tr>
+            </tbody>
+            <thead>
+               <th>Dirección</th>
+               <th>Ciudad</th>
+               <th>País</th>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><?=$datos_cliente->direccion;?></td>
+                  <td><?=$datos_cliente->ciudad;?></td>
+                  <td><?=$datos_cliente->pais;?></td>
+               </tr>
+            </tbody>
+            <thead>
+               <th>Teléfono</th>
+               <th>E-Mail</th>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><?=$datos_cliente->telefono;?></td>
+                  <td><?=$datos_cliente->email;?></td>
+               </tr>
+            </tbody>
+
+         </table>
+
+
+      </div>
+   </div>
+   <hr>
    <div class="row"><!--informacion del vehiculo-->
       <div class="col-md-12">
          <h2>Informacion del Vehiculo</h2>
-         <table class="table">
+         <table class="table table-striped table-bordered">
 
             <thead>
                <th>Patente</th>
@@ -95,22 +142,25 @@
 
       </div>
    </div>
-
+   <hr>
    <div class="row"><!-- Informacio de los extras-->
       <div class="col-md-6">
          <h2>Extras</h2>
-         <table class="table">
+         <table class="table table-striped table-bordered">
             <thead>
                <th>Extra</th>
                <th>Cantidad</th>
+               <th>Precio</th>
             </thead>
             <tbody>
-               <?php foreach ($arriendo['extra'] as $extra): ?>
-                  <?php if ( ! $extra['cantidad']  == 0 ): ?>
+               <?php
+               $extras = $arriendo['extra'];
+               foreach ($extras as $extra): ?>
+                  <?php if ($extra['cantidad'] != null): ?>
                      <tr>
-                        <?php if ($extra->id_extra == $extras->id_extra): ?>
-                           <td><?= $extras->extra?></td>
-                        <?php endif; ?>
+                        <td><?= $extra['info_extra']->extra;?></td>
+                        <td><?= $extra['cantidad'];?></td>
+                        <td><?= $extra['cantidad'] * $extra['info_extra']->precio;?></td>
                      </tr>
                   <?php endif; ?>
                <?php endforeach; ?>
@@ -118,13 +168,12 @@
          </table>
       </div>
    </div>
-
+   <hr>
    <div class="row">
 
       <div class="col-md-12">
          <h2>Precios</h2>
-         <hr>
-         <table class="table">
+         <table class="table table-striped table-bordered">
             <thead>
                <th>Precio por dia</th>
                <th>Sub total</th>

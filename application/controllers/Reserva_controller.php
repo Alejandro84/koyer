@@ -16,6 +16,7 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('cliente');
       $this->load->model('vehiculo');
       $this->load->model('impuesto');
+      $this->load->model('extra');
 
    }
 
@@ -142,8 +143,6 @@ class Reserva_controller extends CI_Controller{
 
       $vehiculo = $this->input->post('vehiculo');
 
-      $cantidades = $this->input->post('cantidad');
-
       $extras = [];
       $cantidades = $this->input->post('cantidad');
 
@@ -151,7 +150,8 @@ class Reserva_controller extends CI_Controller{
       {
           $extras[]   =   [
              'id_extra'  => $id_extra,
-             'cantidad'  => $cantidad
+             'cantidad'  => $cantidad,
+             'info_extra' => $this->extra->getOne($id_extra)
           ];
       }
       $arriendo = array(
@@ -163,10 +163,8 @@ class Reserva_controller extends CI_Controller{
          'locacion_devolucion' => $locacion_devolucion,
       );
 
-      //CREAR UNA COOCKIE DONDE GUARDE $DATA
       $this->session->arriendo = $arriendo;
 
-      //############################
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/buscar');
@@ -249,6 +247,7 @@ class Reserva_controller extends CI_Controller{
             'apellido' => $apellido,
             'direccion' => $direccion,
             'ciudad' => $ciudad,
+            'fecha_nacimiento' => $fecha_nacimiento,
             'pais' => $pais,
             'telefono' => $telefono,
             'email' => $email
