@@ -11,9 +11,17 @@ class Reserva extends CI_Model{
 
   public function getArrendados()
   {
-     $this->db->select( '*' );
-     $this->db->from( 'reservas' );
-     $this->db->where( 'estado_arriendo', 1 );
+     $this->db->select( 'RE.*' );
+     $this->db->select( 'VE.patente' );
+     $this->db->select( 'CL.nombre' );
+     $this->db->select( 'CL.apellido' );
+
+     $this->db->from( 'reservas as RE' );
+
+     $this->db->join( 'vehiculos as VE', 'RE.id_vehiculo = VE.id_vehiculo', 'left' );
+     $this->db->join( 'clientes as CL', 'RE.id_cliente = CL.id_cliente', 'left' );
+
+     $this->db->where( 'RE.estado', 1 );
 
      $q = $this->db->get();
 
@@ -35,14 +43,16 @@ class Reserva extends CI_Model{
 
      $q = $this->db->get();
 
-     if ( $q->num_rows() < 1 )
-     {
+     if ( $q->num_rows() > 0 )
+   {
+     $disponibles = $q->result();
+     return $disponibles[0];
 
-        return false;
-     } else {
+   } else {
 
-        return $q->result();
-     }
+     return false;
+
+   }
   }
 
 
@@ -115,13 +125,68 @@ class Reserva extends CI_Model{
 
      $q = $this->db->get();
 
-     if ( $q->num_rows() < 1 )
-     {
+     if ( $q->num_rows() > 0 )
+   {
+     $disponibles = $q->result();
+     return $disponibles[0];
 
+   } else {
+
+     return false;
+
+   }
+  }
+
+  public function entregarVehiculo($id)
+  {
+     $this->db->where( 'id_reserva', $id );
+     $estado = array ( 'estado_arriendo' => 1 );
+
+     if ( ! $this->db->update('reservas', $estado ) )
+     {
        return false;
+
      } else {
 
-       return $q->result();
+       return true;
+
+     }
+  }
+
+  public function recibirVehiculo($id)
+  {
+     $this->db->where( 'id_reserva', $id );
+     $estado = array (
+        'estado_arriendo' => 0,
+        'estado' => 0,
+      );
+
+     if ( ! $this->db->update('reservas', $estado ) )
+     {
+       return false;
+
+     } else {
+
+       return true;
+
+     }
+  }
+
+  public function pagar($id)
+  {
+     $this->db->where( 'id_reserva', $id );
+     $estado = array (
+        'pagado' => 0
+      );
+
+     if ( ! $this->db->update('reservas', $estado ) )
+     {
+       return false;
+
+     } else {
+
+       return true;
+
      }
   }
 }

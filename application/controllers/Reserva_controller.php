@@ -24,15 +24,20 @@ class Reserva_controller extends CI_Controller{
 
    public function index()
    {
-      $data['reservas'] = $this->reserva->getArrendados();
+      $reservas = $this->reserva->getArrendados();
 
-      echo "<pre>";
-      print_r($data);
-      
-      //$this->load->view('template/header');
-      //$this->load->view('template/nav');
-      //$this->load->view('reserva/listar', $data);
-      //$this->load->view('template/footer');
+         $data = array(
+            'reservas' => $reservas,
+            'locaciones' => $this->locacion->getall()
+         );
+
+      //echo "<pre>";
+      //print_r($data);
+
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('reserva/listar', $data);
+      $this->load->view('template/footer');
 
    }
 
@@ -376,79 +381,71 @@ class Reserva_controller extends CI_Controller{
               $this->extra_reserva->guardar($insert2);
            }
         }
-         redirect('reserva');
+       redirect('reserva/ver_reserva/' . $reserva->id_reserva);
       }
 
    }
 
-   public function guardar()
+   public function verReserva($id_reserva)
    {
+      $reserva = $this->reserva->verReserva($id_reserva);
 
-      $codigo_reserva      =  $this->input->post('codigo_reserva');
-      $fecha_entrega       =  $this->input->post('fecha_entrega');
-      $fecha_devolucion    =  $this->input->post('fecha_devolucion');
-      $locacion_entrega    =  $this->input->post('locacion_entrega');
-      $locacion_devolucion =  $this->input->post('locacion_devolucion');
-      $id_categoria        =  $this->input->post('id_categoria');
-      $id_combustible      =  $this->input->post('id_combustible');
-      $id_tarifa           =  $this->input->post('id_tarifa');
+      $vehiculo = $this->vehiculo->getOne($reserva->id_vehiculo);
 
-      if ( $patente != null && $id_modelo != null && $id_marca != null && $id_transmision != null && $id_categoria != null && $id_combustible != null && $id_tarifa != null )
-         {
+      $cliente = $this->cliente->getOne($reserva->id_cliente);
 
-          $insert = array(
-                         'patente' => $patente,
-                         'id_modelo' => $id_modelo,
-                         'id_marca' => $id_marca,
-                         'id_transmision' => $id_transmision,
-                         'id_categoria' => $id_categoria,
-                         'id_combustible' => $id_combustible,
-                         'id_tarifa' => $id_tarifa
-                      );
+      $locacion_entrega = $this->locacion->getOne($reserva->locacion_entrega);
+      $locacion_devolucion = $this->locacion->getOne($reserva->locacion_devolucion);
 
-            if ( ! $this->reserva->guardar( $insert ) )
-            {
-               //$error = $this->db->_error_message();
-               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-               //$this->session->set_flashdata('error',$mensaje);
-               redirect('reserva');
-            } else {
-               $mensaje = 'Sus datos han sido guardados exitosamente';
-               //$this->session->set_flashdata('success',$mensaje);
-               redirect('reserva');
-            }
-         } else {
-            $mensaje = '¡Debe rellenar todos los campos!';
-            //$this->session->set_flashdata('error', $mensaje);
-            redirect('reserva/nuevo');
-         }
+      $datos_extra = $this->extra_reserva->getExtras($reserva->id_reserva);
+
+      $data = array(
+         'reserva' => $reserva ,
+         'cliente' => $cliente ,
+         'vehiculo' => $vehiculo ,
+         'locacion_entrega' => $locacion_entrega ,
+         'locacion_devolucion' => $locacion_devolucion,
+         'extras' => $datos_extra
+      );
+
+      //echo "<pre>";
+      //print_r($datos_extra);
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('reserva/reserva', $data);
+      $this->load->view('template/footer');
+
 
    }
 
-   public function editar($id_reserva)
+   public function entregarVehiculo($id_reserva)
    {
-      $this->load->model('modelo');
-      $this->load->model('marca');
-      $this->load->model('combustible');
-      $this->load->model('transmision');
-      $this->load->model('categoria');
-      $this->load->model('tarifa');
+      if ( ! $this->reserva->entregarVehiculo($id_reserva) )
+          {
+             $error = $this->db->_error_message();
+             $mensaje = 'No se pudo borrar el elemento: '.$error;
+             $this->session->set_flashdata('error', $mensaje );
+             redirect('reserva');
+          } else {
+             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+             $this->session->set_flashdata('success', $mensaje );
+             redirect('reserva');
+          }
+   }
 
-      $data = array(
-         'reserva' => $this->reserva->getOne($id_reserva),
-         'modelo' => $this->modelo->getAll(),
-         'marca' => $this->marca->getAll(),
-         'combustible' => $this->combustible->getAll(),
-         'transmision' => $this->transmision->getAll(),
-         'categoria' => $this->categoria->getAll(),
-         'tarifa' => $this->tarifa->getAll(),
-       );
-
-
-       $this->load->view('template/header');
-       $this->load->view('template/nav');
-      $this->load->view('reserva/editar', $data);
-      $this->load->view('template/footer');
+   public function recibirVehiculo($id_reserva)
+   {
+      if ( ! $this->reserva->recibirVehiculo($id_reserva) )
+          {
+             $error = $this->db->_error_message();
+             $mensaje = 'No se pudo borrar el elemento: '.$error;
+             $this->session->set_flashdata('error', $mensaje );
+             redirect('reserva');
+          } else {
+             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+             $this->session->set_flashdata('success', $mensaje );
+             redirect('reserva');
+          }
    }
 
 

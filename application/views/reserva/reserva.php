@@ -8,14 +8,14 @@
       <div class="col-md-12">
          <h2>Datos de la reserva</h2>
          <div class="col-md-4">
-            <label for="">Código de la reserva:</label><p><?= $codigo ?> </p>
+            <label for="">Código de la reserva:</label><p><?= $reserva->codigo_reserva ?> </p>
 
             <label for="">Dias de arriendo:</label>
 
             <?php  // lo primero es hacerlo objeto
 
-            $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $arriendo['fecha_entrega'] ); // los parametros son, el formato de la fecha que estas metiendo y la fecha
-            $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $arriendo['fecha_devolucion'] );
+            $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $reserva->fecha_entrega ); // los parametros son, el formato de la fecha que estas metiendo y la fecha
+            $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $reserva->fecha_devolucion );
 
             $fecha_entrega       = $fecha_entrega->getTimestamp();
             $fecha_devolucion    = $fecha_devolucion->getTimestamp();
@@ -33,26 +33,14 @@
          </div>
 
          <div class="col-md-4">
-            <label for="">Fecha de Entrega:</label> <p><?= $arriendo['fecha_entrega'] ?> </p>
-            <label for="">Fecha de Devolución:</label><p><?= $arriendo['fecha_devolucion'] ?> </p>
+            <label for="">Fecha de Entrega:</label> <p><?= $reserva->fecha_entrega ?> </p>
+            <label for="">Fecha de Devolución:</label><p><?= $reserva->fecha_devolucion ?> </p>
 
          </div>
 
          <div class="col-md-4">
-            <label for="">Lugar de Entrega:</label>
-               <?php foreach ($locaciones as $locacion): ?>
-                  <?php if ($locacion->id_locacion == $arriendo['locacion_entrega']): ?>
-                     <p><?= $locacion->locacion?></p>
-                  <?php endif; ?>
-               <?php endforeach; ?>
-
-            <label for="">Lugar de Devolucion:</label>
-            <?php foreach ($locaciones as $locacion): ?>
-               <?php if ($locacion->id_locacion == $arriendo['locacion_devolucion']): ?>
-                  <p><?= $locacion->locacion?></p>
-               <?php endif; ?>
-            <?php endforeach; ?>
-
+            <label for="">Lugar de Entrega:</label><p><?= $locacion_entrega->locacion?></p>
+            <label for="">Lugar de Devolucion:</label><p><?= $locacion_devolucion->locacion?></p>
          </div>
 
       </div>
@@ -71,9 +59,9 @@
 
             <tbody>
                <tr>
-                  <td><?=$datos_cliente->rut;?></td>
-                  <td><?=$datos_cliente->nombre;?></td>
-                  <td><?=$datos_cliente->apellido;?></td>
+                  <td><?=$cliente->rut;?></td>
+                  <td><?=$cliente->nombre;?></td>
+                  <td><?=$cliente->apellido;?></td>
                </tr>
             </tbody>
             <thead>
@@ -83,9 +71,9 @@
             </thead>
             <tbody>
                <tr>
-                  <td><?=$datos_cliente->direccion;?></td>
-                  <td><?=$datos_cliente->ciudad;?></td>
-                  <td><?=$datos_cliente->pais;?></td>
+                  <td><?=$cliente->direccion;?></td>
+                  <td><?=$cliente->ciudad;?></td>
+                  <td><?=$cliente->pais;?></td>
                </tr>
             </tbody>
             <thead>
@@ -94,8 +82,8 @@
             </thead>
             <tbody>
                <tr>
-                  <td><?=$datos_cliente->telefono;?></td>
-                  <td><?=$datos_cliente->email;?></td>
+                  <td><?=$cliente->telefono;?></td>
+                  <td><?=$cliente->email;?></td>
                </tr>
             </tbody>
 
@@ -153,16 +141,18 @@
                <th>Precio</th>
             </thead>
             <tbody>
-               <?php
-               $extras = $arriendo['extra'];
-               foreach ($extras as $extra): ?>
-                  <?php if ($extra['cantidad'] != null): ?>
-                     <tr>
-                        <td><?= $extra['info_extra']->extra;?></td>
-                        <td><?= $extra['cantidad'];?></td>
-                        <td><?= $extra['cantidad'] * $extra['info_extra']->precio;?></td>
-                     </tr>
-                  <?php endif; ?>
+               <?php $suma_extra = 0; ?>
+               <?php foreach ($extras as $extra ): ?>
+                  <tr>
+                     <td><?= $extra->extra ?></td>
+                     <td><?= $extra->cantidad ?></td>
+                     <?
+                        $total_extra = $extra->cantidad * $extra->precio;
+                        $suma_extra = $suma_extra + $total_extra;
+                     ?>
+                     <td><?= $total_extra ?></td>
+
+                  </tr>
                <?php endforeach; ?>
             </tbody>
          </table>
@@ -176,18 +166,32 @@
          <table class="table table-striped table-bordered">
             <thead>
                <th>Precio por dia</th>
+               <th>Precio por extras</th>
                <th>Sub total</th>
                <th>Total</th>
             </thead>
             <tbody>
+               <tr class="success">
+                  <td><?='$' . number_format($reserva->precio_arriendo_vehiculo , '2', ',' , '.');?></td>
+                  <td><?='$' . number_format($suma_extra , '2', ',' , '.');?></td>
+                  <td><?='$' . number_format($reserva->sub_total , '2', ',' , '.');?></td>
+                  <td><?='$' . number_format($reserva->total , '2', ',' , '.');?></td>
+               </tr>
                <tr>
-                  <td><?=$vehiculo->precio;?></td>
-                  <td><?=$vehiculo->precio * $dias_arriendo;?></td>
-                  <td><?=($vehiculo->precio * $dias_arriendo) * ('1.' . $impuestos['0']->valor)?></td>
+                  <td></td>
+                  <td></td>
+                  <th>Precio Final USD</th>
+                  <? $precio_en_usd = $reserva->total / 620?>
+                  <td class="success"><?='$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
                </tr>
             </tbody>
          </table>
       </div>
 
+   </div>
+   <div class="row">
+      <div class="col-md-12">
+
+      </div>
    </div>
 </div>
