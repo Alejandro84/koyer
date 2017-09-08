@@ -1,15 +1,16 @@
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ini_set('error_reporting', E_STRICT); 
 
-require_once dirname(__FILE__) . '/tcpdf.php';
+require APPPATH."/third_party/dompdf/autoload.inc.php"; 
+use Dompdf\Dompdf;
 
-class Pdf extends TCPDF
-{
+class Pdf extends Dompdf { 
 
-   function __construct()
-   {
-      parent::__construct();
-   }
-}
+    public function __construct() { 
+        parent::__construct();
+        
+    } 
 
+} 
 
- ?>
+?>
