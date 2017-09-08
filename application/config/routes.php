@@ -66,6 +66,15 @@ $route['vehiculo/borrar/(:num)']          =     'vehiculo_controller/borrar/$1';
 $route['vehiculo/papelera']               =     'vehiculo_controller/papelera';
 $route['vehiculo/activar/(:num)']         =     'vehiculo_controller/activar/$1';
 
+$route['usuario']                        =     'usuario_controller';
+$route['usuario/nuevo']                  =     'usuario_controller/nuevo';
+$route['usuario/guardar']                =     'usuario_controller/guardar';
+$route['usuario/editar/(:num)']          =     'usuario_controller/editar/$1';
+$route['usuario/actualizar']             =     'usuario_controller/actualizar';
+$route['usuario/borrar/(:num)']          =     'usuario_controller/borrar/$1';
+$route['usuario/papelera']               =     'usuario_controller/papelera';
+$route['usuario/activar/(:num)']         =     'usuario_controller/activar/$1';
+
 $route['marca']                           =     'marca_controller';
 $route['marca/nuevo']                     =     'marca_controller/nuevo';
 $route['marca/guardar']                   =     'marca_controller/guardar';
@@ -128,8 +137,6 @@ $route['combustible/actualizar']          =     'combustible_controller/actualiz
 $route['combustible/borrar/(:num)']       =     'combustible_controller/borrar/$1';
 $route['combustible/papelera']            =     'combustible_controller/papelera';
 $route['combustible/activar/(:num)']      =     'combustible_controller/activar/$1';
-
-$route['reporte']                            =     'reporte_controller';
 
 $route['mantenimiento']                      =     'mantenimiento_controller';
 $route['mantenimiento/nuevo']                =     'mantenimiento_controller/nuevo';
