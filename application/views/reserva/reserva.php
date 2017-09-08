@@ -195,6 +195,7 @@
    </div>
    <div class="row">
       <div class="col-md-12">
+         <td><a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a></td>
          <td><a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right">Pagado</a></td>
       </div>
    </div>

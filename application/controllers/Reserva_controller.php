@@ -416,10 +416,10 @@ class Reserva_controller extends CI_Controller{
 
       //echo "<pre>";
       //print_r($datos_extra);
-      //$this->load->view('template/header');
-     // $this->load->view('template/nav');
-      $this->load->view('reserva/reserva_pdf', $data);
-      //$this->load->view('template/footer');
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('reserva/reserva', $data);
+      $this->load->view('template/footer');
 
 
    }
@@ -471,9 +471,9 @@ class Reserva_controller extends CI_Controller{
 
     public function imprimirPDF($id_reserva)
     {
-        $url    =   site_url('reserva/ver_reserva/'.$id_reserva);
+        $url    =   site_url('reserva/reserva_pdf/'.$id_reserva);
         $html   =   file_get_contents ( $url );
-        
+
         $this->load->library('pdf');
         //$this->pdf->set_option('isHtml5ParserEnabled', true);
         $this->pdf->load_html($html);
