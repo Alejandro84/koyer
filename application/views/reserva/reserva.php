@@ -192,7 +192,6 @@
    <div class="row">
       <div class="col-md-12">
          <td><a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right">Pagado</a></td>
-         <td><a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" target = "_ blank" class="btn btn-success pull-right">Imprimir en PDF</a></td>
       </div>
    </div>
 </div>
