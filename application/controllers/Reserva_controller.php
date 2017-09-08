@@ -20,10 +20,12 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('locacion');
       $this->load->model('extra_reserva');
 
+
    }
 
    public function index()
    {
+
       $reservas = $this->reserva->getArrendados();
 
          $data = array(
@@ -272,7 +274,7 @@ class Reserva_controller extends CI_Controller{
              redirect('reserva/resumen');
 
             } else {
-               //$error = $this->db->_error_message();
+               $error = $this->db->_error_message();
                $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
                $this->session->set_flashdata('error',$mensaje);
                redirect('reserva/cliente_nuevo');
@@ -367,7 +369,7 @@ class Reserva_controller extends CI_Controller{
          $mensaje = 'Sus datos han sido guardados exitosamente';
          $this->session->set_flashdata('success',$mensaje);
          foreach ($extras as $extra) {
-           if ( $extra['cantidad'] != null) {
+            if ( $extra['cantidad'] != null) {
               $id_extra = $extra['id_extra'];
               $cantidad = $extra['cantidad'];
               $reserva = $this->reserva->devolverId($codigo);
@@ -379,9 +381,10 @@ class Reserva_controller extends CI_Controller{
               );
 
               $this->extra_reserva->guardar($insert2);
-           }
-        }
-       redirect('reserva/ver_reserva/' . $reserva->id_reserva);
+            }
+         }
+         $reserva = $this->reserva->devolverId($codigo);
+         redirect('reserva/ver_reserva/' . $reserva->id_reserva);
       }
 
    }
@@ -427,7 +430,7 @@ class Reserva_controller extends CI_Controller{
              $this->session->set_flashdata('error', $mensaje );
              redirect('reserva');
           } else {
-             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+             $mensaje = 'Se ha entregado correctamente.';
              $this->session->set_flashdata('success', $mensaje );
              redirect('reserva');
           }
@@ -442,28 +445,32 @@ class Reserva_controller extends CI_Controller{
              $this->session->set_flashdata('error', $mensaje );
              redirect('reserva');
           } else {
-             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+             $mensaje = 'Se ha recibido correctamente.';
              $this->session->set_flashdata('success', $mensaje );
              redirect('reserva');
           }
    }
 
-
-   public function cancelar($id_reserva)
+   public function pagar($id_reserva)
    {
-      if ( ! $this->reserva->borrar($id_reserva) )
+      if ( ! $this->reserva->pagar($id_reserva) )
           {
-             //$error = $this->db->_error_message();
+             $error = $this->db->_error_message();
              $mensaje = 'No se pudo borrar el elemento: '.$error;
-             // el flash data para mostrarlo en el listado
-             //$this->session->set_flashdata('error', $mensaje );
+             $this->session->set_flashdata('error', $mensaje );
              redirect('reserva');
           } else {
-             // todo ok, creamos el mensaje y lo enviamos
-             $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
-             //$this->session->set_flashdata('success', $mensaje );
+             $mensaje = 'El elemento se ha pagado correctamente.';
+             $this->session->set_flashdata('success', $mensaje );
              redirect('reserva');
           }
+   }
+
+   public function imprimirPDF($id_reserva)
+   {
+      $this->load->library('Pdf');
+      $this->load->view('reserva/reserva/' . $id_reserva);
+
    }
 
 

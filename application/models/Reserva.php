@@ -175,9 +175,7 @@ class Reserva extends CI_Model{
   public function pagar($id)
   {
      $this->db->where( 'id_reserva', $id );
-     $estado = array (
-        'pagado' => 0
-      );
+     $estado = array ('pagado' => 1);
 
      if ( ! $this->db->update('reservas', $estado ) )
      {

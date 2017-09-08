@@ -5,6 +5,8 @@
       <div class="col-md-6 col-md-offset-4 login">
          <h3>Cliente registrado</h3>
 
+         <? $this->load->view('template/alert'); ?>
+         
          <div class="form-group">
             <form action="<?=site_url('reserva/buscar');?>" method="post">
                <div class="form-inline">

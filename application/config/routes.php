@@ -129,6 +129,8 @@ $route['combustible/borrar/(:num)']       =     'combustible_controller/borrar/$
 $route['combustible/papelera']            =     'combustible_controller/papelera';
 $route['combustible/activar/(:num)']      =     'combustible_controller/activar/$1';
 
+$route['reporte']                            =     'reporte_controller';
+
 $route['mantenimiento']                      =     'mantenimiento_controller';
 $route['mantenimiento/nuevo']                =     'mantenimiento_controller/nuevo';
 $route['mantenimiento/guardar']              =     'mantenimiento_controller/guardar';
@@ -162,3 +164,5 @@ $route['reserva/guardar_cliente']            =     'reserva_controller/guardarCl
 $route['reserva/ver_reserva/(:num)']         =     'reserva_controller/verReserva/$1';
 $route['reserva/entregar_vehiculo/(:num)']   =     'reserva_controller/entregarVehiculo/$1';
 $route['reserva/recibir_vehiculo/(:num)']    =     'reserva_controller/recibirVehiculo/$1';
+$route['reserva/pagado/(:num)']              =     'reserva_controller/pagar/$1';
+$route['reserva/imprimir_pdf/(:num)']        =     'reserva_controller/imprimirPDF/$1';

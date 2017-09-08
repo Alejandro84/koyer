@@ -8,6 +8,7 @@
    <div class="row">
 
       <div class="col-xs-12 col-md-12">
+         <? $this->load->view('template/alert'); ?>
 
          <table class="table table-striped">
 
@@ -28,7 +29,7 @@
             <tbody>
                <?php foreach ($reservas as $reserva ): ?>
                   <tr>
-                     <td><a href="<?= site_url( 'reserva/ver_reserva/'.$reserva->id_reserva ); ?>" class="btn btn-primary">Entregar</a></td>
+                     <td><a href="<?= site_url( 'reserva/ver_reserva/'.$reserva->id_reserva ); ?>" class="btn btn-primary">Ver Reserva</a></td>
                      <td><?=$reserva->codigo_reserva;?></td>
                      <td><?=$reserva->patente;?></td>
                      <td><?=$reserva->nombre . ' ' . $reserva->apellido;?></td>
