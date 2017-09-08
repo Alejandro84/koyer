@@ -172,4 +172,5 @@ $route['reserva/ver_reserva/(:num)']         =     'reserva_controller/verReserv
 $route['reserva/entregar_vehiculo/(:num)']   =     'reserva_controller/entregarVehiculo/$1';
 $route['reserva/recibir_vehiculo/(:num)']    =     'reserva_controller/recibirVehiculo/$1';
 $route['reserva/pagado/(:num)']              =     'reserva_controller/pagar/$1';
-$route['reserva/imprimir_pdf/(:num)']        =     'reserva_controller/imprimirPDF/$1';
+$route['reserva/imprimir_pdf/(:num)']        =     'reserva_controller/imprimirPDF/$1';  
+$route['reserva/reserva_pdf/(:num)']        =       'reserva_controller/formatoPdf/$1';

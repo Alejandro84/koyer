@@ -469,6 +469,30 @@ class Reserva_controller extends CI_Controller{
           }
    }
 
+   public function formatoPdf( $id_reserva )
+   {
+            $reserva = $this->reserva->verReserva($id_reserva);
+    
+          $vehiculo = $this->vehiculo->getOne($reserva->id_vehiculo);
+    
+          $cliente = $this->cliente->getOne($reserva->id_cliente);
+    
+          $locacion_entrega = $this->locacion->getOne($reserva->locacion_entrega);
+          $locacion_devolucion = $this->locacion->getOne($reserva->locacion_devolucion);
+    
+          $datos_extra = $this->extra_reserva->getExtras($reserva->id_reserva);
+    
+          $data = array(
+             'reserva' => $reserva ,
+             'cliente' => $cliente ,
+             'vehiculo' => $vehiculo ,
+             'locacion_entrega' => $locacion_entrega ,
+             'locacion_devolucion' => $locacion_devolucion,
+             'extras' => $datos_extra
+          );
+    
+          $this->load->view('reserva/reserva_pdf', $data);
+   }
     public function imprimirPDF($id_reserva)
     {
         $url    =   site_url('reserva/reserva_pdf/'.$id_reserva);
@@ -478,7 +502,11 @@ class Reserva_controller extends CI_Controller{
         //$this->pdf->set_option('isHtml5ParserEnabled', true);
         $this->pdf->load_html($html);
         $this->pdf->render();
-        $this->pdf->stream('koyer-reserva-'.$id_reserva.'.pdf');
+        $this->pdf->stream( date('YmdHis').'-koyer-reserva-'.trim($id_reserva).'.pdf');
+        // AñoMesDiaHoraMinutoSegundo-koyer-reserva-IDReserva.pdf
+        // asi despues puedes buscar 
+        // ls 2017*.pdf 
+        // y te da todos los pdf de un año donde esten desacrgados.. solo por siu acaso
     }
 
 
