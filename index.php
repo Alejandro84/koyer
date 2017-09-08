@@ -1,4 +1,7 @@
 <?php
+
+ini_set('short_open_tag', '1');
+
 /**
  * CodeIgniter
  *

@@ -131,9 +131,13 @@
       </div>
    </div>
    <hr>
+   <?php $suma_extra = 0; ?>
+   <?php if ( ! $extras ):
+   else: ?>
    <div class="row"><!-- Informacio de los extras-->
       <div class="col-md-6">
          <h2>Extras</h2>
+
          <table class="table table-striped table-bordered">
             <thead>
                <th>Extra</th>
@@ -141,7 +145,6 @@
                <th>Precio</th>
             </thead>
             <tbody>
-               <?php $suma_extra = 0; ?>
                <?php foreach ($extras as $extra ): ?>
                   <tr>
                      <td><?= $extra->extra ?></td>
@@ -159,6 +162,7 @@
       </div>
    </div>
    <hr>
+<?php endif; ?>
    <div class="row">
 
       <div class="col-md-12">
