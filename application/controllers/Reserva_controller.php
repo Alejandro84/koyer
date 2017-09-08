@@ -17,17 +17,22 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('vehiculo');
       $this->load->model('impuesto');
       $this->load->model('extra');
+      $this->load->model('locacion');
+      $this->load->model('extra_reserva');
 
    }
 
    public function index()
    {
-      $data['reservas'] = $this->reserva->getDisponibles();
+      $data['reservas'] = $this->reserva->getArrendados();
 
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('reserva/listar', $data);
-      $this->load->view('template/footer');
+      echo "<pre>";
+      print_r($data);
+      
+      //$this->load->view('template/header');
+      //$this->load->view('template/nav');
+      //$this->load->view('reserva/listar', $data);
+      //$this->load->view('template/footer');
 
    }
 
@@ -278,43 +283,115 @@ class Reserva_controller extends CI_Controller{
 
     public function resumen()
    {
-      $this->load->model('locacion');
-      $this->load->model('extra');
-
+      ########################################################
+      #### Codigo de reserva
+      ########################################################
       $fecha = date("Ymd");
       $rand = strtoupper(substr(uniqid(sha1(time())),0,4));
 
       $codigo = 'RK'. $fecha . $rand;
+      ##################################################################
+      #### Calculo de dias de arriendo
+      ##################################################################
 
-      $data = array(
-         'codigo' => $codigo,
-         'arriendo' => $this->session->arriendo,
-         'cliente' => $this->session->cliente,
-         'locaciones' => $this->locacion->getAll(),
-         'vehiculo' => $this->vehiculo->getOne($this->session->arriendo['vehiculo']),
-         'datos_cliente' => $this->cliente->getOne($this->session->cliente),
-         'impuestos' => $this->impuesto->getAll(),
-         'extras' => $this->extra->getAll()
-      );
+      $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $this->session->arriendo['fecha_entrega'] );
+      $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $this->session->arriendo['fecha_devolucion'] );
 
-      //echo "<pre>";
-      //print_r($data);
-      $this->load->view('template/header' , $data);
-      $this->load->view('template/nav');
-      $this->load->view('reserva/resumen');
-      $this->load->view('template/footer');
+      $fecha_entrega       = $fecha_entrega->getTimestamp();
+      $fecha_devolucion    = $fecha_devolucion->getTimestamp();
+
+      $delta_tiempo  = $fecha_devolucion - $fecha_entrega;
+
+      $dias_arriendo = $delta_tiempo / 60 ; // minutos
+      $dias_arriendo = $dias_arriendo / 60 ; // horas
+      $dias_arriendo = $dias_arriendo / 24 ; // dias
+
+      $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
+      ##################################################################
+      #### declaracion de variables
+      ##################################################################
+
+      $extras = $this->session->arriendo['extra'];
+
+      $cliente = $this->cliente->getOne($this->session->cliente);
+
+      $vehiculo = $this->vehiculo->getOne($this->session->arriendo['vehiculo']);
+
+      $fecha_entrega = $this->session->arriendo['fecha_entrega'];
+      $fecha_devolucion = $this->session->arriendo['fecha_devolucion'];
+
+      $locacion_entrega = $this->locacion->getOne($this->session->arriendo['locacion_entrega']);
+      $locacion_devolucion = $this->locacion->getOne($this->session->arriendo['locacion_devolucion']);
+
+      $impuesto = $this->impuesto->getOne('1');
+
+      $iva = '1.' . $impuesto->valor;
+      ##################################################################
+      #### Precio por el arriendo del vehiculo
+      ##################################################################
+
+      $precio_vehiculo = $vehiculo->precio * $dias_arriendo;
+
+      $subtotal = $precio_vehiculo + $locacion_entrega->recargo_entrega + $locacion_devolucion->recargo_devolucion;
+
+      $total = $subtotal * $iva;
+
+      ##################################################################
+
+      $insert = array(
+         'codigo_reserva'        =>    $codigo,
+         'fecha_entrega'         =>    $fecha_entrega,
+         'fecha_devolucion'      =>    $fecha_devolucion,
+         'locacion_entrega'      =>    $locacion_entrega->id_locacion,
+         'locacion_devolucion'   =>    $locacion_devolucion->id_locacion,
+         'id_cliente'            =>    $cliente->id_cliente,
+         'id_vehiculo'           =>    $vehiculo->id_vehiculo,
+         'precio_arriendo_vehiculo'    => $precio_vehiculo,
+         'sub_total'              => $subtotal,
+         'total'                 => $total
+       );
+
+
+       if ( ! $this->reserva->guardar( $insert ) )
+      {
+         $error = $this->db->_error_message();
+         $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+         $this->session->set_flashdata('error',$mensaje);
+         redirect('reserva');
+      } else {
+         $mensaje = 'Sus datos han sido guardados exitosamente';
+         $this->session->set_flashdata('success',$mensaje);
+         foreach ($extras as $extra) {
+           if ( $extra['cantidad'] != null) {
+              $id_extra = $extra['id_extra'];
+              $cantidad = $extra['cantidad'];
+              $reserva = $this->reserva->devolverId($codigo);
+
+              $insert2 = array(
+                 'id_extra' => $id_extra,
+                 'cantidad' => $cantidad,
+                 'id_reserva' => $reserva->id_reserva
+              );
+
+              $this->extra_reserva->guardar($insert2);
+           }
+        }
+         redirect('reserva');
+      }
 
    }
 
    public function guardar()
    {
-      $patente          =  $this->input->post('patente');
-      $id_modelo        =  $this->input->post('id_modelo');
-      $id_marca         =  $this->input->post('id_marca');
-      $id_transmision   =  $this->input->post('id_transmision');
-      $id_categoria     =  $this->input->post('id_categoria');
-      $id_combustible   =  $this->input->post('id_combustible');
-      $id_tarifa        =  $this->input->post('id_tarifa');
+
+      $codigo_reserva      =  $this->input->post('codigo_reserva');
+      $fecha_entrega       =  $this->input->post('fecha_entrega');
+      $fecha_devolucion    =  $this->input->post('fecha_devolucion');
+      $locacion_entrega    =  $this->input->post('locacion_entrega');
+      $locacion_devolucion =  $this->input->post('locacion_devolucion');
+      $id_categoria        =  $this->input->post('id_categoria');
+      $id_combustible      =  $this->input->post('id_combustible');
+      $id_tarifa           =  $this->input->post('id_tarifa');
 
       if ( $patente != null && $id_modelo != null && $id_marca != null && $id_transmision != null && $id_categoria != null && $id_combustible != null && $id_tarifa != null )
          {

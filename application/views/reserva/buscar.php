@@ -14,7 +14,7 @@
                      <input type="text" class="form-control" name="rut_busqueda">
                   </div>
                   <div class="form-group">
-                     <input type="submit" class="btn btn-success"  name="Buscar">
+                     <input type="submit" class="btn btn-success"  name="Buscar" value="Buscar">
                   </div>
                </div>
             </form>
