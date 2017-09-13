@@ -68,7 +68,7 @@ class Reserva extends CI_Model{
       $this->db->where('( fecha_devolucion >="'.$fecha_entrega.'" or fecha_entrega >= "'. $fecha_entrega.'" or fecha_entrega >= "'. $fecha_devolucion.'")' ); // quiero sacarlo antes que lo devuelvan
                //->or_where( ) // quiero sacarlo cuando alguien ya lo saco
                //->or_where(); // quiero devolverlo cuando alquien ya lo tiene
-
+      $this->db->where('estado', 1 );
       $query = $this->db->get();
 
       if ( $query->num_rows() > 0 )

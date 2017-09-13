@@ -336,6 +336,7 @@ class Reserva_controller extends CI_Controller{
       $impuesto = $this->impuesto->getOne('1');
 
       $iva = '1.' . $impuesto->valor;
+
       ##################################################################
       #### Precio por el arriendo del vehiculo
       ##################################################################
@@ -348,48 +349,89 @@ class Reserva_controller extends CI_Controller{
 
       ##################################################################
 
-      $insert = array(
+      $data = array(
          'codigo_reserva'        =>    $codigo,
          'fecha_entrega'         =>    $fecha_entrega,
          'fecha_devolucion'      =>    $fecha_devolucion,
-         'locacion_entrega'      =>    $locacion_entrega->id_locacion,
-         'locacion_devolucion'   =>    $locacion_devolucion->id_locacion,
-         'id_cliente'            =>    $cliente->id_cliente,
-         'id_vehiculo'           =>    $vehiculo->id_vehiculo,
+         'locacion_entrega'      =>    $locacion_entrega,
+         'locacion_devolucion'   =>    $locacion_devolucion,
+         'cliente'               =>    $cliente,
+         'vehiculo'              =>    $vehiculo,
+         'extras'                 =>    $extras,
          'precio_arriendo_vehiculo'    => $precio_vehiculo,
          'sub_total'              => $subtotal,
          'total'                 => $total
        );
 
+       //echo "<pre>";
+       //print_r($this->session->arriendo['extra']);
 
-       if ( ! $this->reserva->guardar( $insert ) )
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('reserva/resumen' , $data);
+       $this->load->view('template/footer');
+
+   }
+
+   public function generarReserva()
+   {
+      $extras = $this->session->arriendo['extra'];
+
+      $codigo_reserva      =  $this->input->post('codigo_reserva');
+      $fecha_entrega       =  $this->input->post('fecha_entrega');
+      $fecha_devolucion    =  $this->input->post('fecha_devolucion');
+      $locacion_entrega    =  $this->input->post('locacion_entrega');
+      $locacion_devolucion =  $this->input->post('locacion_devolucion');
+      $vehiculo            =  $this->input->post('id_vehiculo');
+      $cliente             =  $this->input->post('id_cliente');
+      $precio_arriendo_vehiculo   =  $this->input->post('precio_arriendo_vehiculo');
+      $sub_total           =  $this->input->post('sub_total');
+      $total               =  $this->input->post('total');
+
+      $caracteres = array('$',',', '.' );
+
+      $total =str_replace($caracteres, '' , $total);
+
+      $insert = array(
+         'codigo_reserva' => $codigo_reserva,
+         'fecha_entrega' => $fecha_entrega,
+         'fecha_devolucion' => $fecha_devolucion,
+         'locacion_entrega' => $locacion_entrega,
+         'locacion_devolucion' => $locacion_devolucion,
+         'id_vehiculo' => $vehiculo,
+         'id_cliente' => $cliente,
+         'precio_arriendo_vehiculo' => $precio_arriendo_vehiculo,
+         'sub_total' => $sub_total,
+         'total' => $total
+      );
+
+      if ( ! $this->reserva->guardar( $insert ) )
       {
-         $error = $this->db->_error_message();
-         $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-         $this->session->set_flashdata('error',$mensaje);
-         redirect('reserva');
+       $error = $this->db->_error_message();
+       $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+       $this->session->set_flashdata('error',$mensaje);
+       redirect('reserva');
       } else {
-         $mensaje = 'Sus datos han sido guardados exitosamente';
-         $this->session->set_flashdata('success',$mensaje);
-         foreach ($extras as $extra) {
-            if ( $extra['cantidad'] != null) {
-              $id_extra = $extra['id_extra'];
-              $cantidad = $extra['cantidad'];
-              $reserva = $this->reserva->devolverId($codigo);
+       $mensaje = 'Sus datos han sido guardados exitosamente';
+       $this->session->set_flashdata('success',$mensaje);
+       foreach ($extras as $extra) {
+           if ( $extra['cantidad'] != null) {
+             $id_extra = $extra['id_extra'];
+             $cantidad = $extra['cantidad'];
+             $reserva = $this->reserva->devolverId($codigo_reserva);
 
-              $insert2 = array(
-                 'id_extra' => $id_extra,
-                 'cantidad' => $cantidad,
-                 'id_reserva' => $reserva->id_reserva
-              );
+             $insert2 = array(
+                'id_extra' => $id_extra,
+                'cantidad' => $cantidad,
+                'id_reserva' => $reserva->id_reserva
+             );
 
-              $this->extra_reserva->guardar($insert2);
-            }
-         }
-         $reserva = $this->reserva->devolverId($codigo);
-         redirect('reserva/ver_reserva/' . $reserva->id_reserva);
-      }
-
+             $this->extra_reserva->guardar($insert2);
+           }
+       }
+       $reserva = $this->reserva->devolverId($codigo);
+       redirect('reserva');
+    }
    }
 
    public function verReserva($id_reserva)
@@ -472,16 +514,16 @@ class Reserva_controller extends CI_Controller{
    public function formatoPdf( $id_reserva )
    {
             $reserva = $this->reserva->verReserva($id_reserva);
-    
+
           $vehiculo = $this->vehiculo->getOne($reserva->id_vehiculo);
-    
+
           $cliente = $this->cliente->getOne($reserva->id_cliente);
-    
+
           $locacion_entrega = $this->locacion->getOne($reserva->locacion_entrega);
           $locacion_devolucion = $this->locacion->getOne($reserva->locacion_devolucion);
-    
+
           $datos_extra = $this->extra_reserva->getExtras($reserva->id_reserva);
-    
+
           $data = array(
              'reserva' => $reserva ,
              'cliente' => $cliente ,
@@ -490,7 +532,7 @@ class Reserva_controller extends CI_Controller{
              'locacion_devolucion' => $locacion_devolucion,
              'extras' => $datos_extra
           );
-    
+
           $this->load->view('reserva/reserva_pdf', $data);
    }
     public function imprimirPDF($id_reserva)
@@ -504,8 +546,8 @@ class Reserva_controller extends CI_Controller{
         $this->pdf->render();
         $this->pdf->stream( date('YmdHis').'-koyer-reserva-'.trim($id_reserva).'.pdf');
         // AñoMesDiaHoraMinutoSegundo-koyer-reserva-IDReserva.pdf
-        // asi despues puedes buscar 
-        // ls 2017*.pdf 
+        // asi despues puedes buscar
+        // ls 2017*.pdf
         // y te da todos los pdf de un año donde esten desacrgados.. solo por siu acaso
     }
 
