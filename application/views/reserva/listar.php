@@ -35,19 +35,36 @@
                      <td><?=$reserva->nombre . ' ' . $reserva->apellido;?></td>
                      <td><?=$reserva->fecha_entrega;?></td>
                      <td><?=$reserva->fecha_devolucion;?></td>
-                     <td><?=$reserva->locacion_entrega;?></td>
-                     <td><?=$reserva->locacion_devolucion;?></td>
+                     <?php foreach ($locaciones as $locacion): ?>
+                        <?php if ($locacion->id_locacion == $reserva->locacion_entrega): ?>
+                              <td><?=$locacion->locacion;?></td>
+                        <?php endif; ?>
+                     <?php endforeach; ?>
+                     <?php foreach ($locaciones as $locacion): ?>
+                        <?php if ($locacion->id_locacion == $reserva->locacion_devolucion): ?>
+                              <td><?=$locacion->locacion;?></td>
+                        <?php endif; ?>
+                     <?php endforeach; ?>
                      <?php if ($reserva->estado_arriendo == 1): ?>
-                        <td>En Arriendo</td>
+                        <td>En Arriendo </td>
                      <?php endif; ?>
                      <?php if ($reserva->pagado == 1): ?>
-                        <td>Pagado</td>
+                        <td>Pagado </td>
                      <?php else: ?>
-                        <td>Por Pagar</td>
+                        <td>Por Pagar </td>
                      <?php endif; ?>
                      <td>
-                        <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-warning">Entregar</a>
-                        <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-success">Recibir</a>
+                        <div class="row">
+                           <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-warning btn-block">Entregar</a>
+                        </div>
+
+                        <div class="row">
+                           <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-success btn-block">Recibir</a>
+                        </div>
+                        <div class="row">
+                           <a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right btn-block">Pagado</a>
+                        </div>
+
                      </td>
                   </tr>
                <?php endforeach; ?>

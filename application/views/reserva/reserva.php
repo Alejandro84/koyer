@@ -7,6 +7,8 @@
 
       <div class="col-md-12">
          <h2>Datos de la reserva</h2>
+
+         <? $this->load->view('template/alert'); ?>
          <div class="col-md-4">
             <label for="">Código de la reserva:</label><p><?= $reserva->codigo_reserva ?> </p>
 
@@ -164,9 +166,33 @@
    <hr>
 <?php endif; ?>
    <div class="row">
+      <div class="col-md-6">
+            <h2>Precios</h2>
+      </div>
+
+      <div class="col-md-6 ">
+         <form class="" action="<?= site_url( 'reserva/actualizar_precio' ); ?>" method="post"><!--###############################-->
+         <div class="form-group form-inline pull-right">
+            <label for="">Descuento</label>
+            <input type="number" name="descuento" class="form-control">
+         </div>
+         <div class="form-group form-inline pull-right">
+            <label for="">Modificar precio</label>
+            <input type="text" name="total" value="<?=$reserva->total ?>" class="form-control">
+         </div>
+         <div class="form-group form-inline pull_right">
+            <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
+            <input type="submit" name="Actualizar Precio" class="btn btn-success pull-right" value="Actualizar Precio">
+         </div>
+         </form>
+      </div>
+
+   </div>
+   <br>
+   <div class="row">
 
       <div class="col-md-12">
-         <h2>Precios</h2>
+
          <table class="table table-striped table-bordered">
             <thead>
                <th>Precio por dia</th>
@@ -175,28 +201,44 @@
                <th>Total</th>
             </thead>
             <tbody>
-               <tr class="success">
-                  <td><?='$' . number_format($reserva->precio_arriendo_vehiculo , '2', ',' , '.');?></td>
-                  <td><?='$' . number_format($suma_extra , '2', ',' , '.');?></td>
-                  <td><?='$' . number_format($reserva->sub_total , '2', ',' , '.');?></td>
-                  <td><?='$' . number_format($reserva->total , '2', ',' , '.');?></td>
-               </tr>
-               <tr>
-                  <td></td>
-                  <td></td>
-                  <th>Precio Final USD</th>
-                  <? $precio_en_usd = $reserva->total / 620?>
-                  <td class="success"><?='$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
-               </tr>
+
+                  <tr class="success">
+                     <td><?='$' . number_format($reserva->precio_arriendo_vehiculo , '0', ',' , '.');?></td>
+                     <td><?='$' . number_format($suma_extra , '0', ',' , '.');?></td>
+                     <td><?='$' . number_format($reserva->sub_total , '0', ',' , '.');?></td>
+                     <td><?='$' . number_format($reserva->total , '0', ',' , '.');?></td>
+
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td></td>
+                     <th>Precio Final USD</th>
+                     <? $precio_en_usd = $reserva->total / 620?>
+                     <td class="success"><?='$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
+
+
+                  </tr>
             </tbody>
          </table>
       </div>
-
    </div>
+   <hr>
    <div class="row">
-      <div class="col-md-12">
-         <td><a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a></td>
-         <td><a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right">Pagado</a></td>
+      <div class="col-md-6">
+         <h4>Propiedades de la Reseva:</h4>
+         <div class="form-group">
+            <label for="">Cotizacion</label>
+            <input type="checkbox" name="cotizacion" value="">
+         </div>
+         <div class="form-group">
+            <label for="">Reserva</label>
+            <input type="checkbox" name="reserva" value="">
+         </div>
+
+      </div>
+      <div class="col-md-6">
+         <a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success pull-right">Imprimir Reserva en PDF</a>
+
       </div>
    </div>
 </div>

@@ -68,6 +68,7 @@ class Reserva extends CI_Model{
       $this->db->where('( fecha_devolucion >="'.$fecha_entrega.'" or fecha_entrega >= "'. $fecha_entrega.'" or fecha_entrega >= "'. $fecha_devolucion.'")' ); // quiero sacarlo antes que lo devuelvan
                //->or_where( ) // quiero sacarlo cuando alguien ya lo saco
                //->or_where(); // quiero devolverlo cuando alquien ya lo tiene
+      $this->db->where('estado', 1 );
 
       $query = $this->db->get();
 
@@ -176,6 +177,22 @@ class Reserva extends CI_Model{
   {
      $this->db->where( 'id_reserva', $id );
      $estado = array ('pagado' => 1);
+
+     if ( ! $this->db->update('reservas', $estado ) )
+     {
+       return false;
+
+     } else {
+
+       return true;
+
+     }
+  }
+
+  public function actualizarPrecio($data)
+  {
+     $this->db->where( 'id_reserva', $data['id_reserva'] );
+     $estado = array ('total' => $data['total']);
 
      if ( ! $this->db->update('reservas', $estado ) )
      {
