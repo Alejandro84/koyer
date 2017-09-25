@@ -37,8 +37,9 @@ class Modelo_controller extends CI_Controller{
   {
      $modelo = $this->input->post('modelo');
      $id_marca = $this->input->post('id_marca');
+     $tarifa = $this->input->post('precio');
 
-     if ( $modelo != null && $id_marca != null)
+     if ( $modelo != null && $id_marca != null && $tarifa != null)
         {
 
          $insert = array(
@@ -48,18 +49,23 @@ class Modelo_controller extends CI_Controller{
 
            if ( ! $this->modelo->guardar( $insert ) )
            {
-              //$error = $this->db->_error_message();
+              $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-              //$this->session->set_flashdata('error',$mensaje);
+              $this->session->set_flashdata('error',$mensaje);
               redirect('modelo');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
-              //$this->session->set_flashdata('success',$mensaje);
+              $this->session->set_flashdata('success',$mensaje);
+
+              /*$insert2 = array(
+                 '' => , );
+
+              $this->tarifa->guardar();*/
               redirect('modelo');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
-           //$this->session->set_flashdata('error', $mensaje);
+           $this->session->set_flashdata('error', $mensaje);
            redirect('modelo');
         }
 
@@ -74,7 +80,7 @@ class Modelo_controller extends CI_Controller{
         'modelos' => $this->modelo->getOne($id_modelo),
         'marcas' => $this->marca->getAll(),
         'tarifas' => $this->tarifa->getAll()
-        
+
       );
 
       $this->load->view('template/header');

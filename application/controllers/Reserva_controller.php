@@ -9,11 +9,10 @@ class Reserva_controller extends CI_Controller{
    {
       parent::__construct();
 
-      /*
+
       if ( ! $this->session->logueado ) {
          redirect('login');
       }
-      */
 
       $this->load->model('reserva');
       $this->load->model('cliente');
@@ -23,13 +22,31 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('locacion');
       $this->load->model('extra_reserva');
 
-
    }
 
    public function index()
    {
-
       $reservas = $this->reserva->getArrendados();
+
+         $data = array(
+            'reservas' => $reservas,
+            'locaciones' => $this->locacion->getall()
+         );
+
+      //echo "<pre>";
+      //echo $this->calendar->generate();
+
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('reserva/listar', $data);
+      $this->load->view('template/footer');
+
+   }
+
+   public function cotizacion()
+   {
+
+      $reservas = $this->reserva->getCotizaciones();
 
          $data = array(
             'reservas' => $reservas,
@@ -41,7 +58,7 @@ class Reserva_controller extends CI_Controller{
 
       $this->load->view('template/header');
       $this->load->view('template/nav');
-      $this->load->view('reserva/listar', $data);
+      $this->load->view('reserva/cotizacion', $data);
       $this->load->view('template/footer');
 
    }
@@ -124,13 +141,13 @@ class Reserva_controller extends CI_Controller{
          ];
 
 
-         //echo "<pre>";
-         //print_r($variables_vista);
+         echo "<pre>";
+         print_r($variables_vista);
 
-         $this->load->view('template/header', $variables_vista );
-         $this->load->view('template/nav');
-         $this->load->view('reserva/disponibles');
-         $this->load->view('template/footer');
+         //$this->load->view('template/header', $variables_vista );
+         //$this->load->view('template/nav');
+         //$this->load->view('reserva/disponibles');
+         //$this->load->view('template/footer');
 
 
       }else {
@@ -463,6 +480,36 @@ class Reserva_controller extends CI_Controller{
           }
    }
 
+   public function definirReserva()
+   {
+      $esCotizacion = $this->input->post('cotizacion');
+      $id_reserva = $this->input->post('id_reserva');
+
+      $insert = array(
+         'id_reserva' => $id_reserva,
+         'cotizacion' => $esCotizacion
+      );
+      echo "<pre>";
+      print_r($insert);
+
+      if ($esCotizacion == 1) {
+         if ( ! $this->reserva->esCotizacion($insert) )
+             {
+                $error = $this->db->_error_message();
+                $mensaje = 'No se pudo borrar el elemento: '.$error;
+                $this->session->set_flashdata('error', $mensaje );
+                redirect('reserva');
+             } else {
+                $mensaje = 'Se ha entregado correctamente.';
+                $this->session->set_flashdata('success', $mensaje );
+                redirect('reserva/cotizacion');
+             }
+      }else {
+         redirect('reserva');
+      }
+
+   }
+
    public function entregarVehiculo($id_reserva)
    {
       if ( ! $this->reserva->entregarVehiculo($id_reserva) )
@@ -548,6 +595,17 @@ class Reserva_controller extends CI_Controller{
         // y te da todos los pdf de un año donde esten desacrgados.. solo por siu acaso
     }
 
+    public function enviarCorreo()
+    {
+      $para = 'thejanoo84@gmail.com';
+      $titulo = 'mensaje de prueba Koyer';
+      // El mensaje
+      $mensaje = "Línea 1\r\nLínea 2\r\nLínea 3";
+
+      // Enviarlo
+      mail( $para , $titulo , $mensaje);
+
+    }
 
 }
 ?>

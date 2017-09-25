@@ -6,15 +6,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://web.koyer.cl"><img src="<?= base_url('assets/img/logo_koyer2.png');?>" width="100%" class="logo-nav"></a>
+          <a class="navbar-brand" href="http://web.koyer.dev"><img src="<?= base_url('assets/img/logo_koyer2.png');?>" width="100%" class="logo-nav"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
              <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="<?= site_url('/reserva');?>">Reservas</a></li>
                 <li><a href="<?= site_url('/reserva/nuevo');?>">Nueva reserva</a></li>
+                <li><a href="<?= site_url('/reserva');?>">Reservas</a></li>
+                <li><a href="<?= site_url('/reserva/cotizacion');?>">Cotizaciones</a></li>
               </ul>
             </li>
 
@@ -32,6 +33,14 @@
                 <li><a href="<?= site_url('/mantenimiento');?>">Ingresar Mantenimiento</a></li>
                 <li><a href="<?= site_url('/mantenimiento/reporte');?>">Generar reportes de mantenimiento</a></li>
 
+
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ajustes <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?= site_url('/descuento');?>">Descuentos</a></li>
 
               </ul>
             </li>

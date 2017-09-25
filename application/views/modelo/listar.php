@@ -36,9 +36,6 @@
       </div>
       <div class="col-md-6">
          <div class="row">
-            <? $this->load->view('marca/nuevo');?>
-         </div>
-         <div class="row">
             <? $this->load->view('modelo/nuevo');?>
          </div>
          <div class="row col-md-6 papelera">

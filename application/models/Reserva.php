@@ -35,6 +35,32 @@ class Reserva extends CI_Model{
      }
   }
 
+  public function getCotizaciones()
+  {
+     $this->db->select( 'RE.*' );
+     $this->db->select( 'VE.patente' );
+     $this->db->select( 'CL.nombre' );
+     $this->db->select( 'CL.apellido' );
+
+     $this->db->from( 'reservas as RE' );
+
+     $this->db->join( 'vehiculos as VE', 'RE.id_vehiculo = VE.id_vehiculo', 'left' );
+     $this->db->join( 'clientes as CL', 'RE.id_cliente = CL.id_cliente', 'left' );
+
+     $this->db->where( 'RE.cotizacion', 1 );
+
+     $q = $this->db->get();
+
+     if ( $q->num_rows() < 1 )
+     {
+
+        return false;
+     } else {
+
+        return $q->result();
+     }
+  }
+
   public function verReserva($id)
   {
      $this->db->select( '*' );
@@ -193,6 +219,25 @@ class Reserva extends CI_Model{
   {
      $this->db->where( 'id_reserva', $data['id_reserva'] );
      $estado = array ('total' => $data['total']);
+
+     if ( ! $this->db->update('reservas', $estado ) )
+     {
+       return false;
+
+     } else {
+
+       return true;
+
+     }
+  }
+
+  public function esCotizacion($data)
+  {
+     $this->db->where( 'id_reserva', $data['id_reserva'] );
+     $estado = array (
+        'cotizacion' => $data['cotizacion'],
+        'estado' => 0
+     );
 
      if ( ! $this->db->update('reservas', $estado ) )
      {

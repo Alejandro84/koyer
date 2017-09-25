@@ -1,21 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Extra_controller extends CI_Controller{
+class tarifa_controller extends CI_Controller{
 
   public function __construct()
   {
      parent::__construct();
-      $this->load->model('extra');
+      $this->load->model('tarifa');
   }
 
   function index()
   {
-     $data['extras'] = $this->extra->getAll();
+     $data['tarifas'] = $this->tarifa->getAll();
+
+     //echo "<pre>";
+     //print_r($data);
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/listar', $data);
+     $this->load->view('tarifa/listar', $data);
      $this->load->view('template/footer');
 
   }
@@ -24,125 +27,125 @@ class Extra_controller extends CI_Controller{
   {
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/nuevo');
+     $this->load->view('tarifa/nuevo');
      $this->load->view('template/footer');
   }
 
   public function guardar()
   {
-     $extra = $this->input->post('extra');
+     $tarifa = $this->input->post('tarifa');
      $precio = $this->input->post('precio');
 
-     if ( $extra != null && $precio != null)
+     if ( $tarifa != null && $precio != null)
         {
 
          $insert = array(
-                        'extra' => $extra,
+                        'tarifa' => $tarifa,
                         'precio' => $precio
                      );
 
-           if ( ! $this->extra->guardar( $insert ) )
+           if ( ! $this->tarifa->guardar( $insert ) )
            {
               //$error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               $this->session->set_flashdata('error',$mensaje);
-              redirect('extra/nuevo');
+              redirect('tarifa/nuevo');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
-              redirect('extra');
+              redirect('tarifa');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
            $this->session->set_flashdata('error', $mensaje);
-           redirect('extra/nuevo');
+           redirect('tarifa/nuevo');
         }
 
   }
 
-  public function editar($id_extra)
+  public function editar($id_tarifa)
   {
-     $data['extra'] = $this->extra->getOne($id_extra);
+     $data['tarifa'] = $this->tarifa->getOne($id_tarifa);
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/editar', $data);
+     $this->load->view('tarifa/editar', $data);
      $this->load->view('template/footer');
   }
 
   public function actualizar()
   {
-     $id_extra = $this->input->post('id_extra');
-     $extra = $this->input->post('extra');
+     $id_tarifa = $this->input->post('id_tarifa');
+     $tarifa = $this->input->post('tarifa');
      $precio = $this->input->post('precio');
 
-     if ( $extra != null && $precio != null)
+     if ( $tarifa != null && $precio != null)
         {
 
          $insert = array(
-                        'extra' => $extra,
+                        'tarifa' => $tarifa,
                         'precio' => $precio
                      );
 
-           if ( ! $this->extra->actualizar( $insert , $id_extra ) )
+           if ( ! $this->tarifa->actualizar( $insert , $id_tarifa ) )
            {
               $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               $this->session->set_flashdata('error',$mensaje);
-              redirect('extra');
+              redirect('tarifa');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
-              redirect('extra');
+              redirect('tarifa');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
            $this->session->set_flashdata('error', $mensaje);
-           redirect('extra/editar');
+           redirect('tarifa/editar');
         }
   }
 
-  public function borrar($id_extra)
+  public function borrar($id_tarifa)
   {
-     if ( ! $this->extra->borrar($id_extra) )
+     if ( ! $this->tarifa->borrar($id_tarifa) )
          {
             $error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
             $this->session->set_flashdata('error', $mensaje );
-            redirect('extra');
+            redirect('tarifa');
          } else {
             $mensaje = 'Elemento borrado de manera correcta.';
             $this->session->set_flashdata('success', $mensaje );
-            redirect('extra');
+            redirect('tarifa');
          }
   }
 
 
   function papelera()
   {
-     $data['extras'] = $this->extra->getTrash();
+     $data['tarifas'] = $this->tarifa->getTrash();
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/papelera', $data);
+     $this->load->view('tarifa/papelera', $data);
      $this->load->view('template/footer');
 
 
   }
 
-  public function activar($id_extra)
+  public function activar($id_tarifa)
   {
-     if ( ! $this->extra->activar($id_extra) )
+     if ( ! $this->tarifa->activar($id_tarifa) )
          {
             $error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
             $this->session->set_flashdata('error', $mensaje );
-            redirect('extra/papelera');
+            redirect('tarifa/papelera');
          } else {
 
             $mensaje = 'Elemento recuperado de manera correcta!';
             $this->session->set_flashdata('success', $mensaje );
-            redirect('extra');
+            redirect('tarifa');
          }
   }
 }

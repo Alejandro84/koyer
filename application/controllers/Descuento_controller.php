@@ -1,21 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Extra_controller extends CI_Controller{
+class Descuento_controller extends CI_Controller{
 
   public function __construct()
   {
      parent::__construct();
-      $this->load->model('extra');
+      $this->load->model('descuento');
   }
 
   function index()
   {
-     $data['extras'] = $this->extra->getAll();
+     $data['descuentos'] = $this->descuento->getAll();
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/listar', $data);
+     $this->load->view('descuento/listar', $data);
      $this->load->view('template/footer');
 
   }
@@ -24,125 +24,126 @@ class Extra_controller extends CI_Controller{
   {
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/nuevo');
+     $this->load->view('descuento/nuevo');
      $this->load->view('template/footer');
   }
 
   public function guardar()
   {
-     $extra = $this->input->post('extra');
-     $precio = $this->input->post('precio');
+     $descuento = $this->input->post('descuento');
+     $valor = $this->input->post('valor');
 
-     if ( $extra != null && $precio != null)
+     if ( $descuento != null && $valor != null)
         {
 
          $insert = array(
-                        'extra' => $extra,
-                        'precio' => $precio
+                        'descuento' => $descuento,
+                        'valor' => $valor
                      );
 
-           if ( ! $this->extra->guardar( $insert ) )
+           if ( ! $this->descuento->guardar( $insert ) )
            {
-              //$error = $this->db->_error_message();
+              $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               $this->session->set_flashdata('error',$mensaje);
-              redirect('extra/nuevo');
+              redirect('descuento');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
-              redirect('extra');
+              redirect('descuento');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
            $this->session->set_flashdata('error', $mensaje);
-           redirect('extra/nuevo');
+           redirect('descuento');
         }
 
   }
 
-  public function editar($id_extra)
+  public function editar($id_descuento)
   {
-     $data['extra'] = $this->extra->getOne($id_extra);
+     $data['descuento'] = $this->descuento->getOne($id_descuento);
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/editar', $data);
+     $this->load->view('descuento/editar', $data);
      $this->load->view('template/footer');
   }
 
   public function actualizar()
   {
-     $id_extra = $this->input->post('id_extra');
-     $extra = $this->input->post('extra');
-     $precio = $this->input->post('precio');
+     $id_descuento = $this->input->post('id_descuento');
+     $descuento = $this->input->post('descuento');
+     $valor = $this->input->post('valor');
 
-     if ( $extra != null && $precio != null)
+     if ( $descuento != null && $valor != null)
         {
 
          $insert = array(
-                        'extra' => $extra,
-                        'precio' => $precio
+                        'descuento' => $descuento,
+                        'valor' => $valor
                      );
 
-           if ( ! $this->extra->actualizar( $insert , $id_extra ) )
+           if ( ! $this->descuento->actualizar( $insert , $id_descuento ) )
            {
               $error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               $this->session->set_flashdata('error',$mensaje);
-              redirect('extra');
+              redirect('descuento/nuevo');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
-              redirect('extra');
+              redirect('descuento');
            }
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
-           $this->session->set_flashdata('error', $mensaje);
-           redirect('extra/editar');
+           //$this->session->set_flashdata('error', $mensaje);
+           redirect('descuento/editar');
         }
   }
 
-  public function borrar($id_extra)
+  public function borrar($id_descuento)
   {
-     if ( ! $this->extra->borrar($id_extra) )
+     if ( ! $this->descuento->borrar($id_descuento) )
          {
             $error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
             $this->session->set_flashdata('error', $mensaje );
-            redirect('extra');
+            redirect('descuento');
          } else {
             $mensaje = 'Elemento borrado de manera correcta.';
             $this->session->set_flashdata('success', $mensaje );
-            redirect('extra');
+            redirect('descuento');
          }
   }
 
 
   function papelera()
   {
-     $data['extras'] = $this->extra->getTrash();
+     $data['descuentos'] = $this->descuento->getTrash();
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
-     $this->load->view('extra/papelera', $data);
+     $this->load->view('descuento/papelera', $data);
      $this->load->view('template/footer');
 
 
   }
 
-  public function activar($id_extra)
+  public function activar($id_descuento)
   {
-     if ( ! $this->extra->activar($id_extra) )
+     if ( ! $this->descuento->activar($id_descuento) )
          {
-            $error = $this->db->_error_message();
+            //$error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
-            $this->session->set_flashdata('error', $mensaje );
-            redirect('extra/papelera');
+            // el flash data para mostrarlo en el listado
+            //$this->session->set_flashdata('error', $mensaje );
+            redirect('descuento');
          } else {
-
-            $mensaje = 'Elemento recuperado de manera correcta!';
-            $this->session->set_flashdata('success', $mensaje );
-            redirect('extra');
+            // todo ok, creamos el mensaje y lo enviamos
+            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            //$this->session->set_flashdata('success', $mensaje );
+            redirect('descuento');
          }
   }
 }

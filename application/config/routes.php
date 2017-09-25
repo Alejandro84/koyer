@@ -1,54 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/*
-| -------------------------------------------------------------------------
-| URI ROUTING
-| -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
-|
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
-|
-|	example.com/class/method/id/
-|
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
-|
-| Please see the user guide for complete details:
-|
-|	https://codeigniter.com/user_guide/general/routing.html
-|
-| -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
-*/
 $route['default_controller'] = 'login_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -84,6 +36,15 @@ $route['marca/borrar/(:num)']             =     'marca_controller/borrar/$1';
 $route['marca/papelera']                  =     'marca_controller/papelera';
 $route['marca/activar/(:num)']            =     'marca_controller/activar/$1';
 
+$route['descuento']                           =     'descuento_controller';
+$route['descuento/nuevo']                     =     'descuento_controller/nuevo';
+$route['descuento/guardar']                   =     'descuento_controller/guardar';
+$route['descuento/editar/(:num)']             =     'descuento_controller/editar/$1';
+$route['descuento/actualizar']                =     'descuento_controller/actualizar';
+$route['descuento/borrar/(:num)']             =     'descuento_controller/borrar/$1';
+$route['descuento/papelera']                  =     'descuento_controller/papelera';
+$route['descuento/activar/(:num)']            =     'descuento_controller/activar/$1';
+
 $route['extra']                           =     'extra_controller';
 $route['extra/nuevo']                     =     'extra_controller/nuevo';
 $route['extra/guardar']                   =     'extra_controller/guardar';
@@ -92,6 +53,15 @@ $route['extra/actualizar']                =     'extra_controller/actualizar';
 $route['extra/borrar/(:num)']             =     'extra_controller/borrar/$1';
 $route['extra/papelera']                  =     'extra_controller/papelera';
 $route['extra/activar/(:num)']            =     'extra_controller/activar/$1';
+
+$route['tarifa']                           =     'tarifa_controller';
+$route['tarifa/nuevo']                     =     'tarifa_controller/nuevo';
+$route['tarifa/guardar']                   =     'tarifa_controller/guardar';
+$route['tarifa/editar/(:num)']             =     'tarifa_controller/editar/$1';
+$route['tarifa/actualizar']                =     'tarifa_controller/actualizar';
+$route['tarifa/borrar/(:num)']             =     'tarifa_controller/borrar/$1';
+$route['tarifa/papelera']                  =     'tarifa_controller/papelera';
+$route['tarifa/activar/(:num)']            =     'tarifa_controller/activar/$1';
 
 $route['modelo']                          =     'modelo_controller';
 $route['modelo/nuevo']                    =     'modelo_controller/nuevo';
@@ -172,7 +142,11 @@ $route['reserva/ver_reserva/(:num)']         =     'reserva_controller/verReserv
 $route['reserva/entregar_vehiculo/(:num)']   =     'reserva_controller/entregarVehiculo/$1';
 $route['reserva/recibir_vehiculo/(:num)']    =     'reserva_controller/recibirVehiculo/$1';
 $route['reserva/pagado/(:num)']              =     'reserva_controller/pagar/$1';
-$route['reserva/generar_reserva']              =     'reserva_controller/generarReserva';
+$route['reserva/generar_reserva']            =     'reserva_controller/generarReserva';
 $route['reserva/imprimir_pdf/(:num)']        =     'reserva_controller/imprimirPDF/$1';
-$route['reserva/reserva_pdf/(:num)']        =       'reserva_controller/formatoPdf/$1';
-$route['reserva/actualizar_precio']        =       'reserva_controller/actualizarPrecio';
+$route['reserva/reserva_pdf/(:num)']         =     'reserva_controller/formatoPdf/$1';
+$route['reserva/actualizar_precio']          =     'reserva_controller/actualizarPrecio';
+$route['reserva/definir_reserva']            =     'reserva_controller/definirReserva';
+$route['reserva/cotizacion']                 =     'reserva_controller/cotizacion';
+
+$route['reserva/correo']                  =     'reserva_controller/enviarCorreo';

@@ -17,6 +17,10 @@
             </select>
          </div>
 
+         <div class="form-group">
+            <label for="precio">Precio</label>
+            <input type="text" name="precio" value="" class="form-control" placeholder="Ej: 45000">
+         </div>
 
             <input type="submit" name="" value="Guardar" class="btn btn-success">
       </form>

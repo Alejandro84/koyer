@@ -166,24 +166,30 @@
    <hr>
 <?php endif; ?>
    <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
             <h2>Precios</h2>
       </div>
 
-      <div class="col-md-6 ">
-         <form class="" action="<?= site_url( 'reserva/actualizar_precio' ); ?>" method="post"><!--###############################-->
-         <div class="form-group form-inline pull-right">
-            <label for="">Descuento</label>
-            <input type="number" name="descuento" class="form-control">
+      <div class="col-md-8 ">
+         <div class="row">
+            <form class="" action="<?= site_url( 'reserva/actualizar_precio' ); ?>" method="post"><!--###############################-->
+            <div class="form-group form-inline pull-right">
+               <label for="">Descuento(%):</label>
+               <input type="number" name="descuento" class="form-control" placeholder="Ej: 15">
+            </div>
+            <div class="form-group form-inline pull-right">
+               <label for="">Modificar precio</label>
+               <input type="text" name="total" value="<?=$reserva->total ?>" class="form-control">
+            </div>
          </div>
-         <div class="form-group form-inline pull-right">
-            <label for="">Modificar precio</label>
-            <input type="text" name="total" value="<?=$reserva->total ?>" class="form-control">
+
+         <div class="row">
+            <div class="form-group form-inline">
+               <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
+               <input type="submit" name="Actualizar Precio" class="btn btn-success pull-right" value="Actualizar Precio">
+            </div>
          </div>
-         <div class="form-group form-inline pull_right">
-            <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
-            <input type="submit" name="Actualizar Precio" class="btn btn-success pull-right" value="Actualizar Precio">
-         </div>
+
          </form>
       </div>
 
@@ -225,20 +231,27 @@
    <hr>
    <div class="row">
       <div class="col-md-6">
-         <h4>Propiedades de la Reseva:</h4>
-         <div class="form-group">
-            <label for="">Cotizacion</label>
-            <input type="checkbox" name="cotizacion" value="">
-         </div>
-         <div class="form-group">
-            <label for="">Reserva</label>
-            <input type="checkbox" name="reserva" value="">
-         </div>
+         <a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a>
+      </div>
+
+      <div class="col-md-6 pull-right">
+         <form class="" action="<?= site_url( 'reserva/definir_reserva'); ?>" method="post">
+
+            <h4>Propiedades de la Reseva:</h4>
+            <div class="col-md-6">
+               <div class="form-group">
+                  <label for="">Cotizacion</label>
+                  <input type="checkbox" name="cotizacion" value="1">
+               </div>
+            </div>
+            <div class="col-md-6">
+               <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
+               <input type="submit" name="" value="Guardar Cotizacion/Reserva" class="btn btn-primary btn-block">
+            </div>
+
+         </form>
 
       </div>
-      <div class="col-md-6">
-         <a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success pull-right">Imprimir Reserva en PDF</a>
 
-      </div>
    </div>
 </div>
