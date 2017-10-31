@@ -6,13 +6,15 @@ $(function () {
    $('#fecha_desde').datetimepicker({
       locale: "es",
       format: "YYYY-MM-DD",
-      inline: true
    });
    $('#fecha_hasta').datetimepicker({
       locale: "es",
       format: "YYYY-MM-DD",
-      inline: true,
       useCurrent: false
+   });
+
+   $("#fecha_desde").on("dp.change", function (e) {
+      $('#fecha_hasta').data("DateTimePicker").minDate(e.date);
    });
 
    $('#reserva-fecha_desde').datetimepicker({
@@ -28,4 +30,10 @@ $(function () {
       $('#reserva-fecha_hasta').data("DateTimePicker").minDate(e.date);
    });
 
+   $(function () {
+       $('#buqueda_fecha').datetimepicker({
+           viewMode: 'years',
+           format: 'MM/YYYY'
+       });
+   });
 });

@@ -7,6 +7,8 @@ class Modelo_controller extends CI_Controller{
   {
      parent::__construct();
       $this->load->model('modelo');
+      $this->load->model('tarifa');
+      $this->load->model('marca');
   }
 
   function index()
@@ -57,10 +59,13 @@ class Modelo_controller extends CI_Controller{
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
 
-              /*$insert2 = array(
-                 '' => , );
+              $id_modelo = $this->modelo->getID($modelo);
 
-              $this->tarifa->guardar();*/
+              $insert2 = array(
+                 'precio' => $tarifa,
+                 'id_modelo' => $id_modelo['0']->id_modelo
+               );
+              $this->tarifa->guardar($insert2);
               redirect('modelo');
            }
         } else {
@@ -73,16 +78,11 @@ class Modelo_controller extends CI_Controller{
 
   public function editar($id_modelo)
   {
-      $this->load->model('marca');
-      $this->load->model('tarifa');
-
       $data = array(
         'modelos' => $this->modelo->getOne($id_modelo),
         'marcas' => $this->marca->getAll(),
-        'tarifas' => $this->tarifa->getAll()
 
       );
-
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('modelo/editar', $data);

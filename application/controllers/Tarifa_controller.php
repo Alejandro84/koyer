@@ -7,14 +7,15 @@ class tarifa_controller extends CI_Controller{
   {
      parent::__construct();
       $this->load->model('tarifa');
+      $this->load->model('modelo');
   }
 
   function index()
   {
-     $data['tarifas'] = $this->tarifa->getAll();
-
-     //echo "<pre>";
-     //print_r($data);
+     $data[
+        'tarifas' => $this->tarifa->getAll(),
+        'modelos' => $this->modelo->getAll()
+     ];
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
@@ -33,7 +34,7 @@ class tarifa_controller extends CI_Controller{
 
   public function guardar()
   {
-     $tarifa = $this->input->post('tarifa');
+     $id_modelo = $this->input->post('id_modelo');
      $precio = $this->input->post('precio');
 
      if ( $tarifa != null && $precio != null)

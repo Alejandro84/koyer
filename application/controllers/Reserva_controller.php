@@ -9,6 +9,7 @@ class Reserva_controller extends CI_Controller{
    {
       parent::__construct();
 
+      date_default_timezone_set('America/Buenos_Aires');
 
       if ( ! $this->session->logueado ) {
          redirect('login');
@@ -22,24 +23,96 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('locacion');
       $this->load->model('extra_reserva');
 
+      $prefs['template'] = '
+
+        {table_open}<table class="table table-bordered">{/table_open}
+
+        {heading_row_start}<tr>{/heading_row_start}
+
+        {heading_previous_cell}<th><a href="{previous_url}">&lt;&lt;</a></th>{/heading_previous_cell}
+        {heading_title_cell}<th colspan="{colspan}">{heading}</th>{/heading_title_cell}
+        {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
+
+        {heading_row_end}</tr>{/heading_row_end}
+
+        {week_row_start}<tr>{/week_row_start}
+        {week_day_cell}<td>{week_day}</td>{/week_day_cell}
+        {week_row_end}</tr>{/week_row_end}
+
+        {cal_row_start}<tr>{/cal_row_start}
+        {cal_cell_start}<td>{/cal_cell_start}
+        {cal_cell_start_today}<td>{/cal_cell_start_today}
+        {cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
+
+        {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
+        {cal_cell_content_today}<div><a href="{content}">{day}</a></div>{/cal_cell_content_today}
+
+        {cal_cell_no_content}{day}{/cal_cell_no_content}
+        {cal_cell_no_content_today}<div class="highlight">{day}</div>{/cal_cell_no_content_today}
+
+        {cal_cell_blank}&nbsp;{/cal_cell_blank}
+
+        {cal_cell_other}{day}{/cal_cel_other}
+
+        {cal_cell_end}</td>{/cal_cell_end}
+        {cal_cell_end_today}</td>{/cal_cell_end_today}
+        {cal_cell_end_other}</td>{/cal_cell_end_other}
+        {cal_row_end}</tr>{/cal_row_end}
+
+        {table_close}</table>{/table_close}
+        ';
+
+        $this->load->library('calendar' , $prefs);
    }
 
    public function index()
    {
-      $reservas = $this->reserva->getArrendados();
+      $fecha = date('l jS \of F Y h:i A');
+      $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
 
-         $data = array(
-            'reservas' => $reservas,
-            'locaciones' => $this->locacion->getall()
-         );
+      $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
+
+      $data = array(
+         'reservas' => $reservas,
+         'locaciones' => $this->locacion->getall(),
+         'fecha' => $fecha,
+         'mes' => $fecha,
+         'calendar' => $this->calendar->generate()
+      );
 
       //echo "<pre>";
-      //echo $this->calendar->generate();
+      //print_r($insert);
 
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
       $this->load->view('template/footer');
+
+   }
+
+   public function buscarReservas()
+   {
+      $fecha = date('l jS \of F Y h:i A');
+      $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
+
+      $mesano = $this->input->post('busqueda_fecha');
+      $mesano = DateTime::createFromFormat( 'm/Y' , $mesano );
+
+      $reservas = $this->reserva->getReservasMes($mesano->format('Y-m'));
+
+      $data = array(
+         'reservas' => $reservas,
+         'locaciones' => $this->locacion->getall(),
+         'fecha' => $fecha,
+         'mes' => $mesano,
+         'calendar' => $this->calendar->generate()
+      );
+
+      $this->load->view('template/header');
+      $this->load->view('template/nav');
+      $this->load->view('reserva/listar', $data);
+      $this->load->view('template/footer');
+
 
    }
 
@@ -68,7 +141,8 @@ class Reserva_controller extends CI_Controller{
       $this->load->model('locacion');
 
       $data = array(
-         'locaciones' => $this->locacion->getAll()
+         'locaciones_entrega' => $this->locacion->getAllentrega(),
+         'locaciones_devolucion' => $this->locacion->getAlldevolucion()
       );
 
        $this->load->view('template/header');
@@ -141,13 +215,13 @@ class Reserva_controller extends CI_Controller{
          ];
 
 
-         echo "<pre>";
-         print_r($variables_vista);
+         //echo "<pre>";
+         //print_r($variables_vista);
 
-         //$this->load->view('template/header', $variables_vista );
-         //$this->load->view('template/nav');
-         //$this->load->view('reserva/disponibles');
-         //$this->load->view('template/footer');
+         $this->load->view('template/header', $variables_vista );
+         $this->load->view('template/nav');
+         $this->load->view('reserva/disponibles');
+         $this->load->view('template/footer');
 
 
       }else {
@@ -353,6 +427,7 @@ class Reserva_controller extends CI_Controller{
       $impuesto = $this->impuesto->getOne('1');
 
       $iva = '1.' . $impuesto->valor;
+
       ##################################################################
       #### Precio por el arriendo del vehiculo
       ##################################################################
@@ -365,48 +440,89 @@ class Reserva_controller extends CI_Controller{
 
       ##################################################################
 
-      $insert = array(
+      $data = array(
          'codigo_reserva'        =>    $codigo,
          'fecha_entrega'         =>    $fecha_entrega,
          'fecha_devolucion'      =>    $fecha_devolucion,
-         'locacion_entrega'      =>    $locacion_entrega->id_locacion,
-         'locacion_devolucion'   =>    $locacion_devolucion->id_locacion,
-         'id_cliente'            =>    $cliente->id_cliente,
-         'id_vehiculo'           =>    $vehiculo->id_vehiculo,
+         'locacion_entrega'      =>    $locacion_entrega,
+         'locacion_devolucion'   =>    $locacion_devolucion,
+         'cliente'               =>    $cliente,
+         'vehiculo'              =>    $vehiculo,
+         'extras'                 =>    $extras,
          'precio_arriendo_vehiculo'    => $precio_vehiculo,
          'sub_total'              => $subtotal,
          'total'                 => $total
        );
 
+       //echo "<pre>";
+       //print_r($this->session->arriendo['extra']);
 
-       if ( ! $this->reserva->guardar( $insert ) )
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('reserva/resumen' , $data);
+       $this->load->view('template/footer');
+
+   }
+
+   public function generarReserva()
+   {
+      $extras = $this->session->arriendo['extra'];
+
+      $codigo_reserva      =  $this->input->post('codigo_reserva');
+      $fecha_entrega       =  $this->input->post('fecha_entrega');
+      $fecha_devolucion    =  $this->input->post('fecha_devolucion');
+      $locacion_entrega    =  $this->input->post('locacion_entrega');
+      $locacion_devolucion =  $this->input->post('locacion_devolucion');
+      $vehiculo            =  $this->input->post('id_vehiculo');
+      $cliente             =  $this->input->post('id_cliente');
+      $precio_arriendo_vehiculo   =  $this->input->post('precio_arriendo_vehiculo');
+      $sub_total           =  $this->input->post('sub_total');
+      $total               =  $this->input->post('total');
+
+      $caracteres = array('$',',', '.' );
+
+      $total =str_replace($caracteres, '' , $total);
+
+      $insert = array(
+         'codigo_reserva' => $codigo_reserva,
+         'fecha_entrega' => $fecha_entrega,
+         'fecha_devolucion' => $fecha_devolucion,
+         'locacion_entrega' => $locacion_entrega,
+         'locacion_devolucion' => $locacion_devolucion,
+         'id_vehiculo' => $vehiculo,
+         'id_cliente' => $cliente,
+         'precio_arriendo_vehiculo' => $precio_arriendo_vehiculo,
+         'sub_total' => $sub_total,
+         'total' => $total
+      );
+
+      if ( ! $this->reserva->guardar( $insert ) )
       {
-         $error = $this->db->_error_message();
-         $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-         $this->session->set_flashdata('error',$mensaje);
-         redirect('reserva');
+       $error = $this->db->_error_message();
+       $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+       $this->session->set_flashdata('error',$mensaje);
+       redirect('reserva');
       } else {
-         $mensaje = 'Sus datos han sido guardados exitosamente';
-         $this->session->set_flashdata('success',$mensaje);
-         foreach ($extras as $extra) {
-            if ( $extra['cantidad'] != null) {
-              $id_extra = $extra['id_extra'];
-              $cantidad = $extra['cantidad'];
-              $reserva = $this->reserva->devolverId($codigo);
+       $mensaje = 'Sus datos han sido guardados exitosamente';
+       $this->session->set_flashdata('success',$mensaje);
+       foreach ($extras as $extra) {
+           if ( $extra['cantidad'] != null) {
+             $id_extra = $extra['id_extra'];
+             $cantidad = $extra['cantidad'];
+             $reserva = $this->reserva->devolverId($codigo_reserva);
 
-              $insert2 = array(
-                 'id_extra' => $id_extra,
-                 'cantidad' => $cantidad,
-                 'id_reserva' => $reserva->id_reserva
-              );
+             $insert2 = array(
+                'id_extra' => $id_extra,
+                'cantidad' => $cantidad,
+                'id_reserva' => $reserva->id_reserva
+             );
 
-              $this->extra_reserva->guardar($insert2);
-            }
-         }
-         $reserva = $this->reserva->devolverId($codigo);
-         redirect('reserva/ver_reserva/' . $reserva->id_reserva);
-      }
-
+             $this->extra_reserva->guardar($insert2);
+           }
+       }
+       $reserva = $this->reserva->devolverId($codigo);
+       redirect('reserva');
+    }
    }
 
    public function verReserva($id_reserva)
@@ -593,18 +709,6 @@ class Reserva_controller extends CI_Controller{
         // asi despues puedes buscar
         // ls 2017*.pdf
         // y te da todos los pdf de un año donde esten desacrgados.. solo por siu acaso
-    }
-
-    public function enviarCorreo()
-    {
-      $para = 'thejanoo84@gmail.com';
-      $titulo = 'mensaje de prueba Koyer';
-      // El mensaje
-      $mensaje = "Línea 1\r\nLínea 2\r\nLínea 3";
-
-      // Enviarlo
-      mail( $para , $titulo , $mensaje);
-
     }
 
 }

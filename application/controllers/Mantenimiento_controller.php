@@ -57,18 +57,18 @@ class Mantenimiento_controller extends CI_Controller{
 
            if ( ! $this->mantenimiento->guardar( $insert ) )
            {
-              //$error = $this->db->_error_message();
-              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-              //$this->session->set_flashdata('error',$mensaje);
+              $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              $this->session->set_flashdata('error',$mensaje);
               redirect('mantenimiento');
            } else {
-              //$mensaje = 'Sus datos han sido guardados exitosamente';
-              //$this->session->set_flashdata('success',$mensaje);
+              $mensaje = 'Sus datos han sido guardados exitosamente';
+              $this->session->set_flashdata('success',$mensaje);
               redirect('mantenimiento');
            }
         } else {
-           //$mensaje = '¡Debe rellenar todos los campos!';
-           //$this->session->set_flashdata('error', $mensaje);
+           $mensaje = '¡Debe rellenar todos los campos!';
+           $this->session->set_flashdata('error', $mensaje);
            redirect('mantenimiento');
         }
 
@@ -117,18 +117,18 @@ class Mantenimiento_controller extends CI_Controller{
 
            if ( ! $this->mantenimiento->actualizar( $insert , $id_mantenimiento ) )
            {
-              //$error = $this->db->_error_message();
-              //$mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-              //$this->session->set_flashdata('error',$mensaje);
+              $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              $this->session->set_flashdata('error',$mensaje);
               redirect('mantenimiento');
            } else {
-              //$mensaje = 'Sus datos han sido guardados exitosamente';
-              //$this->session->set_flashdata('success',$mensaje);
+              $mensaje = 'Sus datos han sido guardados exitosamente';
+              $this->session->set_flashdata('success',$mensaje);
               redirect('mantenimiento');
            }
         } else {
-           //$mensaje = '¡Debe rellenar todos los campos!';
-           //$this->session->set_flashdata('error', $mensaje);
+           $mensaje = '¡Debe rellenar todos los campos!';
+           $this->session->set_flashdata('error', $mensaje);
            redirect('mantenimiento');
         }
   }
@@ -137,15 +137,13 @@ class Mantenimiento_controller extends CI_Controller{
   {
      if ( ! $this->mantenimiento->borrar($id_mantenimiento) )
          {
-            //$error = $this->db->_error_message();
+            $error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
-            // el flash data para mostrarlo en el listado
-            //$this->session->set_flashdata('error', $mensaje );
+            $this->session->set_flashdata('error', $mensaje );
             redirect('mantenimiento');
          } else {
-            // todo ok, creamos el mensaje y lo enviamos
-            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
-            //$this->session->set_flashdata('success', $mensaje );
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            $this->session->set_flashdata('success', $mensaje );
             redirect('mantenimiento');
          }
   }
@@ -165,22 +163,21 @@ class Mantenimiento_controller extends CI_Controller{
   {
      if ( ! $this->manteni->activar($id_mantenimiento) )
          {
-            //$error = $this->db->_error_message();
+            $error = $this->db->_error_message();
             $mensaje = 'No se pudo borrar el elemento: '.$error;
-            // el flash data para mostrarlo en el listado
-            //$this->session->set_flashdata('error', $mensaje );
+            $this->session->set_flashdata('error', $mensaje );
             redirect('mantenimiento');
          } else {
-            // todo ok, creamos el mensaje y lo enviamos
-            //$mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
-            //$this->session->set_flashdata('success', $mensaje );
+            $mensaje = 'Elemento borrado de manera correcta. <a href="'.site_url('admin/taxis/papelera').'">¿Desea recuperarlo?</a>';
+            $this->session->set_flashdata('success', $mensaje );
             redirect('mantenimiento');
          }
   }
 
      function reporte()
      {
-        $this->load->model('vehiculo');
+
+       $this->load->model('vehiculo');
        $this->load->model('tipo_mantenimiento');
 
        $data = array(
@@ -194,8 +191,131 @@ class Mantenimiento_controller extends CI_Controller{
         $this->load->view('mantenimiento/reporte', $data);
         $this->load->view('template/footer');
 
-        //print('<pre>');
-        //print_r($data);
-        //print('</pre>');
      }
+
+     public function buscarMantenimientos()
+     {
+        $vehiculo = $this->input->post('id_vehiculo');
+        $fecha_desde = $this->input->post('fecha_desde');
+        $fecha_hasta = $this->input->post('fecha_hasta');
+
+        if ($vehiculo != null) {
+
+           if ($fecha_desde != null && $fecha_hasta != null) {
+
+             $insert = array(
+                'id_vehiculo' => $vehiculo,
+                'fecha_desde' => $fecha_desde,
+                'fecha_hasta' => $fecha_hasta
+              );
+
+              $mantenimientos = $this->mantenimiento->getMantenimientosVehiFec($insert);
+              $total_mantenimiento = $this->sumaMantenimientos($mantenimientos);
+
+              $data = array(
+                 'mantenimientos' => $mantenimientos,
+                 'total' => $total_mantenimiento
+              );
+
+              //echo "<pre>";
+              //print_r($insert);
+              $this->load->view('template/header');
+              $this->load->view('template/nav');
+              $this->load->view('mantenimiento/vista_reporte' , $data);
+              $this->load->view('template/footer');
+
+
+           } else {
+
+             $insert = array(
+                 'id_vehiculo' => $vehiculo
+              );
+
+              $mantenimientos = $this->mantenimiento->getMantenimientosVehi($insert);
+              $total_mantenimiento = $this->sumaMantenimientos($mantenimientos);
+
+              $data = array(
+                 'mantenimientos' => $mantenimientos,
+                 'total' => $total_mantenimiento
+              );
+
+              //echo "<pre>";
+              //print_r($insert);
+              $this->load->view('template/header');
+              $this->load->view('template/nav');
+              $this->load->view('mantenimiento/vista_reporte' , $data);
+              $this->load->view('template/footer');
+
+              $this->datosMantenciones($data);
+
+           }
+
+        }else {
+
+           if ($fecha_desde != null && $fecha_hasta != null) {
+
+             $insert = array(
+                 'fecha_desde' => $fecha_desde,
+                 'fecha_hasta' => $fecha_hasta
+              );
+
+              $mantenimientos = $this->mantenimiento->getMantenimientosFec($insert);
+              $total_mantenimiento = $this->sumaMantenimientos($mantenimientos);
+
+              $data = array(
+                 'mantenimientos' => $mantenimientos,
+                 'total' => $total_mantenimiento
+              );
+
+              $this->load->view('template/header');
+              $this->load->view('template/nav');
+              $this->load->view('mantenimiento/vista_reporte' , $data);
+              $this->load->view('template/footer');//
+
+           }else {
+
+             $mensaje = 'Debe ingresar una fecha desde y hasta o Ingresar el vehiculo! ';
+             $this->session->set_flashdata('success', $mensaje );
+             redirect('mantenimiento/reporte');
+           }
+        }
+
+
+     }
+
+     public function sumaMantenimientos($data)
+     {
+        $mantenimientos = $data;
+        $total_mantenimiento = 0 ;
+
+        foreach ($mantenimientos as $mantenimiento) {
+            $total_mantenimiento = $total_mantenimiento + $mantenimiento->costo;
+        }
+
+        return $total_mantenimiento;
+     }
+
+     public function datosMantenciones($mantenimientos)
+     {
+        $data = $mantenimientos;
+
+        $this->load->view('mantenimiento/mantencion_pdf', $data);
+     }
+
+     public function imprimirPDF()
+     {
+         $url    =   site_url('reserva/mantencion_pdf');
+         $html   =   file_get_contents ( $url );
+
+         $this->load->library('pdf');
+         //$this->pdf->set_option('isHtml5ParserEnabled', true);
+         $this->pdf->load_html($html);
+         $this->pdf->render();
+         $this->pdf->stream( date('YmdHis').'-koyer-mantencion-'.trim($id_reserva).'.pdf');
+         // AñoMesDiaHoraMinutoSegundo-koyer-reserva-IDReserva.pdf
+         // asi despues puedes buscar
+         // ls 2017*.pdf
+         // y te da todos los pdf de un año donde esten desacrgados.. solo por siu acaso
+     }
+
 }

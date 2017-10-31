@@ -249,4 +249,36 @@ class Reserva extends CI_Model{
 
      }
   }
+
+  public function getReservasMes($data)
+  {
+     $this->db->select( 'RE.*' );
+     $this->db->select( 'VE.patente' );
+     $this->db->select( 'CL.nombre' );
+     $this->db->select( 'CL.apellido' );
+
+     $this->db->from( 'reservas as RE' );
+
+     $this->db->join( 'vehiculos as VE', 'RE.id_vehiculo = VE.id_vehiculo', 'left' );
+     $this->db->join( 'clientes as CL', 'RE.id_cliente = CL.id_cliente', 'left' );
+
+     $this->db->where('RE.fecha_entrega >= "'.$data.'-01 00:00:00" AND
+                        RE.fecha_entrega <= "'.$data.'-30 00:00:00" OR
+                        RE.fecha_devolucion >= "'.$data.'-01 00:00:00" AND
+                        RE.fecha_devolucion <= "'.$data.'-30 00:00:00"');
+     $this->db->where('RE.estado' , 1);
+
+     $q = $this->db->get();
+
+     if ( $q->num_rows() < 1 )
+     {
+
+        return false;
+     } else {
+
+        return $q->result();
+     }
+
+  }
+
 }

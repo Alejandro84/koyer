@@ -51,7 +51,11 @@ class Modelo extends CI_Model{
 
    public function guardar( $data )
   {
-     $this->db->insert('modelos', $data ) ;
+     if ( ! $this->db->insert('modelos', $data )) {
+        return false;
+     } else {
+        return true;
+     }
   }
 
 
@@ -103,6 +107,21 @@ class Modelo extends CI_Model{
            return $q->result();
         }
      }
+
+     public function getId($data)
+    {
+      $this->db->select('id_modelo');
+      $this->db->from('modelos');
+      $this->db->where('modelo' , $data);
+
+      $q = $this->db->get();
+
+      if ($q->num_rows() < 1) {
+          return false;
+      } else {
+          return $q->result();
+      }
+    }
 
      public function getTrash()
      {

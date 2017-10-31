@@ -24,6 +24,38 @@ class Locacion extends CI_Model{
      }
    }
 
+   public function getAllentrega()
+   {
+     $this->db->select('*');
+     $this->db->from('locaciones');
+     $this->db->where('estado' , 1);
+     $this->db->where('entrega' , 1);
+
+     $q = $this->db->get();
+
+     if ($q->num_rows() < 1) {
+        return false;
+     } else {
+        return $q->result();
+     }
+   }
+
+   public function getAlldevolucion()
+   {
+     $this->db->select('*');
+     $this->db->from('locaciones');
+     $this->db->where('estado' , 1);
+     $this->db->where('devolucion' , 1);
+
+     $q = $this->db->get();
+
+     if ($q->num_rows() < 1) {
+        return false;
+     } else {
+        return $q->result();
+     }
+   }
+
    public function getOne($id)
    {
        $this->db->select('*');

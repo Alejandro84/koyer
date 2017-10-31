@@ -117,6 +117,9 @@ $route['mantenimiento/borrar/(:num)']        =     'mantenimiento_controller/bor
 $route['mantenimiento/papelera']             =     'mantenimiento_controller/papelera';
 $route['mantenimiento/activar/(:num)']       =     'mantenimiento_controller/activar/$1';
 $route['mantenimiento/reporte']              =     'mantenimiento_controller/reporte';
+$route['mantenimiento/buscar_mantenimientos']       =     'mantenimiento_controller/buscarMantenimientos';
+$route['mantenimiento/mantencion_pdf']       =     'mantenimiento_controller/datosMantenciones';
+$route['mantenimiento/imprimir_pdf']       =     'mantenimiento_controller/imprimirPDF';
 
 $route['cliente']                            =     'cliente_controller';
 $route['cliente/nuevo']                      =     'cliente_controller/nuevo';
@@ -148,5 +151,6 @@ $route['reserva/reserva_pdf/(:num)']         =     'reserva_controller/formatoPd
 $route['reserva/actualizar_precio']          =     'reserva_controller/actualizarPrecio';
 $route['reserva/definir_reserva']            =     'reserva_controller/definirReserva';
 $route['reserva/cotizacion']                 =     'reserva_controller/cotizacion';
+$route['reserva/buscar_reserva']                 =     'reserva_controller/buscarReservas';
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';

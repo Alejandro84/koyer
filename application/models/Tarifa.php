@@ -46,7 +46,12 @@ class Tarifa extends CI_Model{
 
    public function guardar( $data )
    {
-      $this->db->insert('tarifas', $data ) ;
+
+      if (! $this->db->insert('tarifas', $data )) {
+         return false;
+      } else {
+         return true;
+      }
    }
 
 

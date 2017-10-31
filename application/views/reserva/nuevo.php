@@ -50,8 +50,8 @@
                   <label for="form-control">lugar de Entrega</label>
                   <select class="form-control" name="locacion_entrega">
                      <option value="">Seleccione una opcion...</option>
-                     <?php foreach ($locaciones as $locacion ):?>
-                        <option value="<?=$locacion->id_locacion;?>"><?=$locacion->locacion;?></option>
+                     <?php foreach ($locaciones_entrega as $locacion_entrega ):?>
+                        <option value="<?=$locacion_entrega->id_locacion;?>"><?=$locacion_entrega->locacion;?></option>
                      <?php endforeach; ?>
                   </select>
                </div>
@@ -64,8 +64,8 @@
                <label for="form-control">Lugar de devolucion</label>
                   <select class="form-control" name="locacion_devolucion">
                      <option value="">Seleccione una opcion...</option>
-                     <?php foreach ($locaciones as $locacion ):?>
-                        <option value="<?=$locacion->id_locacion;?>"><?=$locacion->locacion;?></option>
+                     <?php foreach ($locaciones_devolucion as $locacion_devolucion ):?>
+                        <option value="<?=$locacion_devolucion->id_locacion;?>"><?=$locacion_devolucion->locacion;?></option>
                      <?php endforeach; ?>
                </select>
             </div>
