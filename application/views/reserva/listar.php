@@ -34,8 +34,12 @@
    <div class="row">
       <h1> <?php echo $mes->format('F'); ?> </h1>
       <div class="col-xs-12 col-md-12">
-         <? $this->load->view('template/alert'); ?>
-
+         <?php $this->load->view('template/alert'); ?>
+        <?php if ( ! $reservas ) : ?>
+        <div class="alert alert-info">
+            No hay reservas para este mes
+        </div>
+        <?php else: ?>
          <table class="table table-striped">
 
             <thead>
@@ -105,7 +109,7 @@
 
                      </td>
                   </tr>
-               <?php endforeach; ?>
+               <?php endforeach; endif; ?>
 
 
             </tbody>
