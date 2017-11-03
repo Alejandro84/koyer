@@ -40,7 +40,94 @@
             No hay reservas para este mes
         </div>
         <?php else: ?>
-         <table class="table table-striped">
+        <style>
+            .calendario {
+                width: 100%;
+                display;block;
+                border: solid 1px rgba(0,0,0,.07);
+            }
+            .calendario-header {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                width: 100%;
+            }
+            .calendario-fila {
+                display: flex;
+                border-bottom: solid 1px rgba(0,0,0,.07);
+                width: 100%;
+            }
+            .dia {
+                border-left: solid 1px rgba(0,0,0,.07);
+                flex-grow: 1;
+                text-align: center;
+                width: 20px;
+            }
+            .calendario-auto {
+                width: 100px;
+                padding: 5px;  
+            }
+            .reservado {
+                background-color: green;
+            }
+        </style>
+        <div class="calendario">
+            
+            <div class="calendario-header">
+            </div>
+
+            <div class="autos">
+                <div class="calendario-fila">
+                    <div class="calendario-auto">
+                        PATENTE
+                    </div>
+                    <?php for ( $dia = 1; $dia <= $dias; $dia++ ): ?>
+                    <div class="dia">
+                    <?php echo $dia; ?>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+                <?php foreach ( $vehiculos as $a ): ?>
+                <?php $v = $a['vehiculo'];?>
+                <div class="calendario-fila">
+                    <div class="calendario-auto"><?php echo $v->patente; ?></div>
+                    <?php 
+                        $dArr = [];
+                        for ( $d = 1; $d <= $dias; $d++ ) :
+                            
+                            $dArr[$d] = false;
+                            
+                            if ( $a['reservas'] ) :
+                                
+                                foreach ( $a['reservas'] as $r ):
+                                    $fecha_devolucion = DateTime::createFromFormat('Y-m-d H:i:s', $r->fecha_devolucion );
+                                    $fecha_entrega = DateTime::createFromFormat('Y-m-d H:i:s', $r->fecha_entrega );
+                                    $fecha_actual = $mes->format('Y-m').'-'.$d.' 00:00:00';
+                                    $fecha_actual = DateTime::createFromFormat('Y-m-d H:i:s', $fecha_actual );
+
+                                    if ( $fecha_actual >= $fecha_entrega && $fecha_actual <= $fecha_devolucion ) $dArr[$d] = $r;
+                                
+                                endforeach;
+
+                            endif;
+                        endfor;
+                    ?>
+
+
+                    <?php foreach ( $dArr as $d ) {
+                        if ( $d != false ) {
+                            echo '<div class="dia reservado" data-toggle="tooltip" title="<strong>'.$d->nombre.' '.$d->apellido.'</strong><br>"><!--'; print_r($d); echo '--></div>';
+                        } else {
+                            echo '<div class="dia"></div>';
+                        }
+                    } ?>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+        </div>
+<hr>
+        <table class="table table-striped">
 
             <thead>
                <th></th>

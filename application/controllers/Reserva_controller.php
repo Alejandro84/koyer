@@ -69,11 +69,12 @@ class Reserva_controller extends CI_Controller{
    {
       $fecha = date('l jS \of F Y h:i A');
       $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
-
+    $vehiculos = $this->vehiculo->getAll();
       $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
 
       $data = array(
          'reservas' => $reservas,
+         'vehiculos' => $vehiculos,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
          'mes' => $fecha
@@ -94,14 +95,24 @@ class Reserva_controller extends CI_Controller{
    {
       $fecha = date('l jS \of F Y h:i A');
       $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
-
+      $vehiculosConReserva;
       $mesano = $this->input->post('busqueda_fecha');
       $mesano = DateTime::createFromFormat( 'm/Y' , $mesano );
-
+      $vehiculos = $this->vehiculo->getAll();
       $reservas = $this->reserva->getReservasMes($mesano->format('Y-m'));
 
+      foreach( $vehiculos as $v ) {
+
+          $vehiculosConReserva[] = [
+              'vehiculo' => $v,
+              'reservas' => $this->reserva->vehiculoMes( $v->id_vehiculo, $mesano )
+          ];
+      }
+
       $data = array(
+          'dias' => cal_days_in_month(CAL_GREGORIAN, $mesano->format('j'), $mesano->format('Y')),
          'reservas' => $reservas,
+         'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
          'mes' => $mesano,

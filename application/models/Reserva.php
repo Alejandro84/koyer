@@ -281,4 +281,26 @@ class Reserva extends CI_Model{
 
   }
 
+  public function vehiculoMes($id_vehiculo, $mesano )
+  {
+     $this->db->select('*');
+     $this->db->from('reservas');
+     $this->db->where('estado', 1);
+     $this->db->where('id_vehiculo', $id_vehiculo );
+     $this->db->where( ' ( month(fecha_devolucion) = '.$mesano->format('m').' OR month(fecha_entrega) = '.$mesano->format('m').' ) ');
+     $this->db->join('clientes', 'clientes.id_cliente = reservas.id_cliente', 'left' );
+
+     $q = $this->db->get();
+
+     if ( $q->num_rows() < 1 )
+     {
+
+        return false;
+     } else {
+
+        return $q->result();
+     }
+
+  }
+
 }
