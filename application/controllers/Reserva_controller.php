@@ -76,12 +76,12 @@ class Reserva_controller extends CI_Controller{
          'reservas' => $reservas,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
-         'mes' => $fecha,
-         'calendar' => $this->calendar->generate()
+         'mes' => $fecha
+         //'calendar' => $this->calendar->generate()
       );
 
       //echo "<pre>";
-      //print_r($insert);
+      //print_r($data);
 
       $this->load->view('template/header');
       $this->load->view('template/nav');

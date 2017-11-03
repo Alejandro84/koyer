@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class extra_reserva extends CI_Model{
+class Extra_reserva extends CI_Model{
 
    public function __construct()
    {
