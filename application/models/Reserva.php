@@ -258,6 +258,7 @@ class Reserva extends CI_Model{
      $this->db->select( 'CL.apellido' );
 
      $this->db->from( 'reservas as RE' );
+     $this->db->where('RE.estado', 1);
 
      $this->db->join( 'vehiculos as VE', 'RE.id_vehiculo = VE.id_vehiculo', 'left' );
      $this->db->join( 'clientes as CL', 'RE.id_cliente = CL.id_cliente', 'left' );
@@ -266,7 +267,6 @@ class Reserva extends CI_Model{
                         RE.fecha_entrega <= "'.$data.'-30 00:00:00" OR
                         RE.fecha_devolucion >= "'.$data.'-01 00:00:00" AND
                         RE.fecha_devolucion <= "'.$data.'-30 00:00:00"');
-     $this->db->where('RE.estado' , 1);
 
      $q = $this->db->get();
 
@@ -288,7 +288,7 @@ class Reserva extends CI_Model{
      $this->db->where('estado', 1);
      $this->db->where('id_vehiculo', $id_vehiculo );
      $this->db->where( ' ( month(fecha_devolucion) = '.$mesano->format('m').' OR month(fecha_entrega) = '.$mesano->format('m').' ) ');
-     $this->db->join('clientes', 'clientes.id_cliente = reservas.id_cliente', 'left' );
+     $this->db->join('clientes', 'clientes.id_cliente = reservas.id_cliente', 'left');
 
      $q = $this->db->get();
 
