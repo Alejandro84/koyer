@@ -303,4 +303,13 @@ class Reserva extends CI_Model{
 
   }
 
+  public function guardarKilometraje($data)
+  {
+      if (! $this->db->insert('kilometrajes', $data )) {
+         return false;
+      }   else {
+         return true;
+      }
+  }
+
 }

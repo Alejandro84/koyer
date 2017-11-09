@@ -667,6 +667,45 @@ class Reserva_controller extends CI_Controller{
           }
    }
 
+   public function kilometraje($id_reserva)
+   {
+       $reserva = $this->reserva->getOne($id_reserva);
+
+       $data = array('id_vehiculo' => $reserva->id_vehiculo );
+
+       echo "<pre>";
+       print_r($data);
+       //$this->load->view('template/header');
+       //$this->load->view('template/nav');
+       //$this->load->view('reserva/kilometraje', $data);
+       //$this->load->view('template/footer');
+
+   }
+   public function agregarKilometraje()
+   {
+       $id_vehiculo = $this->input->post('id_vehiculo');
+       $kilometraje = $this->input->post('kilometraje');
+
+       if ($kilometraje != 0) {
+           $insert = array(
+               'id_vehiculo'    =>  $id_vehiculo ,
+               'kilometraje'   =>  $kilometraje
+            );
+
+           if ( ! $this->reserva->guardarKilometraje($insert) )
+               {
+                  $error = $this->db->_error_message();
+                  $mensaje = 'No se ah podido guardar los datos: '.$error;
+                  $this->session->set_flashdata('error', $mensaje );
+                  redirect('reserva');
+               } else {
+                  $mensaje = 'Se ha guardado correctamente.';
+                  $this->session->set_flashdata('success', $mensaje );
+                  redirect('reserva');
+               }
+       }
+   }
+
    public function pagar($id_reserva)
    {
       if ( ! $this->reserva->pagar($id_reserva) )

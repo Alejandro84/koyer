@@ -152,5 +152,7 @@ $route['reserva/actualizar_precio']          =     'reserva_controller/actualiza
 $route['reserva/definir_reserva']            =     'reserva_controller/definirReserva';
 $route['reserva/cotizacion']                 =     'reserva_controller/cotizacion';
 $route['reserva/buscar_reserva']                 =     'reserva_controller/buscarReservas';
+$route['reserva/kilometraje/(:num)']                =     'reserva_controller/kilometraje/$1';
+$route['reserva/agregar_kilometraje']        =     'reserva_controller/agregarKilometraje';
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';
