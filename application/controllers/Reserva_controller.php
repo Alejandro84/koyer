@@ -69,26 +69,33 @@ class Reserva_controller extends CI_Controller{
    {
       $fecha = date('l jS \of F Y h:i A');
       $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
-    $vehiculos = $this->vehiculo->getAll();
+
+      $vehiculosConReserva;
+      $vehiculos = $this->vehiculo->getAll();
       $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
 
+      foreach( $vehiculos as $v ) {
+
+          $vehiculosConReserva[] = [
+              'vehiculo' => $v,
+              'reservas' => $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha )
+          ];
+      }
+
       $data = array(
+          'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('j'), $fecha->format('Y')),
          'reservas' => $reservas,
-         'vehiculos' => $vehiculos,
+         'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
-         'mes' => $fecha
-         //'calendar' => $this->calendar->generate()
+         'mes' => $fecha,
+         'calendar' => $this->calendar->generate()
       );
-
-      //echo "<pre>";
-      //print_r($data);
 
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
       $this->load->view('template/footer');
-
    }
 
    public function buscarReservas()
@@ -661,6 +668,7 @@ class Reserva_controller extends CI_Controller{
              $this->session->set_flashdata('error', $mensaje );
              redirect('reserva');
           } else {
+             $this->kilometraje($id_reserva);
              $mensaje = 'Se ha recibido correctamente.';
              $this->session->set_flashdata('success', $mensaje );
              redirect('reserva');
@@ -673,12 +681,10 @@ class Reserva_controller extends CI_Controller{
 
        $data = array('id_vehiculo' => $reserva->id_vehiculo );
 
-       echo "<pre>";
-       print_r($data);
-       //$this->load->view('template/header');
-       //$this->load->view('template/nav');
-       //$this->load->view('reserva/kilometraje', $data);
-       //$this->load->view('template/footer');
+       $this->load->view('template/header');
+       $this->load->view('template/nav');
+       $this->load->view('reserva/kilometraje', $data);
+       $this->load->view('template/footer');
 
    }
    public function agregarKilometraje()
