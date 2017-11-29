@@ -6,12 +6,13 @@ class Mantenimiento_controller extends CI_Controller{
   public function __construct()
   {
      parent::__construct();
+     $this->load->model('vehiculo');
       $this->load->model('mantenimiento');
   }
 
   function index()
   {
-     $this->load->model('vehiculo');
+
      $this->load->model('tipo_mantenimiento');
 
      $data = array(
@@ -205,8 +206,8 @@ class Mantenimiento_controller extends CI_Controller{
 
              $insert = array(
                 'id_vehiculo' => $vehiculo,
-                'fecha_desde' => $fecha_desde,
-                'fecha_hasta' => $fecha_hasta
+                'fecha_desde' => $fecha_desde . ' 00:00:00',
+                'fecha_hasta' => $fecha_hasta . ' 00:00:00'
               );
 
               $mantenimientos = $this->mantenimiento->getMantenimientosVehiFec($insert);
@@ -217,12 +218,14 @@ class Mantenimiento_controller extends CI_Controller{
                  'total' => $total_mantenimiento
               );
 
-              //echo "<pre>";
-              //print_r($insert);
-              $this->load->view('template/header');
-              $this->load->view('template/nav');
-              $this->load->view('mantenimiento/vista_reporte' , $data);
-              $this->load->view('template/footer');
+              echo "<pre>";
+              print_r($insert);
+              //$this->load->view('template/header');
+              //$this->load->view('template/nav');
+              //$this->load->view('mantenimiento/vista_reporte' , $data);
+              //$this->load->view('template/footer');
+
+              $this->datosMantenciones($data);
 
 
            } else {
@@ -236,18 +239,14 @@ class Mantenimiento_controller extends CI_Controller{
 
               $data = array(
                  'mantenimientos' => $mantenimientos,
-                 'total' => $total_mantenimiento
+                 'total' => $total_mantenimiento,
+                 'url' => 'mantenimiento/datos_mantenciones/' . $vehiculo
               );
 
-              //echo "<pre>";
-              //print_r($insert);
               $this->load->view('template/header');
               $this->load->view('template/nav');
               $this->load->view('mantenimiento/vista_reporte' , $data);
               $this->load->view('template/footer');
-
-              $this->datosMantenciones($data);
-
            }
 
         }else {
@@ -255,8 +254,8 @@ class Mantenimiento_controller extends CI_Controller{
            if ($fecha_desde != null && $fecha_hasta != null) {
 
              $insert = array(
-                 'fecha_desde' => $fecha_desde,
-                 'fecha_hasta' => $fecha_hasta
+                 'fecha_desde' => $fecha_desde . ' 00:00:00',
+                 'fecha_hasta' => $fecha_hasta . ' 00:00:00'
               );
 
               $mantenimientos = $this->mantenimiento->getMantenimientosFec($insert);
@@ -267,10 +266,12 @@ class Mantenimiento_controller extends CI_Controller{
                  'total' => $total_mantenimiento
               );
 
-              $this->load->view('template/header');
-              $this->load->view('template/nav');
-              $this->load->view('mantenimiento/vista_reporte' , $data);
-              $this->load->view('template/footer');//
+              echo "<pre>";
+              print_r($data);
+              //$this->load->view('template/header');
+              //$this->load->view('template/nav');
+              //$this->load->view('mantenimiento/vista_reporte' , $data);
+              //$this->load->view('template/footer');//
 
            }else {
 
@@ -281,6 +282,31 @@ class Mantenimiento_controller extends CI_Controller{
         }
 
 
+    }
+
+     public function mostrarKilometraje()
+     {
+         $vehiculosArr;
+         $vehiculos = $this->vehiculo->getAll();
+
+         foreach ( $vehiculos as $v ) {
+             $vehiculosArr[] = [
+                 'vehiculo' => $v,
+                 'km' => $this->mantenimiento->getUltimoKilometraje($v->id_vehiculo)
+             ];
+         }
+
+         $data = array(
+             'kilometrajes' => $vehiculosArr,
+         );
+
+         $this->load->view('template/header');
+         $this->load->view('template/nav');
+         $this->load->view('mantenimiento/kilometraje' , $data);
+         $this->load->view('template/footer');
+
+         //echo "<pre>";
+         //print_r($vehiculosArr);
      }
 
      public function sumaMantenimientos($data)
@@ -295,11 +321,23 @@ class Mantenimiento_controller extends CI_Controller{
         return $total_mantenimiento;
      }
 
-     public function datosMantenciones($mantenimientos)
+     public function datosMantenciones($vehiculo)
      {
-        $data = $mantenimientos;
+         $insert = array(
+             'id_vehiculo' => $vehiculo
+          );
 
-        $this->load->view('mantenimiento/mantencion_pdf', $data);
+          $mantenimientos = $this->mantenimiento->getMantenimientosVehi($insert);
+          $total_mantenimiento = $this->sumaMantenimientos($mantenimientos);
+
+          $data = array(
+             'mantenimientos' => $mantenimientos,
+             'total' => $total_mantenimiento
+          );
+
+          $this->load->view('mantenimiento/mantencion_pdf' , $data);
+
+
      }
 
      public function imprimirPDF()
@@ -311,7 +349,7 @@ class Mantenimiento_controller extends CI_Controller{
          //$this->pdf->set_option('isHtml5ParserEnabled', true);
          $this->pdf->load_html($html);
          $this->pdf->render();
-         $this->pdf->stream( date('YmdHis').'-koyer-mantencion-'.trim($id_reserva).'.pdf');
+         $this->pdf->stream( date('YmdHis').'-koyer-mantencion.pdf');
          // AñoMesDiaHoraMinutoSegundo-koyer-reserva-IDReserva.pdf
          // asi despues puedes buscar
          // ls 2017*.pdf

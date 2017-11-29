@@ -61,7 +61,7 @@ class Extra_reserva extends CI_Model{
           return $q->result();
        }
    }
-
+ 
    public function guardar( $data )
    {
       if ( ! $this->db->insert('extras_reservas', $data )) {

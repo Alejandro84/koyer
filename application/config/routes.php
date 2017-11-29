@@ -156,3 +156,6 @@ $route['reserva/kilometraje/(:num)']                =     'reserva_controller/ki
 $route['reserva/agregar_kilometraje']        =     'reserva_controller/agregarKilometraje';
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';
+
+$route['mantenimiento/ver_kilometraje']                  =     'mantenimiento_controller/mostrarKilometraje';
+$route['mantenimiento/datos_mantenciones/(:num)']                  =     'mantenimiento_controller/datosMantenciones/$1';

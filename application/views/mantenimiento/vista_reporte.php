@@ -36,7 +36,7 @@
          total <?=$total;?>
       </div>
 
-      <form action="<?= site_url( 'mantenimiento/imprimir_pdf'); ?>" method="post">
+      <form action="<?= site_url( ''.$url.''); ?>" method="post">
          <input type="submit" name="" class="btn btn-success" value="Imprimir">
       </form>
    </div>

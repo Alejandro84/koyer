@@ -117,8 +117,8 @@ class Mantenimiento extends CI_Model{
         $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
         $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
         $this->db->where('MA.id_vehiculo = "' . $id_vehiculo. '" and
-                        "MA.fecha_mantencion" => "'.$fecha_desde.' 00:00:00"
-                        and "MA.fecha_mantencion" =< "'.$fecha_desde.' 00:00:00"' );
+                        "MA.fecha_mantencion" => "'.$fecha_desde.'"
+                        and "MA.fecha_mantencion" =< "'.$fecha_desde.'"' );
         $this->db->where('MA.estado' , 1);
 
         $q = $this->db->get();
@@ -157,8 +157,8 @@ class Mantenimiento extends CI_Model{
 
     public function getMantenimientosFec($data)
    {
-     $fecha_desde = $data['fecha_desde'] . ' 00:00:00';
-     $fecha_hasta = $data['fecha_hasta'] . ' 00:00:00';
+     $fecha_desde = $data['fecha_desde'];
+     $fecha_hasta = $data['fecha_hasta'];
 
      $this->db->select('MA.*');
      $this->db->select('TMA.mantenimiento');
@@ -179,6 +179,24 @@ class Mantenimiento extends CI_Model{
      } else {
          return $q->result();
      }
+   }
+
+   public function getUltimoKilometraje($id_vehiculo)
+   {
+
+       $this->db->select('*');
+       $this->db->from('kilometrajes');
+       $this->db->where('id_vehiculo', $id_vehiculo);
+       $this->db->order_by('kilometraje', 'desc' );
+       $this->db->limit(1);
+
+       $q = $this->db->get();
+
+       if ($q->num_rows() < 1) {
+           return false;
+       } else {
+           return $q->result()[0];
+       }
    }
 
 

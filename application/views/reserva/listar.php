@@ -65,14 +65,14 @@
             }
             .calendario-auto {
                 width: 100px;
-                padding: 5px;  
+                padding: 5px;
             }
             .reservado {
                 background-color: green;
             }
         </style>
         <div class="calendario">
-            
+
             <div class="calendario-header">
             </div>
 
@@ -91,14 +91,14 @@
                 <?php $v = $a['vehiculo'];?>
                 <div class="calendario-fila">
                     <div class="calendario-auto"><?php echo $v->patente; ?></div>
-                    <?php 
+                    <?php
                         $dArr = [];
                         for ( $d = 1; $d <= $dias; $d++ ) :
-                            
+
                             $dArr[$d] = false;
-                            
+
                             if ( $a['reservas'] ) :
-                                
+
                                 foreach ( $a['reservas'] as $r ):
                                     $fecha_devolucion = DateTime::createFromFormat('Y-m-d H:i:s', $r->fecha_devolucion );
                                     $fecha_entrega = DateTime::createFromFormat('Y-m-d H:i:s', $r->fecha_entrega );
@@ -106,7 +106,7 @@
                                     $fecha_actual = DateTime::createFromFormat('Y-m-d H:i:s', $fecha_actual );
 
                                     if ( $fecha_actual >= $fecha_entrega && $fecha_actual <= $fecha_devolucion ) $dArr[$d] = $r;
-                                
+
                                 endforeach;
 
                             endif;
@@ -139,72 +139,195 @@
                <th>Fecha de Devolución</th>
                <th>Lugar de Entrega</th>
                <th>Lugar de Devolución</th>
+               <th>Extras</th>
                <th>Estado</th>
                <th>Pagado</th>
-               <th>Acciones</th>
+
 
             </thead>
             <tbody>
                <?php foreach ($reservas as $reserva ): ?>
                   <tr>
-                     <td><a href="<?= site_url( 'reserva/ver_reserva/'.$reserva->id_reserva ); ?>" class="btn btn-primary">Ver Reserva</a></td>
-                     <td><?=$reserva->id_reserva;?></td>
-                     <td><?=$reserva->codigo_reserva;?></td>
-                     <td><?=$reserva->patente;?></td>
-                     <td><?=$reserva->nombre . ' ' . $reserva->apellido;?></td>
-                     <td><?=$reserva->fecha_entrega;?></td>
-                     <td><?=$reserva->fecha_devolucion;?></td>
+                     <td>
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <a href="<?= site_url( 'reserva/ver_reserva/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-primary btn-block">Ver Reserva</a>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-warning btn-block ">Entregar</a>
+                             </div>
+
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12">
+                                <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-success btn-block ">Recibir</a>
+                             </div>
+
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <a href="<?= site_url( 'reserva/pagado/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-primary btn-block">Pagado</a>
+                             </div>
+
+                         </div>
+
+                     </td>
+                     <td><?=$reserva['reserva']->id_reserva;?></td>
+                     <td><?=$reserva['reserva']->codigo_reserva;?></td>
+                     <td><?=$reserva['reserva']->patente;?></td>
+                     <td><?=$reserva['reserva']->nombre . ' ' . $reserva['reserva']->apellido;?></td>
+                     <td><?=$reserva['reserva']->fecha_entrega;?></td>
+                     <td><?=$reserva['reserva']->fecha_devolucion;?></td>
                      <?php foreach ($locaciones as $locacion): ?>
-                        <?php if ($locacion->id_locacion == $reserva->locacion_entrega): ?>
+                        <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
                               <td><?=$locacion->locacion;?></td>
                         <?php endif; ?>
                      <?php endforeach; ?>
                      <?php foreach ($locaciones as $locacion): ?>
-                        <?php if ($locacion->id_locacion == $reserva->locacion_devolucion): ?>
+                        <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
                               <td><?=$locacion->locacion;?></td>
                         <?php endif; ?>
                      <?php endforeach; ?>
-                     <?php if ($reserva->estado_arriendo == 1): ?>
+
+                     <td>
+                         <?php if ($reserva['extras'] != null): ?>
+                             <?php foreach ($reserva['extras'] as $extra): ?>
+                                 <?= $extra->extra ?>
+                                 cantidad: <?= $extra->cantidad ?>
+                             <?php endforeach; ?>
+                         <?php else: ?>
+                             No tiene adicionales contratados
+                         <?php endif; ?>
+
+                     </td>
+                     <?php if ($reserva['reserva']->estado_arriendo == 1): ?>
                         <td class="success">En Arriendo </td>
                      <?php else: ?>
                         <td class="warning">En Espera </td>
                      <?php endif; ?>
 
-                     <?php if ($reserva->pagado == 1): ?>
+                     <?php if ($reserva['reserva']->pagado == 1): ?>
                         <td class="success">Pagado </td>
                      <?php else: ?>
                         <td class="danger" >Por Pagar </td>
                      <?php endif; ?>
-                     <td>
-                        <div class="row">
-                           <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-warning btn-block">Entregar</a>
-                           </div>
-                        </div>
 
-                        <div class="row">
-                           <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-success btn-block">Recibir</a>
-                           </div>
-                        </div>
-
-                        <div class="row">
-                           <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right btn-block">Pagado</a>
-                           </div>
-                        </div>
-
-                     </td>
                   </tr>
-               <?php endforeach; endif; ?>
 
-
+            <?php endforeach; endif; ?>
             </tbody>
 
-         </table>
+        </table>
+
 
       </div>
 
+   </div>
+   <div class="row">
+       <div class="col-md-12">
+           <?php $this->load->view('template/alert'); ?>
+          <?php if ( ! $reservas ) : ?>
+          <div class="alert alert-info">
+              No hay reservas para este mes
+          </div>
+          <?php else: ?>
+             <table class="table table-striped">
+
+                 <thead>
+                    <th></th>
+                    <th>Codigo interno</th>
+                    <th>Codigo de reserva</th>
+                    <th>Patente</th>
+                    <th>Cliente</th>
+                    <th>Fecha de Entrega</th>
+                    <th>Fecha de Devolución</th>
+                    <th>Lugar de Entrega</th>
+                    <th>Lugar de Devolución</th>
+                    <th>Extras</th>
+                    <th>Estado</th>
+                    <th>Pagado</th>
+
+
+                 </thead>
+                 <tbody>
+                    <?php foreach ($reservasPorPagar as $reserva ): ?>
+                       <tr>
+                          <td>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <a href="<?= site_url( 'reserva/ver_reserva/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-primary btn-block">Ver Reserva</a>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-warning btn-block ">Entregar</a>
+                                  </div>
+
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                     <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-success btn-block ">Recibir</a>
+                                  </div>
+
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <a href="<?= site_url( 'reserva/pagado/'.$reserva['reserva']->id_reserva ); ?>" class="btn btn-primary btn-block">Pagado</a>
+                                  </div>
+
+                              </div>
+
+                          </td>
+                          <td><?=$reserva['reserva']->id_reserva;?></td>
+                          <td><?=$reserva['reserva']->codigo_reserva;?></td>
+                          <td><?=$reserva['reserva']->patente;?></td>
+                          <td><?=$reserva['reserva']->nombre . ' ' . $reserva['reserva']->apellido;?></td>
+                          <td><?=$reserva['reserva']->fecha_entrega;?></td>
+                          <td><?=$reserva['reserva']->fecha_devolucion;?></td>
+                          <?php foreach ($locaciones as $locacion): ?>
+                             <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
+                                   <td><?=$locacion->locacion;?></td>
+                             <?php endif; ?>
+                          <?php endforeach; ?>
+                          <?php foreach ($locaciones as $locacion): ?>
+                             <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
+                                   <td><?=$locacion->locacion;?></td>
+                             <?php endif; ?>
+                          <?php endforeach; ?>
+
+                          <td>
+                              <?php if ($reserva['extras'] != null): ?>
+                                  <?php foreach ($reserva['extras'] as $extra): ?>
+                                      <?= $extra->extra ?>
+                                      cantidad: <?= $extra->cantidad ?>
+                                  <?php endforeach; ?>
+                              <?php else: ?>
+                                  No tiene adicionales contratados
+                              <?php endif; ?>
+
+                          </td>
+                          <?php if ($reserva['reserva']->estado_arriendo == 1): ?>
+                             <td class="success">En Arriendo </td>
+                          <?php else: ?>
+                             <td class="warning">En Espera </td>
+                          <?php endif; ?>
+
+                          <?php if ($reserva['reserva']->pagado == 1): ?>
+                             <td class="success">Pagado </td>
+                          <?php else: ?>
+                             <td class="danger" >Por Pagar </td>
+                          <?php endif; ?>
+
+                       </tr>
+
+                 <?php endforeach; endif;?>
+                 </tbody>
+
+             </table>
+
+       </div>
    </div>
 
 </div>

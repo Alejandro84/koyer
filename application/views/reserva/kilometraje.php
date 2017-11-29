@@ -12,8 +12,7 @@
                 <div class="form-group">
                     <input type="text" name="kilometraje" class="form-control" placeholder="Ej.: 142000">
                 </div>
-
-                <input type="text" name="id_vehiculo" hidden="" value="<?= $id_vehiculo;?>">
+                <input type="text" name="id_vehiculo" hidden="" value="<?=$reservas->id_vehiculo; ?>">
                 <input type="submit" value="Guardar" class="btn btn-success form-control">
 
             </form>

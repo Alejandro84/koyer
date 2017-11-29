@@ -145,25 +145,25 @@
                <th>Extra</th>
                <th>Cantidad</th>
                <th>Precio</th>
+               <th>Total</th>
             </thead>
             <tbody>
-               <?php foreach ($extras as $extra ): ?>
-                  <?php if ($extra['cantidad'] != 0): ?>
-                     <tr>
-                        <td><?= $extra['info_extra']->extra ?></td>
-                        <td><?= $extra['cantidad'] ?></td>
-                        <?
-                           $total_extra = $extra['cantidad'] * $extra['info_extra']->precio;
-                           $suma_extra = $suma_extra + $total_extra;
+                <?php foreach ($extras as $extra ): ?>
 
-                        ?>
-                        <td><?= $total_extra ?></td>
+                         <tr>
+                            <td><?= $extra['info_extra']->extra ?></td>
+                            <td><?= $extra['cantidad'] ?></td>
+                            <td><?= $extra['info_extra']->precio?></td>
+                            <?php if ($extra['info_extra']->por_dia == 1 ): ?>
+                                  <td><?= ($extra['info_extra']->precio * $extra['cantidad']) * $dias ?> CLP</td>
+                            <?php else: ?>
+                                  <td><?= $extra['info_extra']->precio * $extra['cantidad']  ?> CLP</td>
+                            <?php endif; ?>
+
+                         </tr>
 
 
-                     </tr>
-                  <?php endif; ?>
-
-               <?php endforeach; ?>
+                      <?php endforeach; ?>
             </tbody>
          </table>
       </div>
@@ -197,7 +197,7 @@
       <form class="" action="<?= site_url( 'reserva/generar_reserva' ); ?>" method="post">
                <tr class="success">
                   <td><?='$' . number_format($precio_arriendo_vehiculo , '0', ',' , '.');?></td>
-                  <td><?='$' . number_format($suma_extra , '0', ',' , '.');?></td>
+                  <td><?='$' . number_format($total_extra , '0', ',' , '.');?></td>
                   <td><?='$' . number_format($sub_total , '0', ',' , '.');?></td>
                   <td><input type="text" name="total" value="<?='$' . number_format($total , '0', ',' , '.');?>" class="form-control"></td>
                </tr>
@@ -205,7 +205,7 @@
                   <td></td>
                   <td></td>
                   <th>Precio Final USD</th>
-                  <? $precio_en_usd = $total / 620?>
+                  <? $precio_en_usd = $total?>
                   <td class="success"><?='$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
                </tr>
             </tbody>
@@ -224,14 +224,31 @@
       <input type="text" name="precio_arriendo_vehiculo" value="<?=$precio_arriendo_vehiculo;?>" hidden="">
       <input type="text" name="sub_total" value="<?=$sub_total;?>" hidden="">
 
-   <div class="row">
-      <div class="col-md-12">
-         <input type="submit" name="" value="Reservar" class="btn btn-success pull-right">
-         </form>
-         <!--
+      <div class="row">
+          <!--
+         <div class="col-md-6">
+            <a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a>
+         </div>
+         -->
+         <div class="col-md-6 pull-right">
+            <form class="" action="<?= site_url( 'reserva/definir_reserva'); ?>" method="post">
 
-         <td><a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a></td>
-      </div>-->
-   </div>
+               <h4>Propiedades de la Reseva:</h4>
+               <div class="col-md-6">
+                  <div class="form-group">
+                     <label for="">Cotizacion</label>
+                     <input type="checkbox" name="cotizacion" value="1">
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <input type="submit" name="" value="Guardar Cotizacion/Reserva" class="btn btn-primary btn-block">
+               </div>
+
+            </form>
+
+         </div>
+
+      </div>
+
 
 </div>

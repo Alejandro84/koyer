@@ -67,31 +67,51 @@ class Reserva_controller extends CI_Controller{
 
    public function index()
    {
-      $fecha = date('l jS \of F Y h:i A');
-      $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
+      $fecha = date('d-m-Y H:i:s');
+      $fecha = DateTime::createFromFormat( 'd-m-Y H:i:s' , $fecha );
 
       $vehiculosConReserva;
       $vehiculos = $this->vehiculo->getAll();
       $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
 
       foreach( $vehiculos as $v ) {
-
           $vehiculosConReserva[] = [
               'vehiculo' => $v,
-              'reservas' => $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha )
+              'reservas' => $reserva = $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha )
+          ];
+      }
+
+      $reservaExtra;
+
+      foreach ($reservas as $reserva) {
+          $reservaExtra[] =[
+              'reserva' => $reserva,
+              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
+          ];
+      }
+
+      $reservasPorPagar = $this->reserva->getReservasPorPagar($fecha->format('Y-m'));
+      $reservasPorPagarExtra;
+
+      foreach ($reservasPorPagar as $reserva) {
+          $reservasPorPagarExtra[] =[
+              'reserva' => $reserva,
+              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
           ];
       }
 
       $data = array(
-          'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('j'), $fecha->format('Y')),
-         'reservas' => $reservas,
+         'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
+         'reservas' => $reservaExtra,
+         'reservasPorPagar' => $reservasPorPagarExtra,
          'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
-         'mes' => $fecha,
-         'calendar' => $this->calendar->generate()
+         'mes' => $fecha
       );
 
+      //echo "<pre>";
+      //print_r($data);
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
@@ -109,23 +129,47 @@ class Reserva_controller extends CI_Controller{
       $reservas = $this->reserva->getReservasMes($mesano->format('Y-m'));
 
       foreach( $vehiculos as $v ) {
+          $reserva = $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha );
 
           $vehiculosConReserva[] = [
               'vehiculo' => $v,
-              'reservas' => $this->reserva->vehiculoMes( $v->id_vehiculo, $mesano )
+              'reservas' => $reserva,
+              'extra' => $this->extra_reserva->getExtras($reserva[0]->id_reserva)
+          ];
+      }
+
+      $reservaExtra;
+
+      foreach ($reservas as $reserva) {
+          $reservaExtra[] =[
+              'reserva' => $reserva,
+              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
+          ];
+      }
+
+      $reservasPorPagar = $this->reserva->getReservasPorPagar($mesano->format('Y-m'));
+      $reservasPorPagarExtra;
+
+      foreach ($reservasPorPagar as $reserva) {
+          $reservasPorPagarExtra[] =[
+              'reserva' => $reserva,
+              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
           ];
       }
 
       $data = array(
-          'dias' => cal_days_in_month(CAL_GREGORIAN, $mesano->format('j'), $mesano->format('Y')),
-         'reservas' => $reservas,
+          'dias' => cal_days_in_month(CAL_GREGORIAN, $mesano->format('m'), $mesano->format('Y')),
+         'reservas' => $reservaExtra,
+         'reservasPorPagar' => $reservasPorPagarExtra,
          'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
-         'mes' => $mesano,
-         'calendar' => $this->calendar->generate()
+         'mes' => $mesano
       );
 
+
+      //echo "<pre>";
+      //print_r($data);
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
@@ -405,27 +449,12 @@ class Reserva_controller extends CI_Controller{
       ########################################################
       #### Codigo de reserva
       ########################################################
-      $fecha = date("Ymd");
-      $rand = strtoupper(substr(uniqid(sha1(time())),0,4));
-
-      $codigo = 'RK'. $fecha . $rand;
+      $codigo = $this->generarCodigo();
       ##################################################################
       #### Calculo de dias de arriendo
       ##################################################################
 
-      $fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $this->session->arriendo['fecha_entrega'] );
-      $fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $this->session->arriendo['fecha_devolucion'] );
-
-      $fecha_entrega       = $fecha_entrega->getTimestamp();
-      $fecha_devolucion    = $fecha_devolucion->getTimestamp();
-
-      $delta_tiempo  = $fecha_devolucion - $fecha_entrega;
-
-      $dias_arriendo = $delta_tiempo / 60 ; // minutos
-      $dias_arriendo = $dias_arriendo / 60 ; // horas
-      $dias_arriendo = $dias_arriendo / 24 ; // dias
-
-      $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
+      $dias_arriendo = $this->diasArriendo($this->session->arriendo['fecha_entrega'] , $this->session->arriendo['fecha_devolucion'] );
       ##################################################################
       #### declaracion de variables
       ##################################################################
@@ -449,31 +478,34 @@ class Reserva_controller extends CI_Controller{
       ##################################################################
       #### Precio por el arriendo del vehiculo
       ##################################################################
+      $totalextra = $this->totalExtra();
 
       $precio_vehiculo = $vehiculo->precio * $dias_arriendo;
 
-      $subtotal = $precio_vehiculo + $locacion_entrega->recargo_entrega + $locacion_devolucion->recargo_devolucion;
+      $subtotal = $precio_vehiculo + $locacion_entrega->recargo_entrega + $locacion_devolucion->recargo_devolucion + $totalextra;
 
       $total = $subtotal * $iva;
 
       ##################################################################
 
       $data = array(
-         'codigo_reserva'        =>    $codigo,
-         'fecha_entrega'         =>    $fecha_entrega,
-         'fecha_devolucion'      =>    $fecha_devolucion,
-         'locacion_entrega'      =>    $locacion_entrega,
-         'locacion_devolucion'   =>    $locacion_devolucion,
-         'cliente'               =>    $cliente,
-         'vehiculo'              =>    $vehiculo,
-         'extras'                 =>    $extras,
-         'precio_arriendo_vehiculo'    => $precio_vehiculo,
-         'sub_total'              => $subtotal,
-         'total'                 => $total
+         'codigo_reserva'           =>  $codigo,
+         'fecha_entrega'            =>  $fecha_entrega,
+         'fecha_devolucion'         =>  $fecha_devolucion,
+         'locacion_entrega'         =>  $locacion_entrega,
+         'locacion_devolucion'      =>  $locacion_devolucion,
+         'cliente'                  =>  $cliente,
+         'vehiculo'                 =>  $vehiculo,
+         'extras'                   =>  $extras,
+         'dias'                     =>  $dias_arriendo,
+         'total_extra'              =>  $totalextra,
+         'precio_arriendo_vehiculo' =>  $precio_vehiculo,
+         'sub_total'                =>  $subtotal,
+         'total'                    =>  $total
        );
 
        //echo "<pre>";
-       //print_r($this->session->arriendo['extra']);
+       //print_r($data);
 
        $this->load->view('template/header');
        $this->load->view('template/nav');
@@ -481,6 +513,54 @@ class Reserva_controller extends CI_Controller{
        $this->load->view('template/footer');
 
    }
+
+   public function generarCodigo()
+	 {
+		 $fecha = date("Ymd");
+		 $rand = strtoupper(substr(uniqid(sha1(time())),0,4));
+
+		 $codigo = 'RK'. $fecha . $rand;
+
+		 return $codigo;
+	 }
+
+   public function diasArriendo($f_entrega , $f_devolucion)
+	 {
+ 		$fecha_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $f_entrega );
+ 		$fecha_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $f_devolucion );
+
+ 		$fecha_entrega       = $fecha_entrega->getTimestamp();
+ 		$fecha_devolucion    = $fecha_devolucion->getTimestamp();
+
+ 		$delta_tiempo  = $fecha_devolucion - $fecha_entrega;
+
+ 		$dias_arriendo = $delta_tiempo / 60 ; // minutos
+ 		$dias_arriendo = $dias_arriendo / 60 ; // horas
+ 		$dias_arriendo = $dias_arriendo / 24 ; // dias
+
+ 		$dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
+
+		return $dias_arriendo;
+	 }
+
+   public function totalExtra()
+	 {
+		 $extras = $this->session->arriendo['extra'];
+         $dias_arriendo = $this->diasArriendo($this->session->arriendo['fecha_entrega'] , $this->session->arriendo['fecha_devolucion'] );
+
+		 $suma_extras = 0;
+
+		 foreach ($extras as $extra) {
+			 if ($extra['info_extra']->por_dia == 1) {
+			 	$suma_extras = ($suma_extras + ($extra['info_extra']->precio * $extra['cantidad'])*$dias_arriendo);
+			}else {
+				$suma_extras = $suma_extras + ($extra['info_extra']->precio * $extra['cantidad'] ) ;
+			}
+
+	 	}
+
+		return $suma_extras;
+	 }
 
    public function generarReserva()
    {
@@ -623,8 +703,6 @@ class Reserva_controller extends CI_Controller{
          'id_reserva' => $id_reserva,
          'cotizacion' => $esCotizacion
       );
-      echo "<pre>";
-      print_r($insert);
 
       if ($esCotizacion == 1) {
          if ( ! $this->reserva->esCotizacion($insert) )
@@ -668,19 +746,22 @@ class Reserva_controller extends CI_Controller{
              $this->session->set_flashdata('error', $mensaje );
              redirect('reserva');
           } else {
-             $this->kilometraje($id_reserva);
+
              $mensaje = 'Se ha recibido correctamente.';
              $this->session->set_flashdata('success', $mensaje );
-             redirect('reserva');
+             $this->kilometraje($id_reserva);
           }
    }
 
    public function kilometraje($id_reserva)
    {
-       $reserva = $this->reserva->getOne($id_reserva);
+       $reserva = $this->reserva->verReserva($id_reserva);
 
-       $data = array('id_vehiculo' => $reserva->id_vehiculo );
-
+       $data = array(
+           'reservas' => $reserva
+       );
+       //echo "<pre>";
+       //print_r($data);
        $this->load->view('template/header');
        $this->load->view('template/nav');
        $this->load->view('reserva/kilometraje', $data);
