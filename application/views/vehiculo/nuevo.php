@@ -1,15 +1,22 @@
 <div class="container">
 
-   <div class="row">
-      <div class="col-md-6">
-         <h1>Vehiculo <small>Nuevo</small></h1>
-         <form action="<?=site_url('vehiculo/guardar');?>" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Vehiculo <small>Nuevo</small></h1>
+        </div>
+    </div>
 
-            <div class="form-inline form-group">
+    <?php echo form_open_multipart('vehiculo/guardar');?>
+
+    <div class="row">
+        <div class="col-md-4"> <!--PATENTE-->
+            <div class="form-group">
                <label for="patente">Patente:</label>
                <input type="text" id="patente" name="patente" value=""class="form-control" placeholder="ej: ABCD96">
             </div>
+        </div><!-- COL PATENTE-->
 
+        <div class="col-md-4"> <!--MARCA-->
             <div class="form-group">
                <label for="marca">Marca:</label>
                <select class="form-control" id="marca" name="id_marca">
@@ -19,7 +26,9 @@
                   <?php endforeach; ?>
                </select>
             </div>
+        </div> <!-- COL MARCA-->
 
+        <div class="col-md-4">    <!--MODELO-->
             <div class="form-group">
                <label for="">Modelo:</label>
                <select class="form-control" id="modelo" name="id_modelo">
@@ -29,7 +38,13 @@
                   <?php endforeach; ?>
                </select>
             </div>
+        </div> <!-- COL MODELO-->
 
+    </div> <!--row patente marca modelo-->
+
+    <div class="row">
+
+        <div class="col-md-6"> <!-- categoria -->
             <div class="form-group">
                <label for="form-control">Categoria:</label>
                <select class="form-control" name="id_categoria">
@@ -39,7 +54,9 @@
                   <?php endforeach; ?>
                </select>
             </div>
+        </div><!-- COL categoria-->
 
+        <div class="col-md-6"> <!-- transmision -->
             <div class="form-group">
                <label for="">Transmisión:</label>
                <select class="form-control" name="id_transmision">
@@ -49,6 +66,13 @@
                   <?php endforeach; ?>
                </select>
             </div>
+        </div><!-- COL transmision-->
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
 
             <div class="form-group">
                <label for="">Combustible:</label>
@@ -70,11 +94,24 @@
                </select>
             </div>
 
+        </div>
 
-            <input type="submit" name="" value="Guardar" class="btn btn-success pull-right" >
+        <div class="col-md-6">
 
-         </form>
-      </div>
+            <div class="form-group">
+                <h4>Imagen o foto</h4>
+                <label>Imagen o foto:</label>
+                <input type="file" name="imagen_vehiculo" class="form-control" >
+            </div>
+        </div>
 
-   </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <input type="submit" name="" value="Guardar" class="btn btn-success btn-block" >
+        </div>
+    </div>
+
+    </form>
 </div>

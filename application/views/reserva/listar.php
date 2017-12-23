@@ -130,21 +130,18 @@
         <table class="table table-striped">
 
             <thead>
-               <th></th>
-               <th>Codigo interno</th>
-               <th>Codigo de reserva</th>
-               <th>Patente</th>
-               <th>Cliente</th>
-               <th>Fecha de Entrega</th>
-               <th>Fecha de Devolución</th>
-               <th>Lugar de Entrega</th>
-               <th>Lugar de Devolución</th>
-               <th>Extras</th>
-               <th>Estado</th>
-               <th>Pagado</th>
-
-
+                <th></th>
+                <th>Codigos</th>
+                <th>Patente</th>
+                <th>Cliente</th>
+                <th>Fechas</th>
+                <th>Lugares</th>
+                <th>Extras</th>
+                <th>Precios</th>
+                <th>Estado</th>
+                <th>Pagado</th>
             </thead>
+
             <tbody>
                <?php foreach ($reservas as $reserva ): ?>
                   <tr>
@@ -174,33 +171,61 @@
                          </div>
 
                      </td>
-                     <td><?=$reserva['reserva']->id_reserva;?></td>
-                     <td><?=$reserva['reserva']->codigo_reserva;?></td>
-                     <td><?=$reserva['reserva']->patente;?></td>
-                     <td><?=$reserva['reserva']->nombre . ' ' . $reserva['reserva']->apellido;?></td>
-                     <td><?=$reserva['reserva']->fecha_entrega;?></td>
-                     <td><?=$reserva['reserva']->fecha_devolucion;?></td>
-                     <?php foreach ($locaciones as $locacion): ?>
-                        <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
-                              <td><?=$locacion->locacion;?></td>
-                        <?php endif; ?>
-                     <?php endforeach; ?>
-                     <?php foreach ($locaciones as $locacion): ?>
-                        <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
-                              <td><?=$locacion->locacion;?></td>
-                        <?php endif; ?>
-                     <?php endforeach; ?>
+                     <td>
+                         <ul class="list-unstyled">
+                             <li><b>Interno:</b> <?=$reserva['reserva']->id_reserva;?></li>
+                             <hr>
+                             <li><b>De Reserva:</b> <?=$reserva['reserva']->codigo_reserva;?></li>
+                         </ul>
+                     </td>
+                     <td>
+                         <ul class="list-unstyled">
+                             <li><?=$reserva['reserva']->patente;?></li>
+                         </ul>
 
+                     </td>
+                     <td><?=$reserva['reserva']->nombre . ' ' . $reserva['reserva']->apellido;?></td>
+                     <td>
+                         <ul class="list-unstyled">
+                             <li><b>Entrega:</b> <?=$reserva['reserva']->fecha_entrega;?></li>
+                             <hr>
+                             <li><b>Devolución:</b> <?=$reserva['reserva']->fecha_devolucion;?></li>
+                         </ul>
+                     </td>
+                     <td>
+                         <ul class="list-unstyled">
+                             <?php foreach ($locaciones as $locacion): ?>
+                                <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
+                                      <li><b>Entrega:</b> <?=$locacion->locacion;?></li>
+                                <?php endif; ?>
+                           <?php endforeach; ?>
+
+                           <hr>
+                             <?php foreach ($locaciones as $locacion): ?>
+                                <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
+                                      <li><b>Devolución:</b> <?=$locacion->locacion;?></li>
+                                <?php endif; ?>
+                             <?php endforeach; ?>
+                         </ul>
+
+
+                     </td>
                      <td>
                          <?php if ($reserva['extras'] != null): ?>
                              <?php foreach ($reserva['extras'] as $extra): ?>
                                  <?= $extra->extra ?>
-                                 cantidad: <?= $extra->cantidad ?>
+                                 <b>cantidad:</b> <?= $extra->cantidad ?>
                              <?php endforeach; ?>
                          <?php else: ?>
                              No tiene adicionales contratados
                          <?php endif; ?>
 
+                     </td>
+                     <td>
+                         <ul>
+                             <li><b>Total:</b> $<?= number_format($reserva['reserva']->total, '2', ',' , '.');?></li>
+                             <li><b>Abonado:</b> $<?= number_format($reserva['reserva']->abonado, '2', ',' , '.');?></li>
+                         </ul>
                      </td>
                      <?php if ($reserva['reserva']->estado_arriendo == 1): ?>
                         <td class="success">En Arriendo </td>
@@ -237,14 +262,11 @@
 
                  <thead>
                     <th></th>
-                    <th>Codigo interno</th>
-                    <th>Codigo de reserva</th>
+                    <th>Codigos</th>
                     <th>Patente</th>
                     <th>Cliente</th>
-                    <th>Fecha de Entrega</th>
-                    <th>Fecha de Devolución</th>
-                    <th>Lugar de Entrega</th>
-                    <th>Lugar de Devolución</th>
+                    <th>Fechas</th>
+                    <th>Lugares</th>
                     <th>Extras</th>
                     <th>Estado</th>
                     <th>Pagado</th>
@@ -280,34 +302,56 @@
                               </div>
 
                           </td>
-                          <td><?=$reserva['reserva']->id_reserva;?></td>
-                          <td><?=$reserva['reserva']->codigo_reserva;?></td>
-                          <td><?=$reserva['reserva']->patente;?></td>
+                          <td>
+                              <ul class="list-unstyled">
+                                  <li><b>Interno:</b> <?=$reserva['reserva']->id_reserva;?></li>
+                                  <li><b>De Reserva:</b> <?=$reserva['reserva']->codigo_reserva;?></li>
+                              </ul>
+                          </td>
+                          <td>
+                              <ul class="list-unstyled">
+                                  <li><?=$reserva['reserva']->patente;?></li>
+                              </ul>
+
+                          </td>
                           <td><?=$reserva['reserva']->nombre . ' ' . $reserva['reserva']->apellido;?></td>
-                          <td><?=$reserva['reserva']->fecha_entrega;?></td>
-                          <td><?=$reserva['reserva']->fecha_devolucion;?></td>
-                          <?php foreach ($locaciones as $locacion): ?>
-                             <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
-                                   <td><?=$locacion->locacion;?></td>
-                             <?php endif; ?>
-                          <?php endforeach; ?>
-                          <?php foreach ($locaciones as $locacion): ?>
-                             <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
-                                   <td><?=$locacion->locacion;?></td>
-                             <?php endif; ?>
-                          <?php endforeach; ?>
+                          <td>
+                              <ul class="list-unstyled">
+                                  <li><b>Entrega:</b> <?=$reserva['reserva']->fecha_entrega;?></li>
+                                  <li><b>Devolución:</b> <?=$reserva['reserva']->fecha_devolucion;?></li>
+                              </ul>
+                          </td>
+                          <td>
+                              <ul class="list-unstyled">
+                                  <?php foreach ($locaciones as $locacion): ?>
+                                     <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_entrega): ?>
+                                           <li><b>Entrega:</b> <?=$locacion->locacion;?></li>
+                                     <?php endif; ?>
+                                <?php endforeach; ?>
+
+
+                                  <?php foreach ($locaciones as $locacion): ?>
+                                     <?php if ($locacion->id_locacion == $reserva['reserva']->locacion_devolucion): ?>
+                                           <li><b>Devolución:</b> <?=$locacion->locacion;?></li>
+                                     <?php endif; ?>
+                                  <?php endforeach; ?>
+                              </ul>
+
+
+                          </td>
 
                           <td>
                               <?php if ($reserva['extras'] != null): ?>
                                   <?php foreach ($reserva['extras'] as $extra): ?>
                                       <?= $extra->extra ?>
-                                      cantidad: <?= $extra->cantidad ?>
+                                      <b>cantidad:</b> <?= $extra->cantidad ?>
                                   <?php endforeach; ?>
                               <?php else: ?>
                                   No tiene adicionales contratados
                               <?php endif; ?>
 
                           </td>
+
                           <?php if ($reserva['reserva']->estado_arriendo == 1): ?>
                              <td class="success">En Arriendo </td>
                           <?php else: ?>

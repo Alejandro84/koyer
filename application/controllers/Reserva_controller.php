@@ -134,7 +134,7 @@ class Reserva_controller extends CI_Controller{
           $vehiculosConReserva[] = [
               'vehiculo' => $v,
               'reservas' => $reserva,
-              'extra' => $this->extra_reserva->getExtras($reserva[0]->id_reserva)
+              'extra' => $this->extra_reserva->getExtras($reserva->id_reserva)
           ];
       }
 

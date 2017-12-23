@@ -8,6 +8,7 @@ class Vehiculo_controller extends CI_Controller{
       parent::__construct();
 
       $this->load->model('vehiculo');
+      $this->load->library('upload' , $this->configuracionImagenes());
 
    }
 
@@ -56,6 +57,7 @@ class Vehiculo_controller extends CI_Controller{
       $id_categoria = $this->input->post('id_categoria');
       $id_combustible = $this->input->post('id_combustible');
       $id_tarifa = $this->input->post('id_tarifa');
+      $imagen = $this->upload->do_upload('imagen_vehiculo');
 
       if ( $patente != null && $id_modelo != null && $id_marca != null && $id_transmision != null && $id_categoria != null && $id_combustible != null && $id_tarifa != null )
          {
@@ -72,21 +74,32 @@ class Vehiculo_controller extends CI_Controller{
 
             if ( ! $this->vehiculo->guardar( $insert ) )
             {
-               //$error = $this->db->_error_message();
+               $error = $this->db->_error_message();
                $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-               //$this->session->set_flashdata('error',$mensaje);
+               $this->session->set_flashdata('error',$mensaje);
                redirect('vehiculo');
             } else {
                $mensaje = 'Sus datos han sido guardados exitosamente';
-               //$this->session->set_flashdata('success',$mensaje);
+               $this->session->set_flashdata('success',$mensaje);
                redirect('vehiculo');
             }
          } else {
             $mensaje = '¡Debe rellenar todos los campos!';
-            //$this->session->set_flashdata('error', $mensaje);
+            $this->session->set_flashdata('error', $mensaje);
             redirect('vehiculo/nuevo');
          }
 
+   }
+
+   public function configuracionImagenes()
+   {
+        $config [ 'upload_path' ]  =  'assets/img/car' ;
+        $config [ 'allowed_types' ]  =  'gif | jpg | png' ;
+        $config [ 'max_size' ]      =  '100' ;
+        $config [ 'max_width' ]  =  '600' ;
+        $config [ 'max_height' ]  =  '343' ;
+
+        return $config;
    }
 
    public function editar($id_vehiculo)
