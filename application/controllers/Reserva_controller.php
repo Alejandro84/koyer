@@ -70,61 +70,38 @@ class Reserva_controller extends CI_Controller{
       $fecha = date('d-m-Y H:i:s');
       $fecha = DateTime::createFromFormat( 'd-m-Y H:i:s' , $fecha );
 
-      $vehiculosConReserva;
-      $vehiculos = $this->vehiculo->getAll();
-      $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
+      $mesano = $this->input->post('busqueda_fecha');
 
-      foreach( $vehiculos as $v ) {
-          $vehiculosConReserva[] = [
-              'vehiculo' => $v,
-              'reservas' => $reserva = $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha )
-          ];
-      }
-
-      $reservaExtra;
-
-      foreach ($reservas as $reserva) {
-          $reservaExtra[] =[
-              'reserva' => $reserva,
-              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
-          ];
-      }
-
-      $reservasPorPagar = $this->reserva->getReservasPorPagar($fecha->format('Y-m'));
-      $reservasPorPagarExtra;
-
-      foreach ($reservasPorPagar as $reserva) {
-          $reservasPorPagarExtra[] =[
-              'reserva' => $reserva,
-              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
-          ];
+      if ($mesano != null) {
+          $fecha_busqueda = $mesano;
+          $fecha_busqueda = DateTime::createFromFormat('Y-m');
+      }else {
+          $fecha_busqueda = $fecha->format('Y-m');
       }
 
       $data = array(
          'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
-         'reservas' => $reservaExtra,
-         'reservasPorPagar' => $reservasPorPagarExtra,
-         'vehiculos' => $vehiculosConReserva,
+         //'data' => $this->buscarReservas($fecha_busqueda), //llamar al metodo buscarReserva()
+         'fecha_busqueda' => $fecha_busqueda,
          'locaciones' => $this->locacion->getall(),
          'fecha' => $fecha,
          'mes' => $fecha
       );
 
-      //echo "<pre>";
-      //print_r($data);
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('reserva/listar', $data);
-      $this->load->view('template/footer');
+      echo "<pre>";
+      print_r($data);
+      //$this->load->view('template/header');
+      //$this->load->view('template/nav');
+      //$this->load->view('reserva/listar', $data);
+      //$this->load->view('template/footer');
    }
 
-   public function buscarReservas()
+   public function buscarReservas($fecha)
    {
-      $fecha = date('l jS \of F Y h:i A');
-      $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
       $vehiculosConReserva;
-      $mesano = $this->input->post('busqueda_fecha');
-      $mesano = DateTime::createFromFormat( 'm/Y' , $mesano );
+      $mesano = $fecha;
+      $mesano = DateTime::createFromFormat('Y-m', $fecha);
+
       $vehiculos = $this->vehiculo->getAll();
       $reservas = $this->reserva->getReservasMes($mesano->format('Y-m'));
 
@@ -158,24 +135,12 @@ class Reserva_controller extends CI_Controller{
       }
 
       $data = array(
-          'dias' => cal_days_in_month(CAL_GREGORIAN, $mesano->format('m'), $mesano->format('Y')),
          'reservas' => $reservaExtra,
          'reservasPorPagar' => $reservasPorPagarExtra,
          'vehiculos' => $vehiculosConReserva,
-         'locaciones' => $this->locacion->getall(),
-         'fecha' => $fecha,
-         'mes' => $mesano
       );
 
-
-      //echo "<pre>";
-      //print_r($data);
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('reserva/listar', $data);
-      $this->load->view('template/footer');
-
-
+      return $data;
    }
 
    public function cotizacion()
@@ -216,7 +181,6 @@ class Reserva_controller extends CI_Controller{
 
    public function verificar()
    {
-      //$this->output->enable_profiler(TRUE);
       $this->load->model('locacion');
       $this->load->model('vehiculo');
       $this->load->model('extra');
@@ -296,152 +260,42 @@ class Reserva_controller extends CI_Controller{
    }
 
 
-   public function ingresarCliente()
+   public function vehiculoSeleccionado()
    {
+       $autos = $this->vehiculo->getAll();
 
-      $this->load->model('vehiculo');
+       $reserva_fecha_desde = $this->input->post('fecha_desde');
+       $reserva_fecha_hasta = $this->input->post('fecha_hasta');
 
-      $autos = $this->vehiculo->getAll();
+       $locacion_entrega    =  $this->input->post('locacion_entrega');
+       $locacion_devolucion =  $this->input->post('locacion_devolucion');
 
-      $reserva_fecha_desde = $this->input->post('fecha_desde');
-      $reserva_fecha_hasta = $this->input->post('fecha_hasta');
+       $vehiculo = $this->input->post('vehiculo');
 
-      $locacion_entrega    =  $this->input->post('locacion_entrega');
-      $locacion_devolucion =  $this->input->post('locacion_devolucion');
+       $extras = [];
+       $cantidades = $this->input->post('cantidad');
 
-      $vehiculo = $this->input->post('vehiculo');
+       foreach ( $cantidades as $id_extra => $cantidad )
+       {
+           $extras[]   =   [
+              'id_extra'  => $id_extra,
+              'cantidad'  => $cantidad,
+              'info_extra' => $this->extra->getOne($id_extra)
+           ];
+       }
+       $arriendo = array(
+          'vehiculo' => $vehiculo,
+          'extra' => $extras,
+          'fecha_entrega' => $reserva_fecha_desde ,
+          'fecha_devolucion' => $reserva_fecha_hasta ,
+          'locacion_entrega' => $locacion_entrega,
+          'locacion_devolucion' => $locacion_devolucion,
+       );
 
-      $extras = [];
-      $cantidades = $this->input->post('cantidad');
+       $this->session->arriendo = $arriendo;
 
-      foreach ( $cantidades as $id_extra => $cantidad )
-      {
-          $extras[]   =   [
-             'id_extra'  => $id_extra,
-             'cantidad'  => $cantidad,
-             'info_extra' => $this->extra->getOne($id_extra)
-          ];
-      }
-      $arriendo = array(
-         'vehiculo' => $vehiculo,
-         'extra' => $extras,
-         'fecha_entrega' => $reserva_fecha_desde ,
-         'fecha_devolucion' => $reserva_fecha_hasta ,
-         'locacion_entrega' => $locacion_entrega,
-         'locacion_devolucion' => $locacion_devolucion,
-      );
-
-      $this->session->arriendo = $arriendo;
-
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('reserva/buscar');
-      $this->load->view('template/footer');
-
+       redirect('cliente/buscar');
    }
-
-   public function buscar()
-   {
-
-      $rut_busqueda           =  $this->input->post('rut_busqueda');
-      $caracteres = array('-',',', '.' );
-
-      $rut = str_replace($caracteres, '' , $rut_busqueda);
-
-      $cliente = $this->cliente->buscar($rut);
-
-      if ( ! $cliente ) {
-         redirect('reserva/cliente_nuevo');
-      } else {
-         redirect('reserva/busqueda/'.$cliente->id_cliente);
-      }
-    }
-
-    public function clienteNuevo()
-   {
-
-       $this->load->view('template/header');
-       $this->load->view('template/nav');
-       $this->load->view('reserva/cliente_nuevo');
-       $this->load->view('template/footer');
-
-   }
-
-    public function busqueda($id_cliente)
-    {
-       $data['cliente'] = $this->cliente->getOne($id_cliente);
-
-       $this->load->view('template/header');
-       $this->load->view('template/nav');
-       $this->load->view('reserva/ver', $data);
-       $this->load->view('template/footer');
-
-    }
-
-    public function clienteRegistrado()
-    {
-       $id_cliente = $this->input->post('id_cliente');
-
-       $mensaje = 'Sus datos han sido guardados exitosamente';
-       $this->session->set_flashdata('success',$mensaje);
-       $this->session->cliente = $id_cliente;
-       redirect('reserva/resumen');
-    }
-
-
-    public function guardarCliente()
-    {
-
-      $caracteres = array('-',',', '.' );
-
-      $rut                 =  $this->input->post('rut');
-      $nombre              =  $this->input->post('nombre');
-      $apellido            =  $this->input->post('apellido');
-      $direccion           =  $this->input->post('direccion');
-      $ciudad              =  $this->input->post('ciudad');
-      $fecha_nacimiento    =  $this->input->post('fecha_nacimiento');
-      $pais                =  $this->input->post('pais');
-      $telefono            =  $this->input->post('telefono');
-      $email               =  $this->input->post('email');
-
-      $rut = str_replace($caracteres, '' , $rut);
-
-
-   if ($rut != null && $nombre != null && $apellido != null && $direccion != null && $ciudad != null && $pais != null && $telefono != null && $email != null) {
-
-         $insert = array(
-            'rut' => $rut,
-            'nombre' => $nombre,
-            'apellido' => $apellido,
-            'direccion' => $direccion,
-            'ciudad' => $ciudad,
-            'fecha_nacimiento' => $fecha_nacimiento,
-            'pais' => $pais,
-            'telefono' => $telefono,
-            'email' => $email
-          );
-
-          if (! $this->cliente->guardar($insert)) {
-
-             $mensaje = 'Sus datos han sido guardados exitosamente';
-             $this->session->set_flashdata('success',$mensaje);
-             $cliente = $this->cliente->buscar($rut);
-             $this->session->cliente = $cliente->id_cliente;
-             redirect('reserva/resumen');
-
-            } else {
-               $error = $this->db->_error_message();
-               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-               $this->session->set_flashdata('error',$mensaje);
-               redirect('reserva/cliente_nuevo');
-          }
-
-      }else {
-         $mensaje = '¡Debe rellenar todos los campos!';
-         $this->session->set_flashdata('error', $mensaje);
-         redirect('reserva/cliente_nuevo');
-      }
-    }
 
 
     public function resumen()
