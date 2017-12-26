@@ -9,7 +9,8 @@ class Cliente_controller extends CI_Controller{
      $this->load->model('cliente');
   }
 
-  public function buscarCliente()
+
+  public function index()
   {
       $this->load->view('template/header');
       $this->load->view('template/nav');
@@ -121,3 +122,12 @@ class Cliente_controller extends CI_Controller{
    }
 
 }
+
+
+/*$mesano = $this->input->post('busqueda_fecha');
+
+if ($mesano != null) {
+    $fecha_busqueda = $mesano;
+}else {
+    $fecha_busqueda = $fecha->format('Y-m');
+}*/

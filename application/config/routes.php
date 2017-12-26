@@ -154,6 +154,7 @@ $route['reserva/cotizacion']                 =     'reserva_controller/cotizacio
 $route['reserva/buscar_reserva/(:any)']                 =     'reserva_controller/buscarReservas/$1';
 $route['reserva/kilometraje/(:num)']                =     'reserva_controller/kilometraje/$1';
 $route['reserva/agregar_kilometraje']        =     'reserva_controller/agregarKilometraje';
+$route['reserva/vehiculos_seleccionado']        =     'reserva_controller/vehiculoSeleccionado';
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';
 

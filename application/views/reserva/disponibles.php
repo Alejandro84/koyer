@@ -35,7 +35,7 @@
 
          <? foreach ( $disponibles as $auto ): ?>
             <? if ( $auto['estado'] === false ): ?>
-            <form action="<?=site_url('reserva/ingresar_cliente');?>" method="post" class="form-horizontal">
+            <form action="<?=site_url('reserva/vehiculos_seleccionado');?>" method="post" class="form-horizontal">
 
                <input type="text" name="fecha_desde" value="<?= $fecha_entrega ?>" hidden>
                <input type="text" name="fecha_hasta" value="<?= $fecha_devolucion ?>" hidden>
