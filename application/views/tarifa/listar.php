@@ -21,10 +21,9 @@
                   <tr>
                      <td><?=$modelo->id_modelo;?></td>
                      <td><?=$modelo->modelo;?></td>
-                     <td><?=$modelo->precio;?></td>
+                     <td>$ <?= number_format($modelo->precio, '0', ',','.');?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
-                        <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="<?= site_url( 'tarifa/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
                      </td>
                   </tr>
                <? endforeach; ?>
@@ -32,15 +31,6 @@
          </table>
 
       </div>
-      <div class="col-md-6">
-         <div class="row">
-            <? $this->load->view('modelo/nuevo');?>
-         </div>
-         <div class="row col-md-6 papelera">
-            <br>
-            <a class="btn btn-warning btn-lg btn-block" href="<?= site_url('modelo/papelera');?>" role="button">Papelera</a>
-         </div>
 
-      </div>
    </div>
 </div>

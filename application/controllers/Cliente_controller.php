@@ -30,9 +30,9 @@ class Cliente_controller extends CI_Controller{
      $cliente = $this->cliente->buscar($rut);
 
      if ( ! $cliente ) {
-        redirect('reserva/cliente_nuevo');
+        redirect('cliente/cliente_nuevo');
      } else {
-        redirect('reserva/busqueda/'.$cliente->id_cliente);
+        redirect('cliente/busqueda/'.$cliente->id_cliente);
      }
    }
 

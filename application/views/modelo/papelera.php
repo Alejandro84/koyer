@@ -32,7 +32,6 @@
 
       </div>
       <div class="col-md-6">
-         <? $this->load->view('marca/papelera');?>
       </div>
 
    </div>

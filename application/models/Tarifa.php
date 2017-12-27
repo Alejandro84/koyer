@@ -27,10 +27,11 @@ class Tarifa extends CI_Model{
 
    public function getOne($id)
    {
-      $this->db->select('*');
+      $this->db->select('TA.*');
+      $this->db->select('MO.modelo');
       $this->db->from('tarifas as TA ');
       $this->db->join('modelos as MO', 'TA.id_modelo = MO.id_modelo', 'left');
-      $this->db->where('TA.id_tarifa' , $id);
+      $this->db->where('Mo.id_modelo' , $id);
 
       $q = $this->db->get();
 

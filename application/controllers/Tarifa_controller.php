@@ -12,10 +12,10 @@ class tarifa_controller extends CI_Controller{
 
   function index()
   {
-     $data[
-        'tarifas' => $this->tarifa->getAll(),
-        'modelos' => $this->modelo->getAll()
-     ];
+      $data = array(
+          'tarifas' => $this->tarifa->getAll(),
+          'modelos' => $this->modelo->getAll()
+      );
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
@@ -66,7 +66,11 @@ class tarifa_controller extends CI_Controller{
 
   public function editar($id_tarifa)
   {
-     $data['tarifa'] = $this->tarifa->getOne($id_tarifa);
+     $data = array(
+         'tarifa' => $this->tarifa->getOne($id_tarifa),
+     );
+     //echo "<pre>";
+     //print_r($data);
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
@@ -77,14 +81,13 @@ class tarifa_controller extends CI_Controller{
   public function actualizar()
   {
      $id_tarifa = $this->input->post('id_tarifa');
-     $tarifa = $this->input->post('tarifa');
      $precio = $this->input->post('precio');
 
-     if ( $tarifa != null && $precio != null)
+     if ( $id_tarifa != null && $precio != null)
         {
 
          $insert = array(
-                        'tarifa' => $tarifa,
+                        'id_tarifa' => $id_tarifa,
                         'precio' => $precio
                      );
 

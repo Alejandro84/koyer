@@ -8,6 +8,8 @@ class Mantenimiento_controller extends CI_Controller{
      parent::__construct();
      $this->load->model('vehiculo');
       $this->load->model('mantenimiento');
+
+      date_default_timezone_set('America/Santiago');
   }
 
   function index()
@@ -200,14 +202,17 @@ class Mantenimiento_controller extends CI_Controller{
         $fecha_desde = $this->input->post('fecha_desde');
         $fecha_hasta = $this->input->post('fecha_hasta');
 
+        $fecha_desde = DateTime::createFromFormat('Y-m-d', $fecha_desde);
+        $fecha_hasta = DateTime::createFromFormat('Y-m-d', $fecha_hasta);
+
         if ($vehiculo != null) {
 
            if ($fecha_desde != null && $fecha_hasta != null) {
 
              $insert = array(
                 'id_vehiculo' => $vehiculo,
-                'fecha_desde' => $fecha_desde . ' 00:00:00',
-                'fecha_hasta' => $fecha_hasta . ' 00:00:00'
+                'fecha_desde' => $fecha_desde->format('Y-m-d 00:00:00'),
+                'fecha_hasta' => $fecha_hasta->format('Y-m-d 00:00:00')
               );
 
               $mantenimientos = $this->mantenimiento->getMantenimientosVehiFec($insert);
@@ -254,8 +259,8 @@ class Mantenimiento_controller extends CI_Controller{
            if ($fecha_desde != null && $fecha_hasta != null) {
 
              $insert = array(
-                 'fecha_desde' => $fecha_desde . ' 00:00:00',
-                 'fecha_hasta' => $fecha_hasta . ' 00:00:00'
+                 'fecha_desde' => $fecha_desde->format('Y-m-d H:i:s'),
+                 'fecha_hasta' => $fecha_hasta->format('Y-m-d H:i:s')
               );
 
               $mantenimientos = $this->mantenimiento->getMantenimientosFec($insert);
@@ -335,18 +340,17 @@ class Mantenimiento_controller extends CI_Controller{
              'total' => $total_mantenimiento
           );
 
-          $this->load->view('mantenimiento/mantencion_pdf' , $data);
-
+          $this->imprimirPDF($vehiculo);
 
      }
 
-     public function imprimirPDF()
+     public function imprimirPDF($id_vehiculo)
      {
-         $url    =   site_url('reserva/mantencion_pdf');
+         $url    =   site_url('mantenimiento/datos_mantimiento/'. $id_vehiculo);
          $html   =   file_get_contents ( $url );
 
          $this->load->library('pdf');
-         //$this->pdf->set_option('isHtml5ParserEnabled', true);
+         $this->pdf->set_option('isHtml5ParserEnabled', true);
          $this->pdf->load_html($html);
          $this->pdf->render();
          $this->pdf->stream( date('YmdHis').'-koyer-mantencion.pdf');

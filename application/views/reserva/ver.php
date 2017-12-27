@@ -1,6 +1,6 @@
 <div class="container">
 
-   <form action="<?=site_url('reserva/cliente_registrado');?>" method="post">
+   <form action="<?=site_url('cliente/cliente_registrado');?>" method="post">
 
    <h3>Datos de Cliente</h3>
 

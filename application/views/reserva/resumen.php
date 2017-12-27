@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-bottom: 60px;">
    <div class="row">
       <h1>Resumen</h1>
       <hr>
@@ -149,18 +149,20 @@
             </thead>
             <tbody>
                 <?php foreach ($extras as $extra ): ?>
+                    <?php if ($extra['cantidad'] != null): ?>
+                        <tr>
+                           <td><?= $extra['info_extra']->extra ?></td>
+                           <td><?= $extra['cantidad'] ?></td>
+                           <td><?= $extra['info_extra']->precio?></td>
+                           <?php if ($extra['info_extra']->por_dia == 1 ): ?>
+                                 <td><?= ($extra['info_extra']->precio * $extra['cantidad']) * $dias ?> CLP</td>
+                           <?php else: ?>
+                                 <td><?= $extra['info_extra']->precio * $extra['cantidad']  ?> CLP</td>
+                           <?php endif; ?>
 
-                         <tr>
-                            <td><?= $extra['info_extra']->extra ?></td>
-                            <td><?= $extra['cantidad'] ?></td>
-                            <td><?= $extra['info_extra']->precio?></td>
-                            <?php if ($extra['info_extra']->por_dia == 1 ): ?>
-                                  <td><?= ($extra['info_extra']->precio * $extra['cantidad']) * $dias ?> CLP</td>
-                            <?php else: ?>
-                                  <td><?= $extra['info_extra']->precio * $extra['cantidad']  ?> CLP</td>
-                            <?php endif; ?>
-
-                         </tr>
+                        </tr>
+                        
+                    <?php endif; ?>
 
 
                       <?php endforeach; ?>

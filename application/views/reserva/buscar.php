@@ -6,9 +6,9 @@
          <h3>Cliente registrado</h3>
 
          <? $this->load->view('template/alert'); ?>
-         
+
          <div class="form-group">
-            <form action="<?=site_url('reserva/buscar');?>" method="post">
+            <form action="<?=site_url('cliente/buscar');?>" method="post">
                <div class="form-inline">
 
                   <div class="form-group">

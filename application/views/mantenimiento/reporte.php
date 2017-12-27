@@ -17,6 +17,7 @@
                   <?php endforeach; ?>
                </select>
             </div>
+            <!--
             <div class="form-group">
                <label for="">Desde:</label>
                 <div class='input-group date' id='fecha_desde'>
@@ -35,7 +36,7 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
-             </div>
+            </div>-->
              <input type="submit" class="btn btn-success btn-block" value="Buscar">
          </form>
 
