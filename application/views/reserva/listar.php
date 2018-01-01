@@ -351,6 +351,12 @@
                               <?php endif; ?>
 
                           </td>
+                          <td>
+                              <ul>
+                                  <li><b>Total:</b> $<?= number_format($reserva['reserva']->total, '2', ',' , '.');?></li>
+                                  <li><b>Abonado:</b> $<?= number_format($reserva['reserva']->abonado, '2', ',' , '.');?></li>
+                              </ul>
+                          </td>
 
                           <?php if ($reserva['reserva']->estado_arriendo == 1): ?>
                              <td class="success">En Arriendo </td>

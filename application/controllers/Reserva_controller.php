@@ -430,6 +430,13 @@ class Reserva_controller extends CI_Controller{
       $sub_total           =  $this->input->post('sub_total');
       $total               =  $this->input->post('total');
 
+        $pasajeros 			= 	$this->input->post('pasajeros');
+        $permiso_conducir 	= 	$this->input->post('permiso_conducir');
+        $permiso_conducir 	= 	DateTime::createFromFormat('d/m/Y H:i', $permiso_conducir);
+
+        $numero_vuelo 		= 	$this->input->post('numero_vuelo');
+        $hospedaje 			= 	$this->input->post('hospedaje');
+
       $caracteres = array('$',',', '.' );
 
       $total =str_replace($caracteres, '' , $total);
@@ -447,33 +454,41 @@ class Reserva_controller extends CI_Controller{
          'total' => $total
       );
 
-      if ( ! $this->reserva->guardar( $insert ) )
-      {
-       $error = $this->db->_error_message();
-       $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
-       $this->session->set_flashdata('error',$mensaje);
-       redirect('reserva');
-      } else {
-       $mensaje = 'Sus datos han sido guardados exitosamente';
-       $this->session->set_flashdata('success',$mensaje);
-       foreach ($extras as $extra) {
-           if ( $extra['cantidad'] != null) {
-             $id_extra = $extra['id_extra'];
-             $cantidad = $extra['cantidad'];
-             $reserva = $this->reserva->devolverId($codigo_reserva);
+      if ($pasajeros =! null && $permiso_conducir =! null) {
+          if ( ! $this->reserva->guardar( $insert ) )
+          {
+               $error = $this->db->_error_message();
+               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+               $this->session->set_flashdata('error',$mensaje);
+               redirect('reserva');
+          } else {
+           $mensaje = 'Sus datos han sido guardados exitosamente';
+           $this->session->set_flashdata('success',$mensaje);
+           foreach ($extras as $extra) {
+               if ( $extra['cantidad'] != null) {
+                 $id_extra = $extra['id_extra'];
+                 $cantidad = $extra['cantidad'];
+                 $reserva = $this->reserva->devolverId($codigo_reserva);
 
-             $insert2 = array(
-                'id_extra' => $id_extra,
-                'cantidad' => $cantidad,
-                'id_reserva' => $reserva->id_reserva
-             );
+                 $insert2 = array(
+                    'id_extra' => $id_extra,
+                    'cantidad' => $cantidad,
+                    'id_reserva' => $reserva->id_reserva
+                 );
 
-             $this->extra_reserva->guardar($insert2);
+                 $this->extra_reserva->guardar($insert2);
+               }
            }
-       }
-       $reserva = $this->reserva->devolverId($codigo);
-       redirect('reserva');
+           $reserva = $this->reserva->devolverId($codigo);
+           redirect('reserva');
+        }
+    }else {
+        $error = $this->db->_error_message();
+        $mensaje = 'Ingrese Los datos Obligatorios'.$error;
+        $this->session->set_flashdata('error',$mensaje);
+        redirect('reserva/resumen');
     }
+
    }
 
    public function verReserva($id_reserva)

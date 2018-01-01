@@ -6,6 +6,8 @@
    <div class="row"><!--informacion de la reserva-->
 
       <div class="col-md-12">
+          <? $this->load->view('template/alert'); ?>
+          
          <h2>Datos de la reserva</h2>
          <div class="col-md-4">
             <label for="">Código de la reserva:</label><p><?= $codigo_reserva ?> </p>
@@ -161,7 +163,7 @@
                            <?php endif; ?>
 
                         </tr>
-                        
+
                     <?php endif; ?>
 
 
@@ -215,7 +217,46 @@
       </div>
 
    </div>
+   <hr>
+   <div class="row">
 
+       <h4>Datos Extras(obligatorio)</h4>
+         <div class="form-group col-md-6">
+            <label>Cantidad de pasajeros</label>
+            <input type="number" name="pasajeros" class="form-control">
+         </div>
+
+         <div class="form-group col-md-6">
+            <label>Fecha de vencimiento del documento de conducir</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input name="permiso_conducir" type="text" placeholder="<?php echo $this->lang->line('fecha_input_permiso');?>" id="calendar_hasta" class="form-control datepicker">
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+         </div>
+
+      </div>
+
+      <div class="row">
+
+          <h4>Datos De vuelo (no obligatorio)</h4>
+         <div class="form-group col-md-4">
+            <label>Nro del vuelo</label>
+            <input type="text" name="numero_vuelo" class="form-control">
+         </div>
+
+         <div class="form-group col-md-4">
+            <label>Nombre de Hospedaje</label>
+            <input type="mail" name="hospedaje" class="form-control">
+         </div>
+
+         <div class="form-group col-md-4">
+            <label>Dirección de Hospedaje</label>
+            <input type="mail" name="hospedaje" class="form-control">
+         </div>
+
+      </div>
       <input type="text" name="codigo_reserva" value="<?= $codigo_reserva?>" hidden="">
       <input type="text" name="fecha_entrega" value="<?= $fecha_entrega?>" hidden="">
       <input type="text" name="fecha_devolucion" value="<?= $fecha_devolucion?>" hidden="">
@@ -225,7 +266,7 @@
       <input type="text" name="id_vehiculo" value="<?=$vehiculo->id_vehiculo;?>" hidden="">
       <input type="text" name="precio_arriendo_vehiculo" value="<?=$precio_arriendo_vehiculo;?>" hidden="">
       <input type="text" name="sub_total" value="<?=$sub_total;?>" hidden="">
-
+      <hr>
       <div class="row">
           <!--
          <div class="col-md-6">
