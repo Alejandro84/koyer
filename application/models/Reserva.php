@@ -92,16 +92,6 @@ class Reserva extends CI_Model{
          return $q->result();
       }
 
-      $q = $this->db->get();
-
-     if ( $q->num_rows() < 1 )
-     {
-
-        return false;
-     } else {
-
-        return $q->result();
-     }
   }
 
   public function verReserva($id)

@@ -32,13 +32,15 @@ class Extra_controller extends CI_Controller{
   {
      $extra = $this->input->post('extra');
      $precio = $this->input->post('precio');
+    $por_dia = $this->input->post('por_dia');
 
      if ( $extra != null && $precio != null)
         {
 
          $insert = array(
                         'extra' => $extra,
-                        'precio' => $precio
+                        'precio' => $precio,
+                        'por_dia' => $por_dia
                      );
 
            if ( ! $this->extra->guardar( $insert ) )
@@ -46,7 +48,7 @@ class Extra_controller extends CI_Controller{
               //$error = $this->db->_error_message();
               $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
               $this->session->set_flashdata('error',$mensaje);
-              redirect('extra/nuevo');
+              redirect('extra');
            } else {
               $mensaje = 'Sus datos han sido guardados exitosamente';
               $this->session->set_flashdata('success',$mensaje);
@@ -55,7 +57,7 @@ class Extra_controller extends CI_Controller{
         } else {
            $mensaje = '¡Debe rellenar todos los campos!';
            $this->session->set_flashdata('error', $mensaje);
-           redirect('extra/nuevo');
+           redirect('extra');
         }
 
   }
@@ -75,13 +77,15 @@ class Extra_controller extends CI_Controller{
      $id_extra = $this->input->post('id_extra');
      $extra = $this->input->post('extra');
      $precio = $this->input->post('precio');
+     $por_dia = $this->input->post('por_dia');
 
      if ( $extra != null && $precio != null)
         {
 
          $insert = array(
                         'extra' => $extra,
-                        'precio' => $precio
+                        'precio' => $precio,
+                        'por_dia' => $por_dia
                      );
 
            if ( ! $this->extra->actualizar( $insert , $id_extra ) )

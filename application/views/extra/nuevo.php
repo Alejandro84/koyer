@@ -7,11 +7,10 @@
       <label for="extra">Precio</label>
       <input type="number" name="precio" class="form-control" placeholder="Ej: 20000">
    </div>
-   <div class="form-group">
-      <label for="extra">Unidades</label>
-      <input type="number" name="stock" class="form-control" placeholder="Ej: 10">
-   </div>
 
+   <div class="checkbox">
+       <label for=""> <input type="checkbox" name="por_dia" value="1"> Pago por dia</label>
+   </div>
    <input type="submit" name="" value="Guardar" class="btn btn-success">
 
 </form>

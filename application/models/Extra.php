@@ -46,7 +46,16 @@ class extra extends CI_Model{
 
    public function guardar( $data )
    {
-     $this->db->insert('extras', $data ) ;
+     if ( ! $this->db->insert('extras', $data ) ) {
+
+         return false;
+
+     } else {
+
+         return true;
+
+     }
+     
    }
 
 
@@ -119,6 +128,6 @@ class extra extends CI_Model{
       }
    }
 
-   
+
 
 }

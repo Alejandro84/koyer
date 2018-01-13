@@ -92,8 +92,7 @@ class Reserva_controller extends CI_Controller{
 
           $vehiculosConReserva[] = [
               'vehiculo' => $v,
-              'reservas' => $reserva,
-              'extra' => $this->extra_reserva->getExtras($reserva->id_reserva)
+              'reservas' => $reserva
           ];
       }
 
@@ -441,18 +440,22 @@ class Reserva_controller extends CI_Controller{
 
       $total =str_replace($caracteres, '' , $total);
 
-      $insert = array(
-         'codigo_reserva' => $codigo_reserva,
-         'fecha_entrega' => $fecha_entrega,
-         'fecha_devolucion' => $fecha_devolucion,
-         'locacion_entrega' => $locacion_entrega,
-         'locacion_devolucion' => $locacion_devolucion,
-         'id_vehiculo' => $vehiculo,
-         'id_cliente' => $cliente,
-         'precio_arriendo_vehiculo' => $precio_arriendo_vehiculo,
-         'sub_total' => $sub_total,
-         'total' => $total
-      );
+        $insert = array(
+            'codigo_reserva'        => $codigo_reserva,
+            'fecha_entrega'         => $fecha_entrega,
+            'fecha_devolucion'      => $fecha_devolucion,
+            'locacion_entrega'      => $locacion_entrega,
+            'locacion_devolucion'   => $locacion_devolucion,
+            'id_vehiculo'           => $vehiculo,
+            'id_cliente'            => $cliente,
+            'vencimiento_permiso' 	=> $permiso_conducir->format('Y-m-d H:i:s'),
+            'pasajeros' 			=> $pasajeros,
+            'nro_vuelo' 		    => $numero_vuelo,
+            'direccion_hospedaje' 	=> $hospedaje,
+            'precio_arriendo_vehiculo' => $precio_arriendo_vehiculo,
+            'sub_total'             => $sub_total,
+            'total'                 => $total
+        );
 
       if ($pasajeros =! null && $permiso_conducir =! null) {
           if ( ! $this->reserva->guardar( $insert ) )

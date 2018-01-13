@@ -18,9 +18,8 @@
             <input type="text" name="precio" class="form-control" value="<?= $extra->precio;?>">
          </div>
 
-         <div class="form-group">
-            <label for="extra">Unidades:</label>
-            <input type="text" name="stock" class="form-control" value="<?= $extra->stock;?>">
+         <div class="checkbox">
+             <label for=""> <input type="checkbox" name="por_dia" value="1"> Pago por dia</label>
          </div>
 
             <input type="text" name="id_extra" value="<?= $extra->id_extra;?>" hidden="true">

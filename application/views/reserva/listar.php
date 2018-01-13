@@ -1,4 +1,7 @@
 <div class="container">
+    <div class="row">
+        
+    </div>
 
    <div class="row">
       <h1>Reservas</h1>
