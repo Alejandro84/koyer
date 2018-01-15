@@ -11,9 +11,9 @@ class Reserva_controller extends CI_Controller{
 
       date_default_timezone_set('America/Buenos_Aires');
 
-      if ( ! $this->session->logueado ) {
+      /*if ( ! $this->session->logueado ) {
          redirect('login');
-      }
+     }*/
 
       $this->load->model('reserva');
       $this->load->model('cliente');
@@ -701,9 +701,9 @@ class Reserva_controller extends CI_Controller{
              'extras' => $datos_extra
           );
 
-          echo "<pre>";
-          print_r($data);
-          //$this->load->view('reserva/reserva_pdf', $data);
+          //echo "<pre>";
+          //print_r($data);
+         $this->load->view('reserva/reserva_pdf', $data);
    }
     public function imprimirPDF($id_reserva)
     {
