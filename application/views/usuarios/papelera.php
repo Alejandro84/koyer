@@ -13,10 +13,10 @@
                   foreach ($marcas as $marca):
                ?>
                   <tr>
-                     <td><?=$marca->id_marca;?></td>
-                     <td><?=$marca->marca;?></td>
+                     <td><?php echo $marca->id_marca;?></td>
+                     <td><?php echo $marca->marca;?></td>
                      <td>
-                        <a href="<?= site_url( 'marca/activar/'.$marca->id_marca ); ?>" class="btn btn-warning">Recuperar</a>
+                        <a href="<?php echo  site_url( 'marca/activar/'.$marca->id_marca ); ?>" class="btn btn-warning">Recuperar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

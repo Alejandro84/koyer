@@ -31,12 +31,12 @@
                   foreach ($descuentos as $descuento):
                ?>
                   <tr>
-                     <td><?=$descuento->id_descuento;?></td>
-                     <td><?=$descuento->descuento;?></td>
-                     <td><?=$descuento->valor;?> %</td>
+                     <td><?php echo $descuento->id_descuento;?></td>
+                     <td><?php echo $descuento->descuento;?></td>
+                     <td><?php echo $descuento->valor;?> %</td>
                      <td>
-                        <a href="<?= site_url( 'descuento/editar/'.$descuento->id_descuento ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?= site_url( 'descuento/borrar/'.$descuento->id_descuento ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?php echo  site_url( 'descuento/editar/'.$descuento->id_descuento ); ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?php echo  site_url( 'descuento/borrar/'.$descuento->id_descuento ); ?>" class="btn btn-danger">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

@@ -2,7 +2,7 @@
 
       <h1>Usuarios <small>Nuevo</small></h1>
 
-      <form action="<?=site_url('usuario/guardar');?>" method="post" >
+      <form action="<?php echo site_url('usuario/guardar');?>" method="post" >
          <div class="form-group">
             <label for="usuario">Nombre:</label>
             <input type="text" name="nombre" value="" class="form-control">

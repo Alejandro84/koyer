@@ -58,10 +58,10 @@ $dias_arriendo = $dias_arriendo / 60 ; // horas
 $dias_arriendo = $dias_arriendo / 24 ; // dias
 $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
 ?>
-    
-    
+
+
     <div class="container">
-   
+
         <div class="row">
             <div class="col-md-6">
                 <h1>Resumen</h1>
@@ -79,7 +79,7 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
 
 
         <div class="row">
-            
+
             <div class="col-md-4">
                 <label class="label">Código de la reserva:</label><p><?php echo $reserva->codigo_reserva; ?></p>
                 <label class="label">Dias de arriendo:</label><p><?php echo $dias_arriendo; ?></p>
@@ -115,42 +115,42 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
 
                     <tbody>
                         <tr>
-                            <td><?=$cliente->rut;?></td>
-                            <td><?=$cliente->nombre;?></td>
-                            <td><?=$cliente->apellido;?></td>
+                            <td><?php echo $cliente->rut;?></td>
+                            <td><?php echo $cliente->nombre;?></td>
+                            <td><?php echo $cliente->apellido;?></td>
                         </tr>
                     </tbody>
-                
+
                     <thead>
                         <tr>
                             <th>Dirección</th>
                             <th>Ciudad</th>
                             <th>País</th>
                         </tr>
-                        
+
                     </thead>
 
                     <tbody>
                         <tr>
-                            <td><?=$cliente->direccion;?></td>
-                            <td><?=$cliente->ciudad;?></td>
-                            <td><?=$cliente->pais;?></td>
+                            <td><?php echo $cliente->direccion;?></td>
+                            <td><?php echo $cliente->ciudad;?></td>
+                            <td><?php echo $cliente->pais;?></td>
                         </tr>
                     </tbody>
-                
+
                     <thead>
                         <tr>
                             <th>Teléfono</th>
                             <th>E-Mail</th>
                             <th></th>
                         </tr>
-                        
+
                     </thead>
-                    
+
                     <tbody>
                         <tr>
-                            <td><?=$cliente->telefono;?></td>
-                            <td><?=$cliente->email;?></td>
+                            <td><?php echo $cliente->telefono;?></td>
+                            <td><?php echo $cliente->email;?></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -176,14 +176,14 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
                             <th>Modelo</th>
                             <th>Marca</th>
                         </tr>
-                        
+
                     </thead>
 
                     <tbody>
                         <tr>
-                            <td><?=$vehiculo->patente;?></td>
-                            <td><?=$vehiculo->modelo;?></td>
-                            <td><?=$vehiculo->marca;?></td>
+                            <td><?php echo $vehiculo->patente;?></td>
+                            <td><?php echo $vehiculo->modelo;?></td>
+                            <td><?php echo $vehiculo->marca;?></td>
                         </tr>
                     </tbody>
 
@@ -197,9 +197,9 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
 
                     <tbody>
                         <tr>
-                            <td><?=$vehiculo->transmision;?></td>
-                            <td><?=$vehiculo->categoria;?></td>
-                            <td><?=$vehiculo->combustible;?></td>
+                            <td><?php echo $vehiculo->transmision;?></td>
+                            <td><?php echo $vehiculo->categoria;?></td>
+                            <td><?php echo $vehiculo->combustible;?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -209,8 +209,8 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
         </div><!-- /row vehiculo -->
 
 
-    <?php 
-    $suma_extra = 0; 
+    <?php
+    $suma_extra = 0;
     if ( ! $extras ):
     else: ?>
 
@@ -230,19 +230,19 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
                             <th>Cantidad</th>
                             <th>Precio</th>
                         </tr>
-                        
+
                     </thead>
-                    
+
                     <tbody>
-                        <?php 
-                        foreach ($extras as $extra ): 
+                        <?php
+                        foreach ($extras as $extra ):
                             $total_extra = $extra->cantidad * $extra->precio;
                             $suma_extra = $suma_extra + $total_extra;
                         ?>
                         <tr>
-                            <td><?= $extra->extra ?></td>
-                            <td><?= $extra->cantidad ?></td>
-                            <td><?= $total_extra ?></td>
+                            <td><?php echo  $extra->extra ?></td>
+                            <td><?php echo  $extra->cantidad ?></td>
+                            <td><?php echo  $total_extra ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -252,7 +252,7 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
         </div><!-- /row extras -->
     <?php endif; ?>
 
-    
+
         <div class="row">
             <div class="col-md-12">
                 <h2>Precio</h2>
@@ -260,7 +260,7 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
 
             <div class="col-md-12">
                 <table class="table table-striped table-bordered">
-                    
+
                     <thead>
                         <tr>
                             <th>Precio por dia</th>
@@ -281,7 +281,7 @@ $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
                         </tr>
                     </tbody>
                 </table>
-            </div> 
+            </div>
         </div><!-- row precio -->
 
         <div class="row">

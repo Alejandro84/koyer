@@ -16,9 +16,9 @@
                 <tbody>
                     <?php foreach ($kilometrajes as $kilom): ?>
                         <tr>
-                            <td><?= $kilom['vehiculo']->patente ?></td>
-                            <td><?= $kilom['vehiculo']->marca . ' ' . $kilom['vehiculo']->modelo ?></td>
-                            <td><?= $kilom['km']->kilometraje?></td>
+                            <td><?php echo  $kilom['vehiculo']->patente ?></td>
+                            <td><?php echo  $kilom['vehiculo']->marca . ' ' . $kilom['vehiculo']->modelo ?></td>
+                            <td><?php echo  $kilom['km']->kilometraje?></td>
                         </tr>
                     <?php endforeach; ?>
 

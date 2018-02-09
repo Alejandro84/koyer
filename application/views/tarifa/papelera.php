@@ -1,6 +1,6 @@
 <div class="container">
    <div class="row">
-      <a class="btn btn-warning btn-lg" href="<?= site_url('modelo');?>" role="button">Volver</a>
+      <a class="btn btn-warning btn-lg" href="<?php echo  site_url('modelo');?>" role="button">Volver</a>
    </div>
    <div class="row">
 
@@ -19,11 +19,11 @@
                   foreach ($modelos as $modelo):
                ?>
                   <tr>
-                     <td><?=$modelo->id_modelo;?></td>
-                     <td><?=$modelo->modelo;?></td>
-                     <td><?=$modelo->marca;?></td>
+                     <td><?php echo $modelo->id_modelo;?></td>
+                     <td><?php echo $modelo->modelo;?></td>
+                     <td><?php echo $modelo->marca;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/activar/'.$modelo->id_modelo ); ?>" class="btn btn-warning">Recuperar</a>
+                        <a href="<?php echo  site_url( 'modelo/activar/'.$modelo->id_modelo ); ?>" class="btn btn-warning">Recuperar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

@@ -8,7 +8,7 @@
          <? $this->load->view('template/alert'); ?>
 
          <div class="form-group">
-            <form action="<?=site_url('cliente/buscar');?>" method="post">
+            <form action="<?php echo site_url('cliente/buscar');?>" method="post">
                <div class="form-inline">
 
                   <div class="form-group">

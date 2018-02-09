@@ -31,7 +31,7 @@ class Reserva_controller extends CI_Controller{
 
       $vehiculosConReserva;
       $vehiculos = $this->vehiculo->getAll();
-      $reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
+      //$reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
 
       foreach( $vehiculos as $v ) {
           $vehiculosConReserva[] = [
@@ -40,37 +40,20 @@ class Reserva_controller extends CI_Controller{
           ];
       }
 
-      $reservaExtra;
-
-      foreach ($reservas as $reserva) {
-          $reservaExtra[] =[
-              'reserva' => $reserva,
-              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
-          ];
-      }
-
-      $reservasPorPagar = $this->reserva->getReservasPorPagar($fecha->format('Y-m'));
-      $reservasPorPagarExtra;
-
-      foreach ($reservasPorPagar as $porpagar) {
-          $reservasPorPagarExtra[] =[
-              'reserva' => $porpagar,
-              'extras' => $this->extra_reserva->getExtras($porpagar->id_reserva)
-          ];
-      }
-
       $data = array(
          'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
-         'reservas' => $reservaExtra,
-         'reservasPorPagar' => $reservasPorPagarExtra,
          'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
-         'fecha' => $fecha,
+         //'fecha' => $fecha,
          'mes' => $fecha
       );
 
+
+      // ########################################################################
+      $vehiculos = $this->vehiculo->getAll();
+
       //echo "<pre>";
-      //print_r($data);
+      //print_r($vehiculosConReserva);
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
@@ -448,7 +431,7 @@ class Reserva_controller extends CI_Controller{
             'locacion_devolucion'   => $locacion_devolucion,
             'id_vehiculo'           => $vehiculo,
             'id_cliente'            => $cliente,
-            'vencimiento_permiso' 	=> $permiso_conducir->format('Y-m-d H:i:s'),
+            //'vencimiento_permiso' 	=> $permiso_conducir->format('Y-m-d H:i:s'),
             'pasajeros' 			=> $pasajeros,
             'nro_vuelo' 		    => $numero_vuelo,
             'direccion_hospedaje' 	=> $hospedaje,

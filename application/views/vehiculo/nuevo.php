@@ -22,7 +22,7 @@
                <select class="form-control" id="marca" name="id_marca">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($marca as $marca ):?>
-                     <option value="<?=$marca->id_marca;?>"><?=$marca->marca;?></option>
+                     <option value="<?php echo $marca->id_marca;?>"><?php echo $marca->marca;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -34,7 +34,7 @@
                <select class="form-control" id="modelo" name="id_modelo">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($modelo as $modelo ):?>
-                     <option value="<?=$modelo->id_modelo;?>"><?=$modelo->modelo;?></option>
+                     <option value="<?php echo $modelo->id_modelo;?>"><?php echo $modelo->modelo;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -50,7 +50,7 @@
                <select class="form-control" name="id_categoria">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($categoria as $categoria ):?>
-                     <option value="<?=$categoria->id_categoria;?>"><?=$categoria->categoria;?></option>
+                     <option value="<?php echo $categoria->id_categoria;?>"><?php echo $categoria->categoria;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -62,7 +62,7 @@
                <select class="form-control" name="id_transmision">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($transmision as $transmision ):?>
-                     <option value="<?=$transmision->id_transmision;?>"><?=$transmision->transmision;?></option>
+                     <option value="<?php echo $transmision->id_transmision;?>"><?php echo $transmision->transmision;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -79,7 +79,7 @@
                <select class="form-control" name="id_combustible">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($combustible as $combustible ):?>
-                     <option value="<?=$combustible->id_combustible;?>"><?=$combustible->combustible;?></option>
+                     <option value="<?php echo $combustible->id_combustible;?>"><?php echo $combustible->combustible;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
@@ -89,7 +89,7 @@
                <select class="form-control" name="id_tarifa">
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($tarifa as $tarifa ):?>
-                     <option value="<?=$tarifa->id_tarifa;?>"><?=$tarifa->precio;?></option>
+                     <option value="<?php echo $tarifa->id_tarifa;?>"><?php echo $tarifa->precio;?></option>
                   <?php endforeach; ?>
                </select>
             </div>

@@ -23,12 +23,12 @@
                foreach ($mantenimientos as $mantenimiento):
             ?>
                <tr>
-                  <td><?=$mantenimiento->mantenimiento;?></td>
-                  <td>$<?= number_format($mantenimiento->costo, '0', ',' ,'.');?></td>
-                  <td><?=$mantenimiento->patente;?></td>
-                  <td><?=$mantenimiento->modelo;?></td>
-                  <td><?=$mantenimiento->comentario;?></td>
-                  <td><?=$mantenimiento->fecha_mantencion;?></td>
+                  <td><?php echo $mantenimiento->mantenimiento;?></td>
+                  <td>$<?php echo  number_format($mantenimiento->costo, '0', ',' ,'.');?></td>
+                  <td><?php echo $mantenimiento->patente;?></td>
+                  <td><?php echo $mantenimiento->modelo;?></td>
+                  <td><?php echo $mantenimiento->comentario;?></td>
+                  <td><?php echo $mantenimiento->fecha_mantencion;?></td>
 
                </tr>
             <? endforeach; ?>
@@ -39,7 +39,7 @@
          </thead>
          <tbody>
             <tr>
-               <td><?=$total;?></td>
+               <td><?php echo $total;?></td>
             </tr>
          </tbody>
       </table>

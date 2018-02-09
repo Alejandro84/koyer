@@ -1,4 +1,4 @@
-<form action="<?=site_url('extra/guardar');?>" method="post" >
+<form action="<?php echo site_url('extra/guardar');?>" method="post" >
    <div class="form-group">
       <label for="">Nombre</label>
       <input type="text" name="extra" class="form-control" placeholder="Ej: Bidón de 10 Lts.">

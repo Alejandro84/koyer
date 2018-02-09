@@ -20,13 +20,13 @@
                   foreach ($modelos as $modelo):
                ?>
                   <tr>
-                     <td><?=$modelo->id_modelo;?></td>
-                     <td><?=$modelo->modelo;?></td>
-                     <td><?=$modelo->marca;?></td>
-                     <td><?=$modelo->precio;?></td>
+                     <td><?php echo $modelo->id_modelo;?></td>
+                     <td><?php echo $modelo->modelo;?></td>
+                     <td><?php echo $modelo->marca;?></td>
+                     <td><?php echo $modelo->precio;?></td>
                      <td>
-                        <a href="<?= site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
-                        <a href="<?= site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="<?php echo  site_url( 'modelo/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
+                        <a href="<?php echo  site_url( 'modelo/borrar/'.$modelo->id_modelo ); ?>" class="btn btn-danger btn-sm">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>
@@ -40,7 +40,7 @@
          </div>
          <div class="row col-md-6 papelera">
             <br>
-            <a class="btn btn-warning btn-lg btn-block" href="<?= site_url('modelo/papelera');?>" role="button">Papelera</a>
+            <a class="btn btn-warning btn-lg btn-block" href="<?php echo  site_url('modelo/papelera');?>" role="button">Papelera</a>
          </div>
 
       </div>

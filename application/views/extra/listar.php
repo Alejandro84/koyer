@@ -23,17 +23,17 @@
                   foreach ($extras as $extra):
                ?>
                   <tr>
-                     <td><?=$extra->id_extra;?></td>
-                     <td><?=$extra->extra;?></td>
-                     <td><?=$extra->precio;?></td>
+                     <td><?php echo $extra->id_extra;?></td>
+                     <td><?php echo $extra->extra;?></td>
+                     <td><?php echo $extra->precio;?></td>
                      <?php if ($extra->por_dia ==1): ?>
                          <td>Pago por dia</td>
                      <?php else: ?>
                          <td>Pago por reserva</td>
                     <?php endif; ?>
                      <td>
-                        <a href="<?= site_url( 'extra/editar/'.$extra->id_extra ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?= site_url( 'extra/borrar/'.$extra->id_extra ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?php echo  site_url( 'extra/editar/'.$extra->id_extra ); ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?php echo  site_url( 'extra/borrar/'.$extra->id_extra ); ?>" class="btn btn-danger">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

@@ -19,11 +19,11 @@
                   foreach ($modelos as $modelo):
                ?>
                   <tr>
-                     <td><?=$modelo->id_modelo;?></td>
-                     <td><?=$modelo->modelo;?></td>
-                     <td>$ <?= number_format($modelo->precio, '0', ',','.');?></td>
+                     <td><?php echo $modelo->id_modelo;?></td>
+                     <td><?php echo $modelo->modelo;?></td>
+                     <td>$ <?php echo  number_format($modelo->precio, '0', ',','.');?></td>
                      <td>
-                        <a href="<?= site_url( 'tarifa/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
+                        <a href="<?php echo  site_url( 'tarifa/editar/'.$modelo->id_modelo ); ?>" class="btn btn-primary btn-sm" >Editar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

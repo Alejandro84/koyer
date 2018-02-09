@@ -6,19 +6,19 @@
 
    <div class="row">
 
-      <form action="<?=site_url('descuento/actualizar');?>" method="post" class="col-xs-4">
+      <form action="<?php echo site_url('descuento/actualizar');?>" method="post" class="col-xs-4">
 
          <div class="form-group">
             <label for="descuento">descuento</label>
-            <input type="text" name="descuento" value="<?= $descuento->descuento;?>" class="form-control" placeholder="Ej: Chevrolet">
+            <input type="text" name="descuento" value="<?php echo $descuento->descuento;?>" class="form-control" placeholder="Ej: Chevrolet">
          </div>
 
          <div class="form-group">
             <label for="valor">Porcentaje (%)</label>
-            <input type="text" name="valor" value="<?= $descuento->valor;?>" class="form-control" >
+            <input type="text" name="valor" value="<?php echo $descuento->valor;?>" class="form-control" >
          </div>
 
-            <input type="text" name="id_descuento" value="<?= $descuento->id_descuento;?>" hidden="true">
+            <input type="text" name="id_descuento" value="<?php echo $descuento->id_descuento;?>" hidden="true">
 
             <input type="submit" name="" value="Guardar" class="btn btn-success">
 

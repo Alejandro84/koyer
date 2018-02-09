@@ -23,12 +23,12 @@
                   foreach ($extras as $extra):
                ?>
                   <tr>
-                     <td><?=$extra->id_extra;?></td>
-                     <td><?=$extra->extra;?></td>
-                     <td><?=$extra->extra;?></td>
-                     <td><?=$extra->stock;?></td>
+                     <td><?php echo $extra->id_extra;?></td>
+                     <td><?php echo $extra->extra;?></td>
+                     <td><?php echo $extra->extra;?></td>
+                     <td><?php echo $extra->stock;?></td>
                      <td>
-                        <a href="<?= site_url( 'extra/activar/'.$extra->id_extra ); ?>" class="btn btn-warning">Recuperar</a>
+                        <a href="<?php echo  site_url( 'extra/activar/'.$extra->id_extra ); ?>" class="btn btn-warning">Recuperar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

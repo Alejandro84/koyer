@@ -11,7 +11,8 @@ class Vehiculo extends CI_Model{
 
    public function getAll()
       {
-        $this->db->select('VE.*');
+        $this->db->select('VE.id_vehiculo');
+        $this->db->select('VE.patente');
         $this->db->select('MA.marca');
         $this->db->select('MO.modelo');
         $this->db->select('TR.transmision');

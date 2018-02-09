@@ -1,14 +1,14 @@
 
       <h1>Mantenimientos <small>Ingrese mantenimiento</small></h1>
 
-      <form action="<?=site_url('mantenimiento/guardar');?>" method="post">
+      <form action="<?php echo site_url('mantenimiento/guardar');?>" method="post">
 
          <div class="form-group">
             <label for="">Tipo de Mantenimiento:</label>
             <select class="form-control" name="id_tipo_mantenimiento">
                <option value="">Elija una opción...</option>
                <?php foreach ($tipos_mantenimientos as $tipo_mantenimiento ):?>
-                  <option value="<?=$tipo_mantenimiento->id_tipo_mantenimiento;?>"><?=$tipo_mantenimiento->mantenimiento;?></option>
+                  <option value="<?php echo $tipo_mantenimiento->id_tipo_mantenimiento;?>"><?php echo $tipo_mantenimiento->mantenimiento;?></option>
                <?php endforeach; ?>
             </select>
          </div>
@@ -23,7 +23,7 @@
             <select class="form-control" name="id_vehiculo">
                <option value="">Elija una opción...</option>
                <?php foreach ($vehiculos as $vehiculo ):?>
-                  <option value="<?=$vehiculo->id_vehiculo;?>"> <b><?=$vehiculo->patente;?></b> <?=$vehiculo->modelo;?></option>
+                  <option value="<?php echo $vehiculo->id_vehiculo;?>"> <b><?php echo $vehiculo->patente;?></b> <?php echo $vehiculo->modelo;?></option>
                <?php endforeach; ?>
             </select>
          </div>

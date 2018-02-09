@@ -23,12 +23,12 @@
                   foreach ($impuestos as $impuesto):
                ?>
                   <tr>
-                     <td><?=$impuesto->id_impuesto;?></td>
-                     <td><?=$impuesto->impuesto;?></td>
-                     <td><?=$impuesto->valor;?> %</td>
+                     <td><?php echo $impuesto->id_impuesto;?></td>
+                     <td><?php echo $impuesto->impuesto;?></td>
+                     <td><?php echo $impuesto->valor;?> %</td>
                      <td>
-                        <a href="<?= site_url( 'impuesto/editar/'.$impuesto->id_impuesto ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?= site_url( 'impuesto/borrar/'.$impuesto->id_impuesto ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?php echo  site_url( 'impuesto/editar/'.$impuesto->id_impuesto ); ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?php echo  site_url( 'impuesto/borrar/'.$impuesto->id_impuesto ); ?>" class="btn btn-danger">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

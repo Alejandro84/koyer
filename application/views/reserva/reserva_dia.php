@@ -37,21 +37,21 @@
             <tbody>
                <?php foreach ($reservas as $reserva ): ?>
                   <tr>
-                     <td><a href="<?= site_url( 'reserva/ver_reserva/'.$reserva->id_reserva ); ?>" class="btn btn-primary">Ver Reserva</a></td>
-                     <td><?=$reserva->id_reserva;?></td>
-                     <td><?=$reserva->codigo_reserva;?></td>
-                     <td><?=$reserva->patente;?></td>
-                     <td><?=$reserva->nombre . ' ' . $reserva->apellido;?></td>
-                     <td><?=$reserva->fecha_entrega;?></td>
-                     <td><?=$reserva->fecha_devolucion;?></td>
+                     <td><a href="<?php echo  site_url( 'reserva/ver_reserva/'.$reserva->id_reserva ); ?>" class="btn btn-primary">Ver Reserva</a></td>
+                     <td><?php echo $reserva->id_reserva;?></td>
+                     <td><?php echo $reserva->codigo_reserva;?></td>
+                     <td><?php echo $reserva->patente;?></td>
+                     <td><?php echo $reserva->nombre . ' ' . $reserva->apellido;?></td>
+                     <td><?php echo $reserva->fecha_entrega;?></td>
+                     <td><?php echo $reserva->fecha_devolucion;?></td>
                      <?php foreach ($locaciones as $locacion): ?>
                         <?php if ($locacion->id_locacion == $reserva->locacion_entrega): ?>
-                              <td><?=$locacion->locacion;?></td>
+                              <td><?php echo $locacion->locacion;?></td>
                         <?php endif; ?>
                      <?php endforeach; ?>
                      <?php foreach ($locaciones as $locacion): ?>
                         <?php if ($locacion->id_locacion == $reserva->locacion_devolucion): ?>
-                              <td><?=$locacion->locacion;?></td>
+                              <td><?php echo $locacion->locacion;?></td>
                         <?php endif; ?>
                      <?php endforeach; ?>
                      <?php if ($reserva->estado_arriendo == 1): ?>
@@ -68,19 +68,19 @@
                      <td>
                         <div class="row">
                            <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/entregar_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-warning btn-block">Entregar</a>
+                              <a href="<?php echo  site_url( 'reserva/entregar_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-warning btn-block">Entregar</a>
                            </div>
                         </div>
 
                         <div class="row">
                            <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/recibir_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-success btn-block">Recibir</a>
+                              <a href="<?php echo  site_url( 'reserva/recibir_vehiculo/'.$reserva->id_reserva ); ?>" class="btn btn-success btn-block">Recibir</a>
                            </div>
                         </div>
 
                         <div class="row">
                            <div class="col-md-12">
-                              <a href="<?= site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right btn-block">Pagado</a>
+                              <a href="<?php echo  site_url( 'reserva/pagado/'.$reserva->id_reserva ); ?>" class="btn btn-primary pull-right btn-block">Pagado</a>
                            </div>
                         </div>
 

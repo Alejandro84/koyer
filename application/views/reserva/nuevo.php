@@ -6,7 +6,7 @@
 
       <h1>Reserva</h1>
 
-         <form action="<?=site_url('reserva/verificar');?>" method="post">
+         <form action="<?php echo site_url('reserva/verificar');?>" method="post">
 
          <? $this->load->view('template/alert'); ?>
 
@@ -51,7 +51,7 @@
                   <select class="form-control" name="locacion_entrega">
                      <option value="">Seleccione una opcion...</option>
                      <?php foreach ($locaciones_entrega as $locacion_entrega ):?>
-                        <option value="<?=$locacion_entrega->id_locacion;?>"><?=$locacion_entrega->locacion;?></option>
+                        <option value="<?php echo $locacion_entrega->id_locacion;?>"><?php echo $locacion_entrega->locacion;?></option>
                      <?php endforeach; ?>
                   </select>
                </div>
@@ -65,7 +65,7 @@
                   <select class="form-control" name="locacion_devolucion">
                      <option value="">Seleccione una opcion...</option>
                      <?php foreach ($locaciones_devolucion as $locacion_devolucion ):?>
-                        <option value="<?=$locacion_devolucion->id_locacion;?>"><?=$locacion_devolucion->locacion;?></option>
+                        <option value="<?php echo $locacion_devolucion->id_locacion;?>"><?php echo $locacion_devolucion->locacion;?></option>
                      <?php endforeach; ?>
                </select>
             </div>

@@ -10,7 +10,7 @@
 
          <? $this->load->view('template/alert'); ?>
          <div class="col-md-4">
-            <label for="">Código de la reserva:</label><p><?= $reserva->codigo_reserva ?> </p>
+            <label for="">Código de la reserva:</label><p><?php echo  $reserva->codigo_reserva ?> </p>
 
             <label for="">Dias de arriendo:</label>
 
@@ -35,14 +35,14 @@
          </div>
 
          <div class="col-md-4">
-            <label for="">Fecha de Entrega:</label> <p><?= $reserva->fecha_entrega ?> </p>
-            <label for="">Fecha de Devolución:</label><p><?= $reserva->fecha_devolucion ?> </p>
+            <label for="">Fecha de Entrega:</label> <p><?php echo  $reserva->fecha_entrega ?> </p>
+            <label for="">Fecha de Devolución:</label><p><?php echo  $reserva->fecha_devolucion ?> </p>
 
          </div>
 
          <div class="col-md-4">
-            <label for="">Lugar de Entrega:</label><p><?= $locacion_entrega->locacion?></p>
-            <label for="">Lugar de Devolucion:</label><p><?= $locacion_devolucion->locacion?></p>
+            <label for="">Lugar de Entrega:</label><p><?php echo  $locacion_entrega->locacion?></p>
+            <label for="">Lugar de Devolucion:</label><p><?php echo  $locacion_devolucion->locacion?></p>
          </div>
 
       </div>
@@ -61,9 +61,9 @@
 
             <tbody>
                <tr>
-                  <td><?=$cliente->rut;?></td>
-                  <td><?=$cliente->nombre;?></td>
-                  <td><?=$cliente->apellido;?></td>
+                  <td><?php echo $cliente->rut;?></td>
+                  <td><?php echo $cliente->nombre;?></td>
+                  <td><?php echo $cliente->apellido;?></td>
                </tr>
             </tbody>
             <thead>
@@ -73,9 +73,9 @@
             </thead>
             <tbody>
                <tr>
-                  <td><?=$cliente->direccion;?></td>
-                  <td><?=$cliente->ciudad;?></td>
-                  <td><?=$cliente->pais;?></td>
+                  <td><?php echo $cliente->direccion;?></td>
+                  <td><?php echo $cliente->ciudad;?></td>
+                  <td><?php echo $cliente->pais;?></td>
                </tr>
             </tbody>
             <thead>
@@ -84,8 +84,8 @@
             </thead>
             <tbody>
                <tr>
-                  <td><?=$cliente->telefono;?></td>
-                  <td><?=$cliente->email;?></td>
+                  <td><?php echo $cliente->telefono;?></td>
+                  <td><?php echo $cliente->email;?></td>
                </tr>
             </tbody>
 
@@ -108,9 +108,9 @@
 
             <tbody>
                <tr>
-                  <td><?=$vehiculo->patente;?></td>
-                  <td><?=$vehiculo->modelo;?></td>
-                  <td><?=$vehiculo->marca;?></td>
+                  <td><?php echo $vehiculo->patente;?></td>
+                  <td><?php echo $vehiculo->modelo;?></td>
+                  <td><?php echo $vehiculo->marca;?></td>
                </tr>
             </tbody>
             <thead>
@@ -120,9 +120,9 @@
             </thead>
             <tbody>
                <tr>
-                  <td><?=$vehiculo->transmision;?></td>
-                  <td><?=$vehiculo->categoria;?></td>
-                  <td><?=$vehiculo->combustible;?></td>
+                  <td><?php echo $vehiculo->transmision;?></td>
+                  <td><?php echo $vehiculo->categoria;?></td>
+                  <td><?php echo $vehiculo->combustible;?></td>
                </tr>
             </tbody>
 
@@ -149,13 +149,13 @@
             <tbody>
                <?php foreach ($extras as $extra ): ?>
                   <tr>
-                     <td><?= $extra->extra ?></td>
-                     <td><?= $extra->cantidad ?></td>
+                     <td><?php echo  $extra->extra ?></td>
+                     <td><?php echo  $extra->cantidad ?></td>
                      <?
                         $total_extra = $extra->cantidad * $extra->precio;
                         $suma_extra = $suma_extra + $total_extra;
                      ?>
-                     <td><?= $total_extra ?></td>
+                     <td><?php echo  $total_extra ?></td>
 
                   </tr>
                <?php endforeach; ?>
@@ -172,20 +172,20 @@
 
       <div class="col-md-8 ">
          <div class="row">
-            <form class="" action="<?= site_url( 'reserva/actualizar_precio' ); ?>" method="post"><!--###############################-->
+            <form class="" action="<?php echo  site_url( 'reserva/actualizar_precio' ); ?>" method="post"><!--###############################-->
             <div class="form-group form-inline pull-right">
                <label for="">Descuento(%):</label>
                <input type="number" name="descuento" class="form-control" placeholder="Ej: 15">
             </div>
             <div class="form-group form-inline pull-right">
                <label for="">Modificar precio</label>
-               <input type="text" name="total" value="<?=$reserva->total ?>" class="form-control">
+               <input type="text" name="total" value="<?php echo $reserva->total ?>" class="form-control">
             </div>
          </div>
 
          <div class="row">
             <div class="form-group form-inline">
-               <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
+               <input type="text" name="id_reserva" value="<?php echo $reserva->id_reserva?>" hidden="">
                <input type="submit" name="Actualizar Precio" class="btn btn-success pull-right" value="Actualizar Precio">
             </div>
          </div>
@@ -209,10 +209,10 @@
             <tbody>
 
                   <tr class="success">
-                     <td><?='$' . number_format($reserva->precio_arriendo_vehiculo , '0', ',' , '.');?></td>
-                     <td><?='$' . number_format($suma_extra , '0', ',' , '.');?></td>
-                     <td><?='$' . number_format($reserva->sub_total , '0', ',' , '.');?></td>
-                     <td><?='$' . number_format($reserva->total , '0', ',' , '.');?></td>
+                     <td><?php echo '$' . number_format($reserva->precio_arriendo_vehiculo , '0', ',' , '.');?></td>
+                     <td><?php echo '$' . number_format($suma_extra , '0', ',' , '.');?></td>
+                     <td><?php echo '$' . number_format($reserva->sub_total , '0', ',' , '.');?></td>
+                     <td><?php echo '$' . number_format($reserva->total , '0', ',' , '.');?></td>
 
                   </tr>
                   <tr>
@@ -220,7 +220,7 @@
                      <td></td>
                      <th>Precio Final USD</th>
                      <? $precio_en_usd = $reserva->total / 620?>
-                     <td class="success"><?='$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
+                     <td class="success"><?php echo '$' . number_format($precio_en_usd , '2', ',' , '.');?></td>
 
 
                   </tr>
@@ -231,11 +231,11 @@
    <hr>
    <div class="row">
       <div class="col-md-6">
-         <a href="<?= site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a>
+         <a href="<?php echo  site_url( 'reserva/imprimir_pdf/'.$reserva->id_reserva ); ?>" class="btn btn-success">Imprimir Reserva en PDF</a>
       </div>
 
       <div class="col-md-6 pull-right">
-         <form class="" action="<?= site_url( 'reserva/definir_reserva'); ?>" method="post">
+         <form class="" action="<?php echo  site_url( 'reserva/definir_reserva'); ?>" method="post">
 
             <h4>Propiedades de la Reseva:</h4>
             <div class="col-md-6">
@@ -245,7 +245,7 @@
                </div>
             </div>
             <div class="col-md-6">
-               <input type="text" name="id_reserva" value="<?=$reserva->id_reserva?>" hidden="">
+               <input type="text" name="id_reserva" value="<?php echo $reserva->id_reserva?>" hidden="">
                <input type="submit" name="" value="Guardar Cotizacion/Reserva" class="btn btn-primary btn-block">
             </div>
 

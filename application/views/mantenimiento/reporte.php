@@ -6,14 +6,14 @@
       <div class="col-md-6">
          <h1>Reportes <small>Mantenimientos</small></h1>
 
-         <form class="" action="<?= site_url( 'mantenimiento/buscar_mantenimientos' ); ?>" method="post">
+         <form class="" action="<?php echo  site_url( 'mantenimiento/buscar_mantenimientos' ); ?>" method="post">
 
             <div class="form-group">
                <label for="">Vehiculo:</label>
                <select class="form-control" name="id_vehiculo">
                   <option value="">Elija un vehiculo</option>
                   <?php foreach ($vehiculos as $vehiculo ):?>
-                     <option value="<?=$vehiculo->id_vehiculo;?>"> <b><?=$vehiculo->patente;?></b> <?=$vehiculo->modelo;?></option>
+                     <option value="<?php echo $vehiculo->id_vehiculo;?>"> <b><?php echo $vehiculo->patente;?></b> <?php echo $vehiculo->modelo;?></option>
                   <?php endforeach; ?>
                </select>
             </div>

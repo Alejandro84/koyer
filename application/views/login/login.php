@@ -1,6 +1,6 @@
 <div class="container">
    <div class="row">
-      <center>  <img src="<?= base_url('assets/img/logo_koyer2.png');?>" class="im"></center>
+      <center>  <img src="<?php echo  base_url('assets/img/logo_koyer2.png');?>" class="im"></center>
    </div>
    <div class="row">
       <div class="col-md-4 col-md-offset-4 login">
@@ -9,7 +9,7 @@
 
          <? $this->load->view('template/alert'); ?>
 
-         <form method="post" action="<?=site_url('login/verificar');?>">
+         <form method="post" action="<?php echo site_url('login/verificar');?>">
 
             <div class="form-group">
                <caption>Usuario</caption>

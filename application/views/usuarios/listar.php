@@ -21,11 +21,11 @@
                   foreach ($usuarios as $usuario):
                ?>
                   <tr>
-                     <td><?=$usuario->id_usuario;?></td>
-                     <td><?=$usuario->usuario;?></td>
+                     <td><?php echo $usuario->id_usuario;?></td>
+                     <td><?php echo $usuario->usuario;?></td>
                      <td>
-                        <a href="<?= site_url( 'usuario/editar/'.$usuario->id_usuario ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?= site_url( 'usuario/borrar/'.$usuario->id_usuario ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?php echo  site_url( 'usuario/editar/'.$usuario->id_usuario ); ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?php echo  site_url( 'usuario/borrar/'.$usuario->id_usuario ); ?>" class="btn btn-danger">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

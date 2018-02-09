@@ -6,7 +6,7 @@
 
    <div class="row">
 
-      <form action="<?=site_url('usuario/actualizar');?>" method="post" class="col-xs-4">
+      <form action="<?php echo site_url('usuario/actualizar');?>" method="post" class="col-xs-4">
 
          <div class="form-group">
             <label for="usuario">Nombre:</label>
@@ -25,7 +25,7 @@
             <input type="password" name="clave" value="" class="form-control">
          </div>
 
-            <input type="text" name="id_usuario" value="<?= $usuario->id_usuario;?>" hidden="true">
+            <input type="text" name="id_usuario" value="<?php echo  $usuario->id_usuario;?>" hidden="true">
 
             <input type="submit" name="" value="Guardar" class="btn btn-success">
 

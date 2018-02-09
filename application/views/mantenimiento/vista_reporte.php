@@ -21,22 +21,22 @@
                   foreach ($mantenimientos as $mantenimiento):
                ?>
                   <tr>
-                     <td><?=$mantenimiento->mantenimiento;?></td>
-                     <td>$<?= number_format($mantenimiento->costo, '0', ',' ,'.');?></td>
-                     <td><?=$mantenimiento->patente;?></td>
-                     <td><?=$mantenimiento->modelo;?></td>
-                     <td><?=$mantenimiento->comentario;?></td>
-                     <td><?=$mantenimiento->fecha_mantencion;?></td>
+                     <td><?php echo $mantenimiento->mantenimiento;?></td>
+                     <td>$<?php echo  number_format($mantenimiento->costo, '0', ',' ,'.');?></td>
+                     <td><?php echo $mantenimiento->patente;?></td>
+                     <td><?php echo $mantenimiento->modelo;?></td>
+                     <td><?php echo $mantenimiento->comentario;?></td>
+                     <td><?php echo $mantenimiento->fecha_mantencion;?></td>
 
                   </tr>
                <? endforeach; ?>
             </tbody>
 
          </table>
-         total <?=$total;?>
+         total <?php echo $total;?>
       </div>
 
-      <form action="<?= site_url( ''.$url.''); ?>" method="post">
+      <form action="<?php echo  site_url( ''.$url.''); ?>" method="post">
          <input type="submit" name="" class="btn btn-success" value="Imprimir">
       </form>
    </div>
