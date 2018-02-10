@@ -41,7 +41,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ajustes <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="<?php echo  site_url('/descuento');?>">Descuentos</a></li>
+                <li><a href="<?php echo  site_url('/descuento');?>">Descuentos y Dolar</a></li>
                 <li><a href="<?php echo  site_url('/tarifa');?>">Cambio de Precios</a></li>
                 <li><a href="<?php echo  site_url('/extra');?>">Administración de Extras</a></li>
               </ul>

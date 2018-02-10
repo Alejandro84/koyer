@@ -7,11 +7,16 @@ class Descuento_controller extends CI_Controller{
   {
      parent::__construct();
       $this->load->model('descuento');
+      $this->load->model('dolar');
   }
 
   function index()
   {
-     $data['descuentos'] = $this->descuento->getAll();
+      $data = array(
+          'descuentos' => $this->descuento->getAll(),
+          'dolar' => $this->dolar->getDolar()
+      );
+
 
      $this->load->view('template/header');
      $this->load->view('template/nav');
@@ -146,4 +151,5 @@ class Descuento_controller extends CI_Controller{
             redirect('descuento');
          }
   }
+
 }

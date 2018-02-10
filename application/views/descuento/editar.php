@@ -10,7 +10,7 @@
 
          <div class="form-group">
             <label for="descuento">descuento</label>
-            <input type="text" name="descuento" value="<?php echo $descuento->descuento;?>" class="form-control" placeholder="Ej: Chevrolet">
+            <input type="text" name="descuento" value="<?php echo $descuento->descuento;?>" class="form-control" placeholder="Ej.: reserva web">
          </div>
 
          <div class="form-group">

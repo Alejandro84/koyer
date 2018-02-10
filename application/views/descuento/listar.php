@@ -4,10 +4,10 @@
       <? $this->load->view('template/alert'); ?>
    </div>
    <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 col-xs-6">
          <h1>Descuentos</h1>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 col-xs-6">
          <h2>Nuevo</h2>
       </div>
 
@@ -15,7 +15,7 @@
 
    <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-6 col-xs-6">
 
          <table class="table table-striped">
 
@@ -46,10 +46,19 @@
 
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 col-xs-6">
          <? $this->load->view('descuento/nuevo');?>
       </div>
 
    </div>
+   <hr>
+   <div class="row">
+
+       <div class="col-md-12">
+            <?php $this->load->view('dolar/listar') ?>
+       </div>
+
+   </div>
+
 
 </div>

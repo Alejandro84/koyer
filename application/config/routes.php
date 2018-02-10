@@ -160,3 +160,5 @@ $route['reserva/correo']                  =     'reserva_controller/enviarCorreo
 
 $route['mantenimiento/ver_kilometraje']                  =     'mantenimiento_controller/mostrarKilometraje';
 $route['mantenimiento/datos_mantenciones/(:num)']                  =     'mantenimiento_controller/datosMantenciones/$1';
+
+$route['dolar/actualizar'] = 'dolar_controller/actualizarDolar';
