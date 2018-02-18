@@ -7,7 +7,7 @@
 
          <h2><center> Iniciar Sesión</center></h2>
 
-         <? $this->load->view('template/alert'); ?>
+         <?php $this->load->view('template/alert'); ?>
 
          <form method="post" action="<?php echo site_url('login/verificar');?>">
 

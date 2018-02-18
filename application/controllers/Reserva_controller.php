@@ -26,8 +26,17 @@ class Reserva_controller extends CI_Controller{
 
    public function index()
    {
-      $fecha = date('d-m-Y H:i:s');
-      $fecha = DateTime::createFromFormat( 'd-m-Y H:i:s' , $fecha );
+
+       $fecha_busqueda = $this->input->post('busqueda_fecha');
+
+       if ($fecha_busqueda != null ) {
+           $fecha = $fecha_busqueda;
+            $fecha = DateTime::createFromFormat( 'm/Y' , $fecha_busqueda );
+       }
+       else {
+            $fecha = date('d-m-Y H:i:s');
+            $fecha = DateTime::createFromFormat( 'd-m-Y H:i:s' , $fecha );
+       }
 
       $vehiculosConReserva;
       $vehiculos = $this->vehiculo->getAll();
@@ -58,64 +67,6 @@ class Reserva_controller extends CI_Controller{
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
       $this->load->view('template/footer');
-   }
-
-   public function buscarReservas()
-   {
-      $fecha = date('l jS \of F Y h:i A');
-      $fecha = DateTime::createFromFormat( 'l jS \of F Y h:i A' , $fecha );
-      $vehiculosConReserva;
-      $mesano = $this->input->post('busqueda_fecha');
-      $mesano = DateTime::createFromFormat( 'm/Y' , $mesano );
-      $vehiculos = $this->vehiculo->getAll();
-      $reservas = $this->reserva->getReservasMes($mesano->format('Y-m'));
-
-      foreach( $vehiculos as $v ) {
-          $reserva = $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha );
-
-          $vehiculosConReserva[] = [
-              'vehiculo' => $v,
-              'reservas' => $reserva
-          ];
-      }
-
-      $reservaExtra;
-
-      foreach ($reservas as $reserva) {
-          $reservaExtra[] =[
-              'reserva' => $reserva,
-              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
-          ];
-      }
-
-      $reservasPorPagar = $this->reserva->getReservasPorPagar($mesano->format('Y-m'));
-      $reservasPorPagarExtra;
-
-      foreach ($reservasPorPagar as $reserva) {
-          $reservasPorPagarExtra[] =[
-              'reserva' => $reserva,
-              'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
-          ];
-      }
-
-      $data = array(
-          'dias' => cal_days_in_month(CAL_GREGORIAN, $mesano->format('m'), $mesano->format('Y')),
-         'reservas' => $reservaExtra,
-         'reservasPorPagar' => $reservasPorPagarExtra,
-         'vehiculos' => $vehiculosConReserva,
-         'locaciones' => $this->locacion->getall(),
-         'fecha' => $fecha,
-         'mes' => $mesano
-      );
-
-      //echo "<pre>";
-      //print_r($data);
-      $this->load->view('template/header');
-      $this->load->view('template/nav');
-      $this->load->view('reserva/listar', $data);
-      $this->load->view('template/footer');
-
-
    }
 
    public function cotizacion()

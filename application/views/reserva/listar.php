@@ -1,9 +1,33 @@
 <div class="container">
     <div class="row">
-       <h1> <?php echo $mes->format('F'); ?> </h1>
+        <div class="col-md-6">
+                <h1> <?php echo $mes->format('F'); ?> </h1>
+        </div>
+        <div class="col-md-6" style="margin-bottom: 30px;">
+            <div class="form-group">
+                <label>Buscar Mes:</label>
+                <form action="<?php echo  base_url( 'reserva' ); ?>" method="post">
+                   <div class="form-group">
+                       <div class='input-group date' id='buqueda_fecha'>
+                           <input type='text' name="busqueda_fecha" class="form-control" />
+                           <span class="input-group-addon">
+                               <span class="glyphicon glyphicon-calendar">
+                               </span>
+                           </span>
+                       </div>
+                   </div>
+
+                   <input type="submit" name="buscar_fecha" value="Buscar Mes/Año" class="btn btn-primary pull-right">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
        <div class="col-xs-12 col-md-12">
           <?php $this->load->view('template/alert'); ?>
-        
+
          <style>
              .calendario {
                  width: 100%;
