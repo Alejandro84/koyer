@@ -162,3 +162,5 @@ $route['mantenimiento/ver_kilometraje']                  =     'mantenimiento_co
 $route['mantenimiento/datos_mantenciones/(:num)']                  =     'mantenimiento_controller/datosMantenciones/$1';
 
 $route['dolar/actualizar'] = 'dolar_controller/actualizarDolar';
+
+$route['reporte'] = 'reporte_controller/';

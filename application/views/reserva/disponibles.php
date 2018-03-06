@@ -53,18 +53,28 @@
                      <!--<h4>Ubicacion Actual: <?php echo  $auto['ubicacion']->locacion?></h4>-->
 
                      <?php foreach ($extras as $extra): ?>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-8 control-label"><?php echo  $extra->extra;?></label>
-                            <div class="col-sm-4">
-                               <input type="number" name="cantidad[<?php echo $extra->id_extra?>]" class="form-control" id="inputEmail3" placeholder="Cantidad">
+                         <?php if ($extra->por_dia == 1): ?>
+                             <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-8 control-label"><?php echo  $extra->extra;?></label>
+                                 <div class="col-sm-4">
+                                    <input type="number" name="cantidad[<?php echo $extra->id_extra?>]" class="form-control" id="inputEmail3" placeholder="Cantidad">
+                                 </div>
+                             </div>
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-8 control-label"><?php echo  $extra->extra;?></label>
+                                <div class="col-sm-4">
+                                   <input type="checkbox" name="cantidad[<?php echo $extra->id_extra?>]" value="1" class="form-control" id="inputEmail3" placeholder="Cantidad">
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
+
                      <?php endforeach; ?>
 
                      <input type="text" name="vehiculo" value="<?php echo $auto['info_auto']->id_vehiculo;?>" hidden="">
 
                   </div>
-                  <input type="submit" class="btn btn-block btn-danger" value="Seleccionar">
+                  <input type="submit" class="btn btn-block btn-danger" value="Seleccionar" style="margin-top:20px;">
 
                </div>
             </form>

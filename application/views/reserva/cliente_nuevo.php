@@ -1,5 +1,5 @@
 <div class="container">
-   <form action="<?php echo site_url('reserva/guardar_cliente');?>" method="post">
+   <form action="<?php echo site_url('cliente/guardar_cliente');?>" method="post">
 
    <h3>Datos de Cliente</h3>
    <? $this->load->view('template/alert'); ?>

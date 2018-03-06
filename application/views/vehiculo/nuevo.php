@@ -21,9 +21,9 @@
                <label for="marca">Marca:</label>
                <select class="form-control" id="marca" name="id_marca">
                   <option value="">Seleccione una opcion...</option>
-                  <?php foreach ($marca as $marca ):?>
+                <?php foreach ($marca as $marca ):?>
                      <option value="<?php echo $marca->id_marca;?>"><?php echo $marca->marca;?></option>
-                  <?php endforeach; ?>
+                 <?php endforeach; ?>
                </select>
             </div>
         </div> <!-- COL MARCA-->
@@ -35,7 +35,7 @@
                   <option value="">Seleccione una opcion...</option>
                   <?php foreach ($modelo as $modelo ):?>
                      <option value="<?php echo $modelo->id_modelo;?>"><?php echo $modelo->modelo;?></option>
-                  <?php endforeach; ?>
+                 <?php endforeach; ?>
                </select>
             </div>
         </div> <!-- COL MODELO-->

@@ -57,7 +57,6 @@ class Vehiculo_controller extends CI_Controller{
       $id_categoria = $this->input->post('id_categoria');
       $id_combustible = $this->input->post('id_combustible');
       $id_tarifa = $this->input->post('id_tarifa');
-      $imagen = $this->upload->do_upload('imagen_vehiculo');
 
       if ( $patente != null && $id_modelo != null && $id_marca != null && $id_transmision != null && $id_categoria != null && $id_combustible != null && $id_tarifa != null )
          {
@@ -96,8 +95,8 @@ class Vehiculo_controller extends CI_Controller{
         $config [ 'upload_path' ]  =  'assets/img/car' ;
         $config [ 'allowed_types' ]  =  'gif | jpg | png' ;
         $config [ 'max_size' ]      =  '100' ;
-        $config [ 'max_width' ]  =  '600' ;
-        $config [ 'max_height' ]  =  '343' ;
+        $config [ 'max_width' ]  =  '250' ;
+        $config [ 'max_height' ]  =  '300' ;
 
         return $config;
    }

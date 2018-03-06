@@ -116,7 +116,7 @@ class Mantenimiento extends CI_Model{
         $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
         $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
         $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
-        $this->db->where('MA.id_vehiculo = ' . $id_vehiculo. ' and "MA.fecha_mantencion" => '.$fecha_desde.' and "MA.fecha_mantencion" =< '.$fecha_hasta );
+        $this->db->where('MA.id_vehiculo = ' . $id_vehiculo. ' and "MA.fecha_mantencion" => '.$fecha_desde->format().' and "MA.fecha_mantencion" =< '.$fecha_hasta );
         $this->db->where('MA.estado' , 1);
 
         $q = $this->db->get();

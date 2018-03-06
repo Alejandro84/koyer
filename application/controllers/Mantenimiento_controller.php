@@ -8,6 +8,7 @@ class Mantenimiento_controller extends CI_Controller{
      parent::__construct();
      $this->load->model('vehiculo');
       $this->load->model('mantenimiento');
+      $this->load->model('impuesto');
 
       date_default_timezone_set('America/Santiago');
   }
@@ -16,13 +17,17 @@ class Mantenimiento_controller extends CI_Controller{
   {
 
      $this->load->model('tipo_mantenimiento');
+     $iva =$this->impuesto->getOne(1);
 
      $data = array(
-     'vehiculos' => $this->vehiculo->getAll(),
-     'mantenimientos' => $this->mantenimiento->getAll(),
-     'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
-   );
+         'vehiculos' => $this->vehiculo->getAll(),
+         'mantenimientos' => $this->mantenimiento->getAll(),
+         'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll(),
+         'iva' => '1.'.$iva->valor
+     );
 
+     //echo "<pre>";
+     //print_r($data);
      $this->load->view('template/header',$data);
      $this->load->view('template/nav');
      $this->load->view('mantenimiento/listar');

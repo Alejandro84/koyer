@@ -72,7 +72,11 @@ class Vehiculo extends CI_Model{
 
    public function guardar( $data )
   {
-     $this->db->insert('vehiculos', $data ) ;
+     if (! $this->db->insert('vehiculos', $data ) ) {
+         return false;
+     }else {
+         return true;
+     }
   }
 
 

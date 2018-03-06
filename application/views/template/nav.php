@@ -23,7 +23,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehiculos <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo  site_url('/vehiculo');?>">Listado de Vehiculos</a></li>
-                <li><a href="<?php echo  site_url('/modelo');?>">Configuraciones</a></li>
+                <li><a href="<?php echo  site_url('/vehiculo/nuevo');?>">Nuevo vehiculo</a></li>
               </ul>
             </li>
 
@@ -44,6 +44,7 @@
                 <li><a href="<?php echo  site_url('/descuento');?>">Descuentos y Dolar</a></li>
                 <li><a href="<?php echo  site_url('/tarifa');?>">Cambio de Precios</a></li>
                 <li><a href="<?php echo  site_url('/extra');?>">Administración de Extras</a></li>
+                <li><a href="<?php echo  site_url('/impuesto');?>">Administración de Extras</a></li>
               </ul>
             </li>
           </ul>

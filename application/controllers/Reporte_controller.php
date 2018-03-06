@@ -7,10 +7,14 @@ class Reporte_controller extends CI_Controller{
   {
      parent::__construct();
      $this->load->library('Pdf');
+     $this->load->model('reporte');
   }
 
   public function index()
   {
-    $this->load->view('prueba');
+    $costos = $this->reporte->getAll();
+
+    echo "<pre>";
+    print_r($costos);
   }
 }
