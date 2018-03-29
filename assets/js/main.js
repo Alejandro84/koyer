@@ -36,4 +36,11 @@ $(function () {
            format: 'MM/YYYY'
        });
    });
+
+   $(function () {
+       $('#fecha_reporte').datetimepicker({
+           viewMode: 'years',
+           format: 'MM/YYYY'
+       });
+   });
 });

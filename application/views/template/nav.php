@@ -44,7 +44,8 @@
                 <li><a href="<?php echo  site_url('/descuento');?>">Descuentos y Dolar</a></li>
                 <li><a href="<?php echo  site_url('/tarifa');?>">Cambio de Precios</a></li>
                 <li><a href="<?php echo  site_url('/extra');?>">Administración de Extras</a></li>
-                <li><a href="<?php echo  site_url('/impuesto');?>">Administración de Extras</a></li>
+                <li><a href="<?php echo  site_url('/impuesto');?>">Administracioón de Impuestos</a></li>
+                <li><a href="<?php echo  site_url('/reporte');?>">Reporte</a></li>
               </ul>
             </li>
           </ul>

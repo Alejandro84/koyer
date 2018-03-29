@@ -163,4 +163,5 @@ $route['mantenimiento/datos_mantenciones/(:num)']                  =     'manten
 
 $route['dolar/actualizar'] = 'dolar_controller/actualizarDolar';
 
-$route['reporte'] = 'reporte_controller/';
+$route['reporte'] = 'reporte_controller';
+$route['reporte/buscar_reporte'] = 'reporte_controller/buscarReporte';
