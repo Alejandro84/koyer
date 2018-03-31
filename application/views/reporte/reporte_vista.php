@@ -70,4 +70,12 @@
             </table>
        </div>
    </div>
+   <div class="row">
+       <div class="col-md-3 col-md-offset-3">
+           <form action="<?php echo site_url('reporte/imprimir_pdf/'. $fecha  );?>" method="post">
+               <button type="submit" class="btn btn-success btn-block">Imprimir Reporte</button>
+           </form>
+
+       </div>
+   </div>
 </div>

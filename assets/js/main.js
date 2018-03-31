@@ -29,18 +29,15 @@ $(function () {
    $("#reserva-fecha_desde").on("dp.change", function (e) {
       $('#reserva-fecha_hasta').data("DateTimePicker").minDate(e.date);
    });
-
-   $(function () {
-       $('#buqueda_fecha').datetimepicker({
-           viewMode: 'years',
-           format: 'MM/YYYY'
-       });
+/*
+   $('#buqueda_fecha').datetimepicker({
+       viewMode: 'years',
+       format: 'MM/YYYY'
    });
 
-   $(function () {
-       $('#fecha_reporte').datetimepicker({
-           viewMode: 'years',
-           format: 'MM/YYYY'
-       });
+   $('#fecha_reporte').datetimepicker({
+       viewMode: 'years',
+       format: 'MM/YYYY'
    });
+*/
 });

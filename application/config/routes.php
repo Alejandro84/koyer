@@ -81,6 +81,15 @@ $route['impuesto/borrar/(:num)']          =     'impuesto_controller/borrar/$1';
 $route['impuesto/papelera']               =     'impuesto_controller/papelera';
 $route['impuesto/activar/(:num)']         =     'impuesto_controller/activar/$1';
 
+$route['locacion']                        =     'locacion_controller';
+$route['locacion/nuevo']                  =     'locacion_controller/nuevo';
+$route['locacion/guardar']                =     'locacion_controller/guardar';
+$route['locacion/editar/(:num)']          =     'locacion_controller/editar/$1';
+$route['locacion/actualizar']             =     'locacion_controller/actualizar';
+$route['locacion/borrar/(:num)']          =     'locacion_controller/borrar/$1';
+$route['locacion/papelera']               =     'locacion_controller/papelera';
+$route['locacion/activar/(:num)']         =     'locacion_controller/activar/$1';
+
 $route['categoria']                       =     'categoria_controller';
 $route['categoria/nuevo']                 =     'categoria_controller/nuevo';
 $route['categoria/guardar']               =     'categoria_controller/guardar';
@@ -165,3 +174,5 @@ $route['dolar/actualizar'] = 'dolar_controller/actualizarDolar';
 
 $route['reporte'] = 'reporte_controller';
 $route['reporte/buscar_reporte'] = 'reporte_controller/buscarReporte';
+$route['reporte/reporte_pdf/(:any)'] = 'reporte_controller/formatoPdf/$1';
+$route['reporte/imprimir_pdf/(:any)'] = 'reporte_controller/imprimirPDF/$1';
