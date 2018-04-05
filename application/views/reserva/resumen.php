@@ -98,7 +98,25 @@
    <hr>
    <div class="row"><!--informacion del vehiculo-->
       <div class="col-md-12">
-         <h2>Informacion del Vehiculo</h2>
+          <div class="row">
+              <div class="col-md-6">
+                  <h2>Informacion del Vehiculo</h2>
+              </div>
+              <div class="col-md-6">
+                  <form action="<?php echo  site_url( 'reserva/cambiarauto' ); ?>" method="post">
+                      <div class="form-group form-inline pull-right">
+                          <select class="form-control" name="cambiar_auto">
+                              <option value="">Si desea cambiar el auto, seleccione uno aquí</option>
+                              <?php foreach ($autos_disponibles as $a ): ?>
+                                  <option value="<?php echo $a['info_auto']->id_vehiculo ?>"><?php echo $a['info_auto']->marca . ' ' . $a['info_auto']->modelo . ' (' . $a['info_auto']->patente . ')'?></option>
+                              <?php endforeach; ?>
+                          </select>
+                          <input type="submit" value="Cambiar" class="btn btn-success ">
+                      </div>
+
+                  </form>
+              </div>
+          </div>
 
          <table class="table table-striped table-bordered">
 

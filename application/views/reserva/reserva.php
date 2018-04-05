@@ -101,27 +101,25 @@
          <table class="table table-striped table-bordered">
 
             <thead>
-               <th>Patente</th>
                <th>Modelo</th>
                <th>Marca</th>
+               <th>Categoria</th>
             </thead>
 
             <tbody>
                <tr>
-                  <td><?php echo $vehiculo->patente;?></td>
                   <td><?php echo $vehiculo->modelo;?></td>
                   <td><?php echo $vehiculo->marca;?></td>
+                  <td><?php echo $vehiculo->categoria;?></td>
                </tr>
             </tbody>
             <thead>
                <th>Transmision</th>
-               <th>Categoria</th>
                <th>Combustible</th>
             </thead>
             <tbody>
                <tr>
                   <td><?php echo $vehiculo->transmision;?></td>
-                  <td><?php echo $vehiculo->categoria;?></td>
                   <td><?php echo $vehiculo->combustible;?></td>
                </tr>
             </tbody>
@@ -147,18 +145,24 @@
                <th>Precio</th>
             </thead>
             <tbody>
-               <?php foreach ($extras as $extra ): ?>
-                  <tr>
-                     <td><?php echo  $extra->extra ?></td>
-                     <td><?php echo  $extra->cantidad ?></td>
-                     <?
-                        $total_extra = $extra->cantidad * $extra->precio;
-                        $suma_extra = $suma_extra + $total_extra;
-                     ?>
-                     <td><?php echo  $total_extra ?></td>
+                <?php foreach ($extras as $extra ): ?>
+                    <?php if ($extra['cantidad'] != null): ?>
+                        <tr>
+                           <td><?php echo  $extra['info_extra']->extra ?></td>
+                           <td><?php echo  $extra['cantidad'] ?></td>
+                           <td><?php echo  $extra['info_extra']->precio?></td>
+                           <?php if ($extra['info_extra']->por_dia == 1 ): ?>
+                                 <td><?php echo  ($extra['info_extra']->precio * $extra['cantidad']) * $dias ?> CLP</td>
+                           <?php else: ?>
+                                 <td><?php echo  $extra['info_extra']->precio * $extra['cantidad']  ?> CLP</td>
+                           <?php endif; ?>
 
-                  </tr>
-               <?php endforeach; ?>
+                        </tr>
+
+                    <?php endif; ?>
+
+
+                      <?php endforeach; ?>
             </tbody>
          </table>
       </div>

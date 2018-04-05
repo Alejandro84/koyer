@@ -12,11 +12,9 @@ class Mantenimiento extends CI_Model{
    public function getAll()
   {
      $this->db->select('MA.*');
-     $this->db->select('TMA.mantenimiento');
      $this->db->select('VE.patente');
      $this->db->select('MO.modelo');
      $this->db->from('mantenimientos as MA');
-     $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
      $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
      $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
      $this->db->where('MA.estado' , 1);
@@ -34,11 +32,9 @@ class Mantenimiento extends CI_Model{
   public function getOne($id)
    {
       $this->db->select('MA.*');
-     $this->db->select('TMA.mantenimiento');
      $this->db->select('VE.patente');
      $this->db->select('MO.modelo');
      $this->db->from('mantenimientos as MA');
-     $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
      $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
      $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
       $this->db->where('MA.id_mantenimiento' , $id);
@@ -109,11 +105,9 @@ class Mantenimiento extends CI_Model{
         $fecha_hasta = $data['fecha_hasta'];
 
         $this->db->select('MA.*');
-        $this->db->select('TMA.mantenimiento');
         $this->db->select('VE.patente');
         $this->db->select('MO.modelo');
         $this->db->from('mantenimientos as MA');
-        $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
         $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
         $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
         $this->db->where('MA.id_vehiculo = ' . $id_vehiculo. ' and "MA.fecha_mantencion" => '.$fecha_desde->format().' and "MA.fecha_mantencion" =< '.$fecha_hasta );
@@ -133,11 +127,9 @@ class Mantenimiento extends CI_Model{
       $id_vehiculo = $data['id_vehiculo'];
 
       $this->db->select('MA.*');
-      $this->db->select('TMA.mantenimiento');
       $this->db->select('VE.patente');
       $this->db->select('MO.modelo');
       $this->db->from('mantenimientos as MA');
-      $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
       $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
       $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
       $this->db->where('MA.id_vehiculo = "'. $id_vehiculo.'"');
@@ -159,11 +151,9 @@ class Mantenimiento extends CI_Model{
      $fecha_hasta = $data['fecha_hasta'];
 
      $this->db->select('MA.*');
-     $this->db->select('TMA.mantenimiento');
      $this->db->select('VE.patente');
      $this->db->select('MO.modelo');
      $this->db->from('mantenimientos as MA');
-     $this->db->join('tipos_mantenimientos as TMA', 'MA.id_tipo_mantenimiento = TMA.id_tipo_mantenimiento', 'left');
      $this->db->join('vehiculos as VE', 'MA.id_vehiculo = VE.id_vehiculo ', 'left');
      $this->db->join('modelos as MO', 'MO.id_modelo = VE.id_modelo ', 'left');
      $this->db->where('"MA.fecha_mantencion" >= "'.$fecha_desde.'" and "MA.fecha_mantencion" <= "'.$fecha_hasta.'"' );

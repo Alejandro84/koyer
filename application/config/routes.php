@@ -164,6 +164,8 @@ $route['reserva/buscar_reserva']                 =     'reserva_controller/busca
 $route['reserva/kilometraje/(:num)']                =     'reserva_controller/kilometraje/$1';
 $route['reserva/agregar_kilometraje']        =     'reserva_controller/agregarKilometraje';
 $route['reserva/vehiculos_seleccionado']        =     'reserva_controller/vehiculoSeleccionado';
+$route['reserva/cambiarauto']        =     'reserva_controller/cambiarAuto';
+
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';
 
