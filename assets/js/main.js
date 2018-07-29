@@ -44,3 +44,39 @@ $(function () {
        });
    });
 });
+
+const celda = $('.periodo');
+
+function cargarCeldas() {
+  $.each(celda, function(x,i){
+    var width = $(this).attr('x-data-percent');
+    width = width + '%';
+    $(this).css('width', width);
+  });
+}
+
+$('#load').on('click', function(){
+  cargarCeldas();
+})
+
+
+[
+  {
+    auto: 'fisker',
+    arriendos: [
+      {
+        nombre_cliente: 'Juan Carrasco',
+        inicio: '2018-06-01',
+        fin: '2018-06-10',
+        delta: 5760 // minutos
+      },
+
+      {
+        nombre_cliente: 'Anibal Barria',
+        inicio: '2018-06-08',
+        fin: '2018-06-13',
+        delta: 5760 // minutos
+      }
+    ]
+  }
+]

@@ -50,7 +50,7 @@ class Reserva_controller extends CI_Controller{
       }
 
       $data = array(
-         'dias' => cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
+         'dias' => 28,//cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
          'vehiculos' => $vehiculosConReserva,
          'locaciones' => $this->locacion->getall(),
          //'fecha' => $fecha,
@@ -62,7 +62,7 @@ class Reserva_controller extends CI_Controller{
       $vehiculos = $this->vehiculo->getAll();
 
       //echo "<pre>";
-      //print_r($vehiculosConReserva);
+      //print_r($data);
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
@@ -268,7 +268,7 @@ class Reserva_controller extends CI_Controller{
 
       $precio_vehiculo = $vehiculo->precio * $dias_arriendo;
 
-      $subtotal = $precio_vehiculo + $locacion_entrega->recargo_entrega + $locacion_devolucion->recargo_devolucion + $totalextra;
+      $subtotal = $precio_vehiculo + $locacion_entrega->recargo + $locacion_devolucion->recargo + $totalextra;
 
       $total = $subtotal * $iva;
 

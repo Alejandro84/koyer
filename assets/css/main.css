@@ -9,3 +9,64 @@
 .logo-login{
    margin-left: 30px;
 }
+ /**/
+
+.container {
+  max-width: 1013px;
+  width:100%;
+  margin: 0px auto;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.vehiculo {
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  padding: 4px;
+}
+.celda {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+  padding: 4px;
+}
+
+.celda:last-child {
+  border: none !important;
+}
+
+.inicial {
+  border-right: solid 1px rgba(0,0,0,.1);
+  text-align: left !important;
+}
+.fila {
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  height: 30px;
+  border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+.cabecera {
+  background-color: rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.cabecera .celda {
+   border-right: solid 1px rgba(0,0,0,.1);
+}
+
+.periodo {
+  height:20px;
+  margin: 0px;
+  padding:0px;
+  border:none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.no-disponible {
+  background-color: red;
+}
+
+.otro {
+  background-color: blue;
+}
