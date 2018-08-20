@@ -46,7 +46,14 @@ class Cliente extends CI_Model{
 
    public function guardar( $data )
   {
-     $this->db->insert('clientes', $data ) ;
+    if (! $this->db->insert('clientes', $data ) ) {
+      return false;
+
+    } else {
+
+       return true;
+    }
+    
   }
 
 
@@ -100,5 +107,20 @@ class Cliente extends CI_Model{
           }
 
        }
+
+  public function getPaises()
+  {
+      $this->db->select('*');
+      $this->db->from('paises');
+
+
+      $q = $this->db->get();
+
+      if ($q->num_rows() < 1) {
+        return false;
+      } else {
+        return $q->result();
+      }
+  }
 
 }

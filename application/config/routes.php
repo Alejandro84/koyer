@@ -81,6 +81,15 @@ $route['impuesto/borrar/(:num)']          =     'impuesto_controller/borrar/$1';
 $route['impuesto/papelera']               =     'impuesto_controller/papelera';
 $route['impuesto/activar/(:num)']         =     'impuesto_controller/activar/$1';
 
+$route['locacion']                        =     'locacion_controller';
+$route['locacion/nuevo']                  =     'locacion_controller/nuevo';
+$route['locacion/guardar']                =     'locacion_controller/guardar';
+$route['locacion/editar/(:num)']          =     'locacion_controller/editar/$1';
+$route['locacion/actualizar']             =     'locacion_controller/actualizar';
+$route['locacion/borrar/(:num)']          =     'locacion_controller/borrar/$1';
+$route['locacion/papelera']               =     'locacion_controller/papelera';
+$route['locacion/activar/(:num)']         =     'locacion_controller/activar/$1';
+
 $route['categoria']                       =     'categoria_controller';
 $route['categoria/nuevo']                 =     'categoria_controller/nuevo';
 $route['categoria/guardar']               =     'categoria_controller/guardar';
@@ -108,24 +117,24 @@ $route['combustible/borrar/(:num)']       =     'combustible_controller/borrar/$
 $route['combustible/papelera']            =     'combustible_controller/papelera';
 $route['combustible/activar/(:num)']      =     'combustible_controller/activar/$1';
 
-$route['mantenimiento']                      =     'mantenimiento_controller';
-$route['mantenimiento/nuevo']                =     'mantenimiento_controller/nuevo';
-$route['mantenimiento/guardar']              =     'mantenimiento_controller/guardar';
-$route['mantenimiento/editar/(:num)']        =     'mantenimiento_controller/editar/$1';
-$route['mantenimiento/actualizar']           =     'mantenimiento_controller/actualizar';
-$route['mantenimiento/borrar/(:num)']        =     'mantenimiento_controller/borrar/$1';
-$route['mantenimiento/papelera']             =     'mantenimiento_controller/papelera';
-$route['mantenimiento/activar/(:num)']       =     'mantenimiento_controller/activar/$1';
-$route['mantenimiento/reporte']              =     'mantenimiento_controller/reporte';
+$route['mantenimiento']                             =     'mantenimiento_controller';
+$route['mantenimiento/nuevo']                       =     'mantenimiento_controller/nuevo';
+$route['mantenimiento/guardar']                     =     'mantenimiento_controller/guardar';
+$route['mantenimiento/editar/(:num)']               =     'mantenimiento_controller/editar/$1';
+$route['mantenimiento/actualizar']                  =     'mantenimiento_controller/actualizar';
+$route['mantenimiento/borrar/(:num)']               =     'mantenimiento_controller/borrar/$1';
+$route['mantenimiento/papelera']                    =     'mantenimiento_controller/papelera';
+$route['mantenimiento/activar/(:num)']              =     'mantenimiento_controller/activar/$1';
+$route['mantenimiento/reporte']                     =     'mantenimiento_controller/reporte';
 $route['mantenimiento/buscar_mantenimientos']       =     'mantenimiento_controller/buscarMantenimientos';
-$route['mantenimiento/mantencion_pdf']       =     'mantenimiento_controller/datosMantenciones';
-$route['mantenimiento/imprimir_pdf']       =     'mantenimiento_controller/imprimirPDF';
+$route['mantenimiento/mantencion_pdf']              =     'mantenimiento_controller/datosMantenciones';
+$route['mantenimiento/imprimir_pdf']                =     'mantenimiento_controller/imprimirPDF';
 
 $route['cliente']                            =     'cliente_controller';
 $route['cliente/nuevo']                      =     'cliente_controller/nuevo';
 $route['cliente/guardar']                    =     'cliente_controller/guardar';
 $route['cliente/editar/(:num)']              =     'cliente_controller/editar/$1';
-$route['cliente/actualizar']                 =     'cliente_controller/actualizar';
+$route['cliente/actualizar_cliente']         =     'cliente_controller/actualizarCliente';
 $route['cliente/ingresar_cliente']           =     'cliente_controller/ingresarCliente';
 $route['cliente/buscar']                     =     'cliente_controller/buscar';
 $route['cliente/busqueda/(:num)']            =     'cliente_controller/busqueda/$1';
@@ -155,6 +164,10 @@ $route['reserva/buscar_reserva']                 =     'reserva_controller/busca
 $route['reserva/kilometraje/(:num)']                =     'reserva_controller/kilometraje/$1';
 $route['reserva/agregar_kilometraje']        =     'reserva_controller/agregarKilometraje';
 $route['reserva/vehiculos_seleccionado']        =     'reserva_controller/vehiculoSeleccionado';
+$route['reserva/cambiarauto']        =     'reserva_controller/cambiarAuto';
+
+$route['api-reserva/(:any)'] = 'api_controller/getReservas/$1';
+$route['api-vehiculo'] = 'vehiculo_controller/apiVehiculos';
 
 $route['reserva/correo']                  =     'reserva_controller/enviarCorreo';
 
@@ -165,3 +178,5 @@ $route['dolar/actualizar'] = 'dolar_controller/actualizarDolar';
 
 $route['reporte'] = 'reporte_controller';
 $route['reporte/buscar_reporte'] = 'reporte_controller/buscarReporte';
+$route['reporte/reporte_pdf/(:any)'] = 'reporte_controller/formatoPdf/$1';
+$route['reporte/imprimir_pdf/(:any)'] = 'reporte_controller/imprimirPDF/$1';

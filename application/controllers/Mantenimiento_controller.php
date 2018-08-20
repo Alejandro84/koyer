@@ -16,13 +16,11 @@ class Mantenimiento_controller extends CI_Controller{
   function index()
   {
 
-     $this->load->model('tipo_mantenimiento');
      $iva =$this->impuesto->getOne(1);
 
      $data = array(
          'vehiculos' => $this->vehiculo->getAll(),
          'mantenimientos' => $this->mantenimiento->getAll(),
-         'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll(),
          'iva' => '1.'.$iva->valor
      );
 
@@ -46,20 +44,19 @@ class Mantenimiento_controller extends CI_Controller{
 
   public function guardar()
   {
-     $id_tipo_mantenimiento = $this->input->post('id_tipo_mantenimiento');
+
      $costo = $this->input->post('costo');
      $id_vehiculo = $this->input->post('id_vehiculo');
-     $comentario = $this->input->post('comentario');
+     $mantenimiento = $this->input->post('mantenimiento');
      $fecha_mantencion = $this->input->post('fecha_mantencion');
 
-     if ( $id_tipo_mantenimiento != null && $costo != null && $id_vehiculo != null && $fecha_mantencion != null )
+     if ( $costo != null && $id_vehiculo != null && $fecha_mantencion != null )
         {
 
          $insert = array(
-                        'id_tipo_mantenimiento' => $id_tipo_mantenimiento,
                         'costo' => $costo,
                         'id_vehiculo' => $id_vehiculo,
-                        'comentario' => $comentario,
+                        'mantenimiento' => $mantenimiento,
                         'fecha_mantencion' => $fecha_mantencion
                      );
 
@@ -85,12 +82,10 @@ class Mantenimiento_controller extends CI_Controller{
   public function editar($id_mantenimiento)
   {
      $this->load->model('vehiculo');
-     $this->load->model('tipo_mantenimiento');
 
      $data = array(
        'mantenimiento' => $this->mantenimiento->getOne($id_mantenimiento),
        'vehiculos' => $this->vehiculo->getAll(),
-       'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
     );
 
     $this->load->view('template/header', $data);
@@ -98,28 +93,23 @@ class Mantenimiento_controller extends CI_Controller{
     $this->load->view('mantenimiento/editar');
     $this->load->view('template/footer');
 
-   //print('<pre>');
-   //print_r($data);
-   //print('</pre>');
   }
 
   public function actualizar()
   {
      $id_mantenimiento = $this->input->post('id_mantenimiento');
-     $id_tipo_mantenimiento = $this->input->post('id_tipo_mantenimiento');
      $costo = $this->input->post('costo');
      $id_vehiculo = $this->input->post('id_vehiculo');
-     $comentario = $this->input->post('comentario');
+     $mantenimiento = $this->input->post('mantenimiento');
      $fecha_mantencion = $this->input->post('fecha_mantencion');
 
-     if ( $id_tipo_mantenimiento != null && $costo != null && $id_vehiculo != null && $comentario != null )
+     if ( $costo != null && $id_vehiculo != null && $mantenimiento != null )
         {
 
          $insert = array(
-                        'id_tipo_mantenimiento' => $id_tipo_mantenimiento,
                         'costo' => $costo,
                         'id_vehiculo' => $id_vehiculo,
-                        'comentario' => $comentario,
+                        'mantenimiento' => $mantenimiento,
                         'fecha_mantencion' => $fecha_mantencion
                      );
 
@@ -186,12 +176,10 @@ class Mantenimiento_controller extends CI_Controller{
      {
 
        $this->load->model('vehiculo');
-       $this->load->model('tipo_mantenimiento');
 
        $data = array(
        'vehiculos' => $this->vehiculo->getAll(),
        'mantenimientos' => $this->mantenimiento->getAll(),
-       'tipos_mantenimientos' => $this->tipo_mantenimiento->getAll()
          );
 
         $this->load->view('template/header');

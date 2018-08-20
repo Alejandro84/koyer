@@ -185,4 +185,25 @@ class Vehiculo extends CI_Model{
           return $q->result();
        }
      }
+
+     public function vehiculoApi()
+      {
+        $this->db->select('VE.id_vehiculo');
+        $this->db->select('VE.patente');
+        $this->db->select('MA.marca');
+        $this->db->select('MO.modelo');
+        $this->db->from('vehiculos as VE');
+        $this->db->join('modelos as MO', 'VE.id_modelo = MO.id_modelo', 'left');
+        $this->db->join('marcas as MA', 'VE.id_marca = MA.id_marca', 'left');
+        $this->db->where('VE.estado' , 1);
+
+
+     $q = $this->db->get();
+
+     if ($q->num_rows() < 1) {
+        return false;
+     } else {
+        return $q->result();
+     }
+  }
 }

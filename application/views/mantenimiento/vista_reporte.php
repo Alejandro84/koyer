@@ -12,7 +12,6 @@
                <th>Costo</th>
                <th>Patente</th>
                <th>Modelo</th>
-               <th>Comentario</th>
                <th>Fecha de mantenimiento</th>
 
             </thead>
@@ -25,7 +24,6 @@
                      <td>$<?php echo  number_format($mantenimiento->costo, '0', ',' ,'.');?></td>
                      <td><?php echo $mantenimiento->patente;?></td>
                      <td><?php echo $mantenimiento->modelo;?></td>
-                     <td><?php echo $mantenimiento->comentario;?></td>
                      <td><?php echo $mantenimiento->fecha_mantencion;?></td>
 
                   </tr>

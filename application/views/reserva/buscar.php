@@ -1,13 +1,16 @@
 <div class="container">
-
+    <div class="row">
+        <div class="col-md-12">
+        <? $this->load->view('template/alert'); ?>
+        </div>
+    </div>
+   
    <div class="row">
 
       <div class="col-md-6 col-md-offset-4 login">
          <h3>Cliente registrado</h3>
 
-         <? $this->load->view('template/alert'); ?>
-
-         <div class="form-group">
+        <div class="form-group">
             <form action="<?php echo site_url('cliente/buscar');?>" method="post">
                <div class="form-inline">
 
@@ -25,5 +28,7 @@
       </div>
 
    </div>
+
+     <?php $this->load->view('reserva/cliente_nuevo');?>   
 
 </div>

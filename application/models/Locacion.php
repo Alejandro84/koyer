@@ -78,7 +78,12 @@ class Locacion extends CI_Model{
 
    public function guardar( $data )
    {
-     $this->db->insert('locaciones', $data ) ;
+       if (! $this->db->insert('locaciones', $data ) ) {
+           return fales;
+       }else {
+           return true;
+       }
+
    }
 
 
@@ -101,17 +106,13 @@ class Locacion extends CI_Model{
 
    public function actualizar( $data, $id )
    {
-
-      $this->db->where( 'id_locacion', $id );
+       $this->db->where( 'id_locacion', $id );
 
       if ( ! $this->db->update('locaciones', $data ) )
       {
-         return false;
-
+          return false;
       } else {
-
-         return true;
-
+          return true;
       }
 
    }

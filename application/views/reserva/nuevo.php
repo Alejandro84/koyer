@@ -2,7 +2,7 @@
 
    <div class="row">
 
-      <div class="col-md-12">
+      <div class="col-md-12 ">
 
       <h1>Reserva</h1>
 
@@ -12,7 +12,7 @@
 
          <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12">
 
                <div class="form-group">
                   <label for="reserva-fecha_desde">Desde:</label>
@@ -26,7 +26,7 @@
 
             </div>
 
-         <div class="col-md-6">
+         <div class="col-md-6 col-xs-12">
 
             <div class="form-group">
                <label for="reserva-fecha_hasta">Hasta:</label>
@@ -44,7 +44,7 @@
 
          <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12">
 
                <div class="form-group">
                   <label for="form-control">lugar de Entrega</label>
@@ -58,7 +58,7 @@
 
             </div>
 
-         <div class="col-md-6">
+         <div class="col-md-6 col-xs-12">
 
             <div class="form-group">
                <label for="form-control">Lugar de devolucion</label>

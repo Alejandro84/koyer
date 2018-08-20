@@ -9,7 +9,12 @@ class Vehiculo_controller extends CI_Controller{
 
       $this->load->model('vehiculo');
       $this->load->library('upload' , $this->configuracionImagenes());
-
+      $this->load->model('modelo');
+      $this->load->model('marca');
+      $this->load->model('combustible');
+      $this->load->model('transmision');
+      $this->load->model('categoria');
+      $this->load->model('tarifa');
    }
 
    public function index()
@@ -25,28 +30,24 @@ class Vehiculo_controller extends CI_Controller{
 
    public function nuevo()
    {
-      $this->load->model('modelo');
-      $this->load->model('marca');
-      $this->load->model('combustible');
-      $this->load->model('transmision');
-      $this->load->model('categoria');
-      $this->load->model('tarifa');
+    $data = array(
 
-      $data = array(
-         'modelo' => $this->modelo->getAll(),
-         'marca' => $this->marca->getAll(),
-         'combustible' => $this->combustible->getAll(),
-         'transmision' => $this->transmision->getAll(),
-         'categoria' => $this->categoria->getAll(),
-         'tarifa' => $this->tarifa->getAll(),
-       );
+        'combustible' => $this->combustible->getAll(),
+        'transmision' => $this->transmision->getAll(),
+        'categoria' => $this->categoria->getAll(),
+        'modelo' => $this->modelo->getAll(),
+        'marca' => $this->marca->getAll(),
+        'tarifa' => $this->tarifa->getAll(),
 
-       $this->load->view('template/header');
+      );
+
+        $this->load->view('template/header');
        $this->load->view('template/nav');
        $this->load->view('vehiculo/nuevo', $data);
        $this->load->view('template/footer');
 
    }
+
 
    public function guardar()
    {

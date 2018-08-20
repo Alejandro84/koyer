@@ -1,34 +1,20 @@
 <div class="container-fluid" style="margin:60px">
+    <link href="assets/css/jquery-ui.css" rel="stylesheet" />
+    <link href="assets/css/jquery.ui.theme.css" rel="stylesheet" />
 
-  <div class="fila cabecera">
+    <link href="assets/css/timelineScheduler.css" rel="stylesheet" />
+    <link href="assets/css/timelineScheduler.styling.css" rel="stylesheet" />
+    <link href="assets/css/calendar.css" rel="stylesheet" />
 
-      <div class="vehiculo">Vehiculo</div>
-      <?php for ($dia=1; $dia < $dias+1; $dia++) {
-          echo '<div class="celda">'.$dia.'</div>';
-      } ?>
+    <h2> <b>Reservas</b> </h2>
+    <div class="calendar">
 
-  </div>
+    </div>
+    <div class="realtime-info">
 
-    <?php foreach ($vehiculos as $vehiculo): ?>
-        <div class="fila">
-            <div class="celda inicial"><?php echo $vehiculo['vehiculo']->patente; ?></div>
-            <div class="periodo" x-data-percent='14.3'></div>
-            <div class="periodo otro" x-data-percent='9'></div>
-            <div class="periodo" x-data-percent='30'></div>
-            <div class="periodo" x-data-percent='10'></div>
-            <div class="periodo no-disponible" x-data-percent='16.7'></div>
-        </div>
-    <?php endforeach; ?>
+    </div>
+    <?php $fecha_mes = DateTime::createfromformat('Y-m-d H:i:s', $fecha->format('Y-m-d H:i:s'))?>
+    <input type="hidden" id="fecha" value="<?php echo $fecha_mes->format('Y-m-d')?>">
 
-  <div class="fila">
-    <div class="celda inicial">Tesla</div>
-    <div class="periodo" x-data-percent='24.3'></div>
-    <div class="periodo no-disponible" x-data-percent='19'></div>
-    <div class="periodo" x-data-percent='3'></div>
-    <div class="periodo" x-data-percent='10'></div>
-    <div class="periodo otro" x-data-percent='16.7'></div>
-  </div>
-
+ 
 </div>
-
-<button id="load">Cargar datos</button>

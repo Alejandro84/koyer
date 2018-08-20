@@ -38,36 +38,16 @@ class Reserva_controller extends CI_Controller{
             $fecha = DateTime::createFromFormat( 'd-m-Y H:i:s' , $fecha );
        }
 
-      $vehiculosConReserva;
-      $vehiculos = $this->vehiculo->getAll();
-      //$reservas = $this->reserva->getReservasMes($fecha->format('Y-m'));
+      $data = array('fecha' => $fecha  );
 
-      foreach( $vehiculos as $v ) {
-          $vehiculosConReserva[] = [
-              'vehiculo' => $v,
-              'reservas' => $reserva = $this->reserva->vehiculoMes( $v->id_vehiculo, $fecha )
-          ];
-      }
-
-      $data = array(
-         'dias' => 28,//cal_days_in_month(CAL_GREGORIAN, $fecha->format('m'), $fecha->format('Y')),
-         'vehiculos' => $vehiculosConReserva,
-         'locaciones' => $this->locacion->getall(),
-         //'fecha' => $fecha,
-         'mes' => $fecha
-      );
-
-
-      // ########################################################################
-      $vehiculos = $this->vehiculo->getAll();
-
-      //echo "<pre>";
-      //print_r($data);
+       //echo "<pre>";
+       //print_r($data);
       $this->load->view('template/header');
       $this->load->view('template/nav');
       $this->load->view('reserva/listar', $data);
       $this->load->view('template/footer');
    }
+
 
    public function cotizacion()
    {
@@ -228,7 +208,33 @@ class Reserva_controller extends CI_Controller{
 
    }
 
+    public function buscarVehiculo($fecha_entrega ,$fecha_devolucion)
+    {
+       $autos = $this->vehiculo->getAll();
 
+       $data = array(
+          'fecha_entrega' => $fecha_entrega,
+          'fecha_devolucion' => $fecha_devolucion
+       );
+
+       $disponibles;
+
+       foreach ($autos as $auto) {
+
+          $id_auto = $auto->id_vehiculo;
+          $estado = $this->reserva->buscar($id_auto , $data);
+
+          $ubicacion = $this->reserva->dondeEsta($auto->id_vehiculo , $fecha_entrega);
+
+          $disponibles[] = array(
+             'info_auto' => $auto,
+             'estado' => $estado,
+             'ubicacion' => $ubicacion
+          );
+       }
+
+       return $disponibles;
+    }
 
     public function resumen()
    {
@@ -260,6 +266,9 @@ class Reserva_controller extends CI_Controller{
       $impuesto = $this->impuesto->getOne('1');
 
       $iva = '1.' . $impuesto->valor;
+      ###############################################
+
+      $autos_disponibles = $this->buscarVehiculo($fecha_entrega, $fecha_devolucion);
 
       ##################################################################
       #### Precio por el arriendo del vehiculo
@@ -287,7 +296,8 @@ class Reserva_controller extends CI_Controller{
          'total_extra'              =>  $totalextra,
          'precio_arriendo_vehiculo' =>  $precio_vehiculo,
          'sub_total'                =>  $subtotal,
-         'total'                    =>  $total
+         'total'                    =>  $total,
+         'autos_disponibles'        => $autos_disponibles
        );
 
        //echo "<pre>";
@@ -297,6 +307,25 @@ class Reserva_controller extends CI_Controller{
        $this->load->view('template/nav');
        $this->load->view('reserva/resumen' , $data);
        $this->load->view('template/footer');
+
+   }
+
+   public function cambiarAuto()
+   {
+       $id_vehiculo = $this->input->post('cambiar_auto');
+
+       $arriendo = array(
+          'vehiculo' => $id_vehiculo,
+          'extra' => $this->session->arriendo['extra'],
+          'fecha_entrega' => $this->session->arriendo['fecha_entrega'] ,
+          'fecha_devolucion' => $this->session->arriendo['fecha_devolucion'] ,
+          'locacion_entrega' => $this->session->arriendo['locacion_entrega'],
+          'locacion_devolucion' => $this->session->arriendo['locacion_devolucion'],
+       );
+
+       $this->session->arriendo = $arriendo;
+
+       redirect('reserva/resumen');
 
    }
 

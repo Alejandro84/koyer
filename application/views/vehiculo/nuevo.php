@@ -56,17 +56,18 @@
             </div>
         </div><!-- COL categoria-->
 
-        <div class="col-md-6"> <!-- transmision -->
-            <div class="form-group">
-               <label for="">Transmisión:</label>
-               <select class="form-control" name="id_transmision">
+        <div class="col-md-6">
+        <div class="form-group">
+               <label for="">Tarifa:</label>
+               <select class="form-control" name="id_tarifa">
                   <option value="">Seleccione una opcion...</option>
-                  <?php foreach ($transmision as $transmision ):?>
-                     <option value="<?php echo $transmision->id_transmision;?>"><?php echo $transmision->transmision;?></option>
+                  <?php foreach ($tarifa as $tarifa ):?>
+                     <option value="<?php echo $tarifa->id_tarifa;?>"><?php echo $tarifa->precio;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
-        </div><!-- COL transmision-->
+        </div>
+
 
     </div>
 
@@ -83,16 +84,17 @@
                   <?php endforeach; ?>
                </select>
             </div>
-
+            
             <div class="form-group">
-               <label for="">Tarifa:</label>
-               <select class="form-control" name="id_tarifa">
+               <label for="">Transmisión:</label>
+               <select class="form-control" name="id_transmision">
                   <option value="">Seleccione una opcion...</option>
-                  <?php foreach ($tarifa as $tarifa ):?>
-                     <option value="<?php echo $tarifa->id_tarifa;?>"><?php echo $tarifa->precio;?></option>
+                  <?php foreach ($transmision as $transmision ):?>
+                     <option value="<?php echo $transmision->id_transmision;?>"><?php echo $transmision->transmision;?></option>
                   <?php endforeach; ?>
                </select>
             </div>
+            
 
         </div>
 
@@ -114,4 +116,5 @@
     </div>
 
     </form>
+    
 </div>

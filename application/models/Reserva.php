@@ -338,6 +338,32 @@ class Reserva extends CI_Model{
 
   }
 
+  public function reservasApi( $mesano )
+  {
+     $this->db->select('reservas.*');
+     $this->db->select('loc1.locacion as locacion_entrega');
+     $this->db->select('loc2.locacion as locacion_devolucion');
+     $this->db->select('clientes.*');
+     $this->db->from('reservas');
+     $this->db->where('reservas.estado', 1);
+     $this->db->where( ' ( month(fecha_devolucion) = '.$mesano->format('m').' OR month(fecha_entrega) = '.$mesano->format('m').' ) ');
+     $this->db->join('clientes', 'clientes.id_cliente = reservas.id_cliente', 'left');
+     $this->db->join('locaciones as loc1', 'loc1.id_locacion = reservas.locacion_entrega', 'left');
+     $this->db->join('locaciones as loc2', 'loc2.id_locacion = reservas.locacion_devolucion', 'left');
+
+     $q = $this->db->get();
+
+     if ( $q->num_rows() < 1 )
+     {
+
+        return false;
+     } else {
+
+        return $q->result();
+     }
+
+  }
+
   public function guardarKilometraje($data)
   {
       if (! $this->db->insert('kilometrajes', $data )) {

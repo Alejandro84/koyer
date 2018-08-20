@@ -3,15 +3,10 @@
 
       <form action="<?php echo site_url('mantenimiento/guardar');?>" method="post">
 
-         <div class="form-group">
-            <label for="">Tipo de Mantenimiento:</label>
-            <select class="form-control" name="id_tipo_mantenimiento">
-               <option value="">Elija una opción...</option>
-               <?php foreach ($tipos_mantenimientos as $tipo_mantenimiento ):?>
-                  <option value="<?php echo $tipo_mantenimiento->id_tipo_mantenimiento;?>"><?php echo $tipo_mantenimiento->mantenimiento;?></option>
-               <?php endforeach; ?>
-            </select>
-         </div>
+          <div class="form-group">
+             <label for="">Descripcion del Mantenimiento</label>
+             <textarea class="form-control" name="mantenimiento" rows="3" cols="30"></textarea>
+          </div>
 
          <div class="form-group">
             <label for="">Costo del mantenimiento:</label>
@@ -27,13 +22,6 @@
                <?php endforeach; ?>
             </select>
          </div>
-
-
-         <div class="form-group">
-            <label for="">Comentario:</label>
-            <textarea class="form-control" name="comentario" rows="3" cols="30"></textarea>
-         </div>
-
 
          <div class="form-group">
             <label for="">Fecha en que se hizo el mantenimiento:</label>
