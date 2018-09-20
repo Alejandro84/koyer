@@ -1,6 +1,7 @@
 ﻿var today = moment().startOf('day');
 var Items2 =[];
 var Sections2 =[];
+var timeout;
 
 var fecha = document.getElementById('fecha').value;
         
@@ -21,7 +22,8 @@ var fecha = document.getElementById('fecha').value;
                         at: moment(data.reserva.fecha_entrega),
                         classes: 'item-event-one'
                     }
-                ]
+                ],
+              	reserva: data.reserva
             }
             Items2.push(temp)
         });
@@ -42,8 +44,59 @@ var fecha = document.getElementById('fecha').value;
       
     }
     
+// esto es un hack no más, demás hay una forma mejor de hacerlo
 
     
+function esconderInfoArriendo()
+{
+    
+    $('#tooltipJano').removeClass('tooltipVisible')
+
+}
+
+$(document).bind('mousemove', function(e){
+
+
+    if ($('#tooltipJano').hasClass('tooltipVisible')) {
+        $('#tooltipJano').css({
+            left:  e.pageX +20,
+            top:   e.pageY -10
+        });    
+    }
+})
+
+
+$(document).on('mouseleave', '.time-sch-item', function(){
+    esconderInfoArriendo()
+})
+
+function mostarInfoArriendo(item)
+{
+  
+  if (!$('#tooltipJano').hasClass('tooltipVisible')) {
+   $('#tooltipJano').addClass('tooltipVisible')
+  }
+
+  
+  var reserva = item.reserva
+  var nombre = reserva.nombre+' '+reserva.apellido
+  var fecha_entrega = reserva.fecha_entrega
+  var fecha_devolucion = reserva.fecha_devolucion
+  var entrega = reserva.locacion_entrega
+  var devolucion = reserva.locacion_devolucion
+  var abono = reserva.abonado
+  var total = reserva.total
+  
+  $('#nombre').html('Nombre: ' + nombre)  
+  $('#reserva').html(reserva)
+  $('#fecha_entrega').html('Fecha de entrega: ' + fecha_entrega)
+  $('#fecha_devolucion').html('Fecha de devolucion: ' + fecha_devolucion)
+  $('#entrega').html('Lugar de Entrega: ' + entrega)
+  $('#devolucion').html('Lugar de devolucion: ' + devolucion)
+  $('#abono').html('Abono: ' + abono)
+  $('#total').html('Total: ' + total)
+  
+}
 
 
 var Calendar = {
@@ -103,10 +156,13 @@ var Calendar = {
     },
   	
   	mouseOver: function(item) {
+      //aca era donde colocabas el alert
+      mostarInfoArriendo(item);
       
     },
   	
   	mouseOut: function() {
+      //esconderInfoArriendo();
     },
 
     GetSections: function (callback) {
@@ -118,7 +174,9 @@ var Calendar = {
     },
 
     Item_Clicked: function (item) {
-        console.log('localhost/koyer/reserva/ver_reserva/'+data.Items.reserva);
+        
+        var url = 'http://localhost/koyer/reserva/ver_reserva/'+item.id;
+        window.location = url;
     },
 
     Item_Dragged: function (item, sectionID, start, end) {

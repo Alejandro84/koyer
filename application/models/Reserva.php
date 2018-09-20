@@ -177,6 +177,17 @@ class Reserva extends CI_Model{
      }
 
   }
+
+  public function guardarCotizacion( $data )
+  {
+     if (! $this->db->insert('reservas', $data )) {
+        return false;
+     }   else {
+        return true;
+     }
+
+  }
+
   public function devolverId($codigo)
   {
      $this->db->select( 'id_reserva' );
@@ -211,6 +222,22 @@ class Reserva extends CI_Model{
        return true;
 
      }
+  }
+
+  public function ingresarABono($data)
+  {
+    $this->db->where( 'id_reserva', $data['id_reserva'] );
+    $estado = array ('abonado' => $data['abono']);
+
+    if ( ! $this->db->update('reservas', $estado ) )
+    {
+      return false;
+
+    } else {
+
+      return true;
+
+    }
   }
 
   public function recibirVehiculo($id)
@@ -336,6 +363,43 @@ class Reserva extends CI_Model{
         return $q->result();
      }
 
+  }
+
+  public function actulizarFechas($data , $id_reserva)
+  {
+    $this->db->where( 'id_reserva', $id_reserva );
+    $estado = array (
+      'fecha_entrega' => $data['fecha_entrega'],
+      'fecha_devolucion' => $data['fecha_devolucion']
+    );
+
+    if ( ! $this->db->update('reservas', $estado ) )
+    {
+      return false;
+
+    } else {
+
+      return true;
+
+    }
+  }
+
+  public function actulizarVehiculo($id_vehiculo , $id_reserva)
+  {
+    $this->db->where( 'id_reserva', $id_reserva );
+    $estado = array (
+      'id_vehiculo' => $id_vehiculo
+    );
+
+    if ( ! $this->db->update('reservas', $estado ) )
+    {
+      return false;
+
+    } else {
+
+      return true;
+
+    }
   }
 
   public function reservasApi( $mesano )

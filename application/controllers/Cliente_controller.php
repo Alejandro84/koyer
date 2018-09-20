@@ -94,7 +94,7 @@ class Cliente_controller extends CI_Controller{
      $rut = str_replace($caracteres, '' , $rut);
 
 
-  if ($rut != null && $nombre != null && $apellido != null && $direccion != null && $ciudad != null && $pais != null && $telefono != null && $email != null) {
+  if ($rut != null) {
 
         $insert = array(
            'rut' => $rut,
@@ -124,7 +124,7 @@ class Cliente_controller extends CI_Controller{
          }
 
      }else {
-        $mensaje = '¡Debe rellenar todos los campos!';
+        $mensaje = '¡Debe rellenar por lo menos el campo <b>RUT</b>';
         $this->session->set_flashdata('warning', $mensaje);
         redirect('cliente');
      }
@@ -149,7 +149,7 @@ class Cliente_controller extends CI_Controller{
      $rut = str_replace($caracteres, '' , $rut);
 
 
-  if ($rut != null && $nombre != null && $apellido != null && $direccion != null && $ciudad != null && $pais != null && $telefono != null && $email != null) {
+  if ($rut != null) {
 
         $insert = array(
            'rut' => $rut,
@@ -181,6 +181,60 @@ class Cliente_controller extends CI_Controller{
         $mensaje = '¡Debe rellenar todos los campos!';
         $this->session->set_flashdata('warning', $mensaje);
         redirect('cliente');
+     }
+   }
+
+   public function actualizarClienteReserva()
+   {
+
+     $caracteres = array('-',',', '.' );
+
+     $id_reserva          =   $this->input->post('id_reserva');
+     $id_cliente          =   $this->input->post('id_cliente');
+     $rut                 =   $this->input->post('rut');
+     $nombre              =   $this->input->post('nombre');
+     $apellido            =   $this->input->post('apellido');
+     $direccion           =   $this->input->post('direccion');
+     $ciudad              =   $this->input->post('ciudad');
+     $fecha_nacimiento    =   $this->input->post('fecha_nacimiento');
+     $pais                =   $this->input->post('pais');
+     $telefono            =   $this->input->post('telefono');
+     $email               =   $this->input->post('email');
+
+     $rut = str_replace($caracteres, '' , $rut);
+
+
+  if ($rut != null) {
+
+        $insert = array(
+           'rut' => $rut,
+           'nombre' => $nombre,
+           'apellido' => $apellido,
+           'direccion' => $direccion,
+           'ciudad' => $ciudad,
+           'fecha_nacimiento' => $fecha_nacimiento,
+           'pais' => $pais,
+           'telefono' => $telefono,
+           'email' => $email
+         );
+
+         if (! $this->cliente->actualizar($insert, $id_cliente)) {
+
+            $error = $this->db->_error_message();
+              $mensaje = 'No se pudo guardar la informacion en la base de datos: <br>'.$error;
+              $this->session->set_flashdata('error',$mensaje);
+              redirect('reserva/ver_reserva/' . $id_reserva);
+
+           } else {
+            $mensaje = 'Los datos del cliente se han actulizado correctamente';
+            $this->session->set_flashdata('success',$mensaje);
+            redirect('reserva/ver_reserva/' . $id_reserva);
+         }
+
+     }else {
+        $mensaje = '¡Debe rellenar todos los campos!';
+        $this->session->set_flashdata('warning', $mensaje);
+        redirect('reserva/ver_reserva/' . $id_reserva);
      }
    }
 

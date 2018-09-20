@@ -6,7 +6,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://web.koyer.dev"><img src="<?php echo  base_url('assets/img/logo_koyer2.png');?>" width="100%" class="logo-nav"></a>
+          <a class="navbar-brand" href="http://web.koyer.cl"><img src="<?php echo  base_url('assets/img/logo_koyer2.png');?>" width="100%" class="logo-nav"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

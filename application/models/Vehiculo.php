@@ -14,6 +14,7 @@ class Vehiculo extends CI_Model{
         $this->db->select('VE.id_vehiculo');
         $this->db->select('VE.patente');
         $this->db->select('MA.marca');
+        $this->db->select('MO.id_modelo');
         $this->db->select('MO.modelo');
         $this->db->select('TR.transmision');
         $this->db->select('CO.combustible');
@@ -42,6 +43,7 @@ class Vehiculo extends CI_Model{
       {
          $this->db->select('VE.*');
          $this->db->select('MA.marca');
+         $this->db->select('MO.id_modelo');
          $this->db->select('MO.modelo');
          $this->db->select('TR.transmision');
          $this->db->select('CO.combustible');
@@ -162,6 +164,7 @@ class Vehiculo extends CI_Model{
       {
         $this->db->select('VE.*');
         $this->db->select('MA.marca');
+        $this->db->select('MO.id_modelo');
         $this->db->select('MO.modelo');
         $this->db->select('TR.transmision');
         $this->db->select('CO.combustible');

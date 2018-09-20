@@ -47,8 +47,8 @@ class Extra_reserva extends CI_Model{
    public function getExtras($id)
    {
        $this->db->select('ER.*');
-       $this->db->select('EX.extra');
-       $this->db->select('EX.precio');
+       $this->db->select('EX.*');
+
        $this->db->from('extras_reservas as ER');
        $this->db->join('extras as EX', 'ER.id_extra = EX.id_extra', 'left');
        $this->db->where('id_reserva' , $id);
