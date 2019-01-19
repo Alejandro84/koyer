@@ -20,6 +20,7 @@
                <th>Categoria</th>
                <th>Combustible</th>
                <th>Precio</th>
+               <th>Comentario</th>
                <th>Acciones</th>
 
             </thead>
@@ -36,9 +37,10 @@
                      <td><?php echo $vehiculo->categoria;?></td>
                      <td><?php echo $vehiculo->combustible;?></td>
                      <td><?php echo $vehiculo->precio;?></td>
+                     <td><?php echo $vehiculo->comentario;?></td>
                      <td>
-                        <a href="<?php echo  site_url( 'vehiculo/editar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-primary">Editar</a>
-                        <a href="<?php echo  site_url( 'vehiculo/borrar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-danger">Eliminar</a>
+                        <a href="<?php echo  site_url( 'vehiculo/editar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-primary btn-block">Editar</a>
+                        <a href="<?php echo  site_url( 'vehiculo/borrar/'.$vehiculo->id_vehiculo ); ?>" class="btn btn-danger btn-block">Eliminar</a>
                      </td>
                   </tr>
                <? endforeach; ?>

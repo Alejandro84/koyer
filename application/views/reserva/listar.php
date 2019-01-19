@@ -35,6 +35,9 @@
       <div id="devolucion">
       </div>
       
+      <div id="extras">
+      </div>
+
       <div id="abono">
       </div>
       

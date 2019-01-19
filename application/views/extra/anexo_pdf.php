@@ -102,38 +102,42 @@
     <div class="container">
         <div class="row"
             id="header">
-        <?php $this->load->view('reserva/pdf/header'); ?>
+        <?php $this->load->view('extra/pdf/header'); ?>
         <hr>
         </div>
         <div class="row">
-        <?php $this->load->view('reserva/pdf/detalle_cliente'); ?>
+        <?php $this->load->view('extra/pdf/detalle_cliente'); ?>
         </div>
         <div class="row">
-        <?php $this->load->view('reserva/pdf/detalle_vehiculo'); ?>
+        <?php $this->load->view('extra/pdf/detalle_vehiculo'); ?>
         </div>
         <div class="row">
-        <?php $this->load->view('reserva/pdf/detalle_arriendo');?>
+        <?php $this->load->view('extra/pdf/detalle_arriendo');?>
         </div>
         <div class="row">
-        <?php $this->load->view('reserva/pdf/detalle_extras');?>
+        <?php $this->load->view('extra/pdf/detalle_extras');?>
         </div>
 
         <div class="row">
             <?php $this->load->view('reserva/pdf/detalle_precios'); ?>
         </div>
-
-        <div class="row">
-            <?php $this->load->view('reserva/pdf/metodo_pago'); ?>
-        </div>
-
-        <div class="row">
-        <?php $this->load->view('reserva/pdf/condiciones'); ?>
-        </div>
         
         <div class="espaciado" style="100px"></div>
         <div class="row">
-            <p style="margin-right:30px">________________________________ </p> <p> ________________________________</p> <br>
-            <p>FIRMA/SIGNATURE KOYER RENT A CAR	                                 FIRMA CLIENTE / CLIENT SIGNATURE	 </p>
+            <div class="col-md-12">
+            <table class="table_2" style="text-align:center; margin-top:20px; width:100%" >
+                    <tr>
+                        <td>___________________________________</td>
+                        <td>___________________________________</td>
+                    </tr>
+
+                    <tr>
+                        <td>FIRMA/SIGNATURE KOYER RENT A CAR</td>
+                        <td>FIRMA CLIENTE / CLIENT SIGNATURE</td>
+                    </tr>
+
+                </table>  
+            </div>
         </div>
     </div>
 </body>

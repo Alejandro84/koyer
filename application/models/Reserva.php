@@ -123,20 +123,19 @@ class Reserva extends CI_Model{
 
       $this->db->select('*');
       $this->db->from('reservas');
-      $this->db->where('id_vehiculo', $id_vehiculo );
-      $this->db->where('( fecha_devolucion >="'.$fecha_entrega.'" or fecha_entrega >= "'. $fecha_entrega.'" or fecha_entrega >= "'. $fecha_devolucion.'")' ); // quiero sacarlo antes que lo devuelvan
-               //->or_where( ) // quiero sacarlo cuando alguien ya lo saco
-               //->or_where(); // quiero devolverlo cuando alquien ya lo tiene
+      $this->db->where('id_vehiculo', (int)$id_vehiculo );
       $this->db->where('estado', 1 );
+
+      $this->db->where("((fecha_devolucion between '$fecha_entrega' and '$fecha_devolucion') or (fecha_entrega between '$fecha_entrega' and '$fecha_devolucion'))");
+
 
       $query = $this->db->get();
 
-      if ( $query->num_rows() > 0 )
+      if ( $query->num_rows() == 0 )
       {
-         // hay más de un resultado, por tanto estan chocando las fechas...
-         return $query->result();
-      } else {
          return false;
+      } else {
+         return $query->result();
       }
 
    }
@@ -402,7 +401,7 @@ class Reserva extends CI_Model{
     }
   }
 
-  public function reservasApi( $mesano )
+  public function reservasApi()
   {
      $this->db->select('reservas.*');
      $this->db->select('loc1.locacion as locacion_entrega');
@@ -410,7 +409,6 @@ class Reserva extends CI_Model{
      $this->db->select('clientes.*');
      $this->db->from('reservas');
      $this->db->where('reservas.estado', 1);
-     $this->db->where( ' ( month(fecha_devolucion) = '.$mesano->format('m').' OR month(fecha_entrega) = '.$mesano->format('m').' ) ');
      $this->db->join('clientes', 'clientes.id_cliente = reservas.id_cliente', 'left');
      $this->db->join('locaciones as loc1', 'loc1.id_locacion = reservas.locacion_entrega', 'left');
      $this->db->join('locaciones as loc2', 'loc2.id_locacion = reservas.locacion_devolucion', 'left');

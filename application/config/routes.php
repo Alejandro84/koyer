@@ -53,6 +53,10 @@ $route['extra/actualizar']                =     'extra_controller/actualizar';
 $route['extra/borrar/(:num)']             =     'extra_controller/borrar/$1';
 $route['extra/papelera']                  =     'extra_controller/papelera';
 $route['extra/activar/(:num)']            =     'extra_controller/activar/$1';
+$route['extra/anexo/(:num)']               =     'extra_controller/anexo/$1';
+$route['extra/agregar_extra/(:num)']               =     'extra_controller/agregarExtra/$1';
+$route['extra/imprimir_pdf/(:num)/(:num)']        =     'extra_controller/imprimirPDF/$1/$2';
+$route['extra/anexo_pdf/(:num)/(:num)']         =     'extra_controller/anexoPdf/$1/$2';
 
 $route['tarifa']                           =     'tarifa_controller';
 $route['tarifa/nuevo']                     =     'tarifa_controller/nuevo';

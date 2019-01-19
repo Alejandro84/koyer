@@ -93,11 +93,27 @@
 
         $autos = $this->vehiculo->getAll();
 
-        $reserva_fecha_desde = $this->input->post('reserva-fecha_desde');
-        $reserva_fecha_hasta = $this->input->post('reserva-fecha_hasta');
+ //       $reserva_fecha_desde = $this->input->post('reserva-fecha_desde');
+//        $reserva_fecha_hasta = $this->input->post('reserva-fecha_hasta');
 
-        $locacion_entrega    =  $this->input->post('locacion_entrega');
-        $locacion_devolucion =  $this->input->post('locacion_devolucion');
+//           $locacion_entrega    =  $this->input->post('locacion_entrega');
+//          $locacion_devolucion =  $this->input->post('locacion_devolucion');
+
+        //$reserva_fecha_desde = $this->input->get('desdeFecha');
+        //$reserva_fecha_hasta = $this->input->get('hasta');
+        
+        $fechaDesde = $this->input->get('desdeFecha');
+        $horaDesde = $this->input->get('desdeHora');
+
+        $reserva_fecha_desde = $fechaDesde.' '.$horaDesde;
+
+        $fechaHasta = $this->input->get('hastaFecha');
+        $horaHasta = $this->input->get('hastaHora');
+
+        $reserva_fecha_hasta = $fechaHasta.' '.$horaHasta;
+
+        $locacion_entrega    =  $this->input->get('entrega');
+        $locacion_devolucion =  $this->input->get('devolucion');
 
         $data = array(
             'fecha_desde' => $reserva_fecha_desde,
@@ -122,19 +138,25 @@
                 'fecha_devolucion' => $reserva_fecha_hasta
             );
 
+            $disponibles = [];
             foreach ($autos as $auto) {
 
                 $id_auto = $auto->id_vehiculo;
                 $estado = $this->reserva->buscar($id_auto , $data);
+                if (!$estado) {
+              
+                    $ubicacion = $this->reserva->dondeEsta($auto->id_vehiculo , $reserva_fecha_desde);
 
-                $ubicacion = $this->reserva->dondeEsta($auto->id_vehiculo , $reserva_fecha_desde);
-
-                $disponibles[] = array(
-                'info_auto' => $auto,
-                'estado' => $estado,
-                'ubicacion' => $ubicacion
-                );
+                    $disponibles[] = array(
+                        'info_auto' => $auto,
+                        'estado' => $estado,
+                        'ubicacion' => $ubicacion
+                        );
+                }
+                
+                
             }
+
 
             $variables_vista = [
                 'disponibles'  => $disponibles,
@@ -145,10 +167,6 @@
                 'extras' => $this->extra->getAll(),
                 'locaciones' => $this->locacion->getAll()
             ];
-
-
-            //echo "<pre>";
-            //print_r($variables_vista);
 
             $this->load->view('template/header', $variables_vista );
             $this->load->view('template/nav');
@@ -365,9 +383,17 @@
             $dias_arriendo = $dias_arriendo / 60 ; // horas
             $dias_arriendo = $dias_arriendo / 24 ; // dias
 
-            $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
+            $dias_arriendo_trunchado = number_format($dias_arriendo, '0', ',', '.');
+            //$dias_arriendo = number_format($dias_arriendo, '4', ',', '.');
+            $dias;
 
-            return $dias_arriendo;
+            if ( ($dias_arriendo_trunchado + 0.083333) < $dias_arriendo ) {
+                $dias = $dias_arriendo_trunchado + 1;
+            }else {
+                $dias = $dias_arriendo_trunchado;
+            }
+
+            return $dias;
         }
 
     public function totalExtra()
@@ -573,6 +599,9 @@
                 'autos_disponibles'     =>  $autos_disponibles
             );
 
+        //echo '<pre>';
+        //print_r($data);
+        
         $this->load->view('template/header');
         $this->load->view('template/nav');
         $this->load->view('reserva/reserva', $data);
@@ -867,12 +896,15 @@
         {
             $url    =   site_url('reserva/reserva_pdf/'.$id_reserva);
             $html   =   file_get_contents ( $url );
-
             $this->load->library('pdf');
-            //$this->pdf->set_option('isHtml5ParserEnabled', true);
-            $this->pdf->load_html($html);
-            $this->pdf->render();
-            $this->pdf->stream( date('YmdHis').'-koyer-reserva-'.trim($id_reserva).'.pdf');
+            $pdf = $this->pdf->nuevo();
+            //var_dump($pdf);
+            //$pdf->set('isRemoteEnabled', true);
+            $pdf->set_option('isHtml5ParserEnabled', true);
+            //$pdf->set_base_path('localhost/koyer/assets/css/bootstrap.min.css');
+            $pdf->load_html($html);
+            $pdf->render();
+            $pdf->stream( date('YmdHis').'-koyer-reserva-'.trim($id_reserva).'.pdf');
             // AñoMesDiaHoraMinutoSegundo-koyer-reserva-IDReserva.pdf
             // asi despues puedes buscar
             // ls 2017*.pdf

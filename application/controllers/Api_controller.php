@@ -9,16 +9,18 @@ class Api_controller extends CI_Controller{
       $this->load->model('reserva');
       $this->load->model('vehiculo');
       $this->load->model('locacion');
+      $this->load->model('extra_reserva');
    }
 
-   function getReservas($fecha_busqueda)
+   function getReservas()
    {
-        $fecha = DateTime::createFromFormat( 'Y-m-d' , $fecha_busqueda );
+        //$fecha = DateTime::createFromFormat( 'Y-m-d' , $fecha_busqueda );
         
         $vehiculosSection;
         $reservasItems;
         $vehiculos = $this->vehiculo->vehiculoApi();
-        $reservas = $this->reserva->reservasApi($fecha);
+        $reservas = $this->reserva->reservasApi();
+
 
         $clases = array(
             'item-status-none',
@@ -43,7 +45,8 @@ class Api_controller extends CI_Controller{
                 'start'=> $reserva->fecha_entrega,
                 'end' => $reserva->fecha_devolucion,
                 'clases' => $clases[array_rand($clases, 1)],
-                'reserva' => $reserva    
+                'reserva' => $reserva,
+                'extras' => $this->extra_reserva->getExtras($reserva->id_reserva)
                 
             ];
         }

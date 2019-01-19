@@ -36,4 +36,18 @@ $(function () {
       $('#reserva-fecha_hasta').data("DateTimePicker").minDate(e.date);
    });
 
+   $('#repo_desde').datetimepicker({
+      locale: "es",
+      format: "YYYY-MM-DD",
+   });
+   $('#repo_hasta').datetimepicker({
+      locale: "es",
+      format: "YYYY-MM-DD",
+      useCurrent: false
+   });
+
+   $("#repo_desde").on("dp.change", function (e) {
+      $('#repo_hasta').data("DateTimePicker").minDate(e.date);
+   });
+
 });

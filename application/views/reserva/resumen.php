@@ -12,25 +12,7 @@
         <div class="col-md-4">
             <label for="">Código de la reserva:</label><p><?php echo  $codigo_reserva ?> </p>
 
-            <label for="">Dias de arriendo:</label>
-
-            <?php  // lo primero es hacerlo objeto
-
-            $f_entrega       = DateTime::createFromFormat( 'Y-m-d H:i:s' , $fecha_entrega ); // los parametros son, el formato de la fecha que estas metiendo y la fecha
-            $f_devolucion    = DateTime::createFromFormat( 'Y-m-d H:i:s' , $fecha_devolucion );
-
-            $f_entrega       = $f_entrega->getTimestamp();
-            $f_devolucion    = $f_devolucion->getTimestamp();
-
-            $delta_tiempo = $f_devolucion - $f_entrega;
-
-            $dias_arriendo = $delta_tiempo / 60 ; // minutos
-            $dias_arriendo = $dias_arriendo / 60 ; // horas
-            $dias_arriendo = $dias_arriendo / 24 ; // dias
-
-            $dias_arriendo = number_format($dias_arriendo, '2', ',', '.');
-            ?>
-            <p><? echo $dias_arriendo; ?></p>
+            <label for="">Días de arriendo:</label><p><? echo $dias; ?> días</p>
 
         </div>
 

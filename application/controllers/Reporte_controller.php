@@ -8,25 +8,91 @@ class Reporte_controller extends CI_Controller{
      parent::__construct();
      date_default_timezone_set('America/Buenos_Aires');
 
-     $this->load->model('reporte');
+    $this->load->model('reporte');
+    $this->load->model('vehiculo');
+
 
   }
 
     public function index()
     {
+        $vehiculo = $this->vehiculo->getAll();
+
+        $data = array(
+            'vehiculos' => $vehiculo 
+        
+        );
+
         $this->load->view('template/header');
         $this->load->view('template/nav');
-        $this->load->view('reporte/buscador');
+        $this->load->view('reporte/buscador', $data);
         $this->load->view('template/footer');
 
     }
 
     public function buscarReporte()
     {
-        $fecha = $this->input->post('fecha_reporte');
-        $fecha = DateTime::createFromFormat('m/Y', $fecha);
+        $vehiculo       =   $this->input->post('id_vehiculo');
 
-        $reservas = $this->reporte->getAll($fecha);
+        $fecha_desde    =   $this->input->post('fecha_desde');
+        $fecha_desde = DateTime::createFromFormat('Y-m-d', $fecha_desde);
+        
+        $fecha_hasta    =   $this->input->post('fecha_hasta');
+        $fecha_hasta = DateTime::createFromFormat('Y-m-d', $fecha_hasta);
+        
+        $mantenimientos;
+        $reservas;
+
+        if ( $vehiculo) {//sí elijo un vehiculo, entra en esta opcion
+            
+            if ( $fecha_desde && $fecha_hasta) { //sí se eligieron fechas, por lo que la busqueda sera con un vehiculo en especifico y entre fechas establecidas...
+                               
+                $data = [
+                    'vehiculo' => $vehiculo,
+                    'fecha_desde' => $fecha_desde->format('Y-m-d H:i:s'),
+                    'fecha_hasta' => $fecha_hasta->format('Y-m-d H:i:s')
+                ];
+                
+                $reservas = $this->reporte->getReservasVehiculoFecha($data);
+                $mantenimientos = $this->reporte->getManteniVehiculoFecha($data);
+               
+
+            } else if ($fecha_desde && $fecha_hasta == null || $fecha_desde == null && $fecha_hasta) {
+                
+                $mensaje = 'Si desea hacer una busqueda con fechas establecidas <b><u>debe ingresar una fecha de INICIO y una fecha de FIN</u></b>';
+                $this->session->set_flashdata('error',$mensaje);
+                redirect('reporte');
+
+            } else {
+                                           
+                $data = [
+                    'vehiculo' => $vehiculo,
+                ];
+                
+                $reservas = $this->reporte->getReservasVehiculo($data);
+                $mantenimientos = $this->reporte->getManteniVehiculo($data);
+            }
+            
+
+        } else { //No se elijio un vehiculo...
+            
+            if ( $fecha_desde &&  $fecha_hasta) { //sí se eligieron fechas, por lo que la busqueda sera con un vehiculo en especifico y entre fechas establecidas...
+                
+                $data = [
+                    'fecha_desde' => $fecha_desde->format('Y-m-d H:i:s'),
+                    'fecha_hasta' => $fecha_hasta->format('Y-m-d H:i:s')
+                ];
+                
+                $reservas = $this->reporte->getReservasFecha($data);
+                $mantenimientos = $this->reporte->getManteniFecha($data);            
+
+            } else {
+                $mensaje = 'Si desea hacer una busqueda con fechas establecidas <b><u>debe ingresar una fecha de INICIO y una fecha de FIN</u></b>';
+                $this->session->set_flashdata('error',$mensaje);
+                redirect('reporte');
+            }
+
+        }// Fin IF vehiculo
 
         $ingreso_subtotal = 0;
         $ingreso_total = 0;
@@ -35,8 +101,6 @@ class Reporte_controller extends CI_Controller{
             $ingreso_subtotal = $reserva->sub_total + $ingreso_subtotal;
             $ingreso_total = $reserva->total + $ingreso_total;
         }
-
-        $mantenimientos = $this->reporte->getManteni($fecha);
 
         $costo = 0;
 
@@ -53,18 +117,15 @@ class Reporte_controller extends CI_Controller{
             'ingreso_total' => $ingreso_total,
             'costo' => $costo,
             'totalReporte' => $totalReporte,
-            'fecha' => $fecha->format('m-Y')
-        );
-
-        //echo "<pre>";
-        //print_r($data);
-
-        $this->load->view('template/header', $data);
+        );     
+        
+        $this->load->view('template/header');
         $this->load->view('template/nav');
-        $this->load->view('reporte/reporte_vista');
+        $this->load->view('reporte/reporte_vista', $data);
         $this->load->view('template/footer');
-    }
 
+    }
+    
     public function formatoPdf( $fecha_busqueda)
     {
         $fecha = $fecha_busqueda;

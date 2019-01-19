@@ -1,7 +1,7 @@
 <div class="container">
 
    <div class="row">
-      <h1>Locaciones de Arriendo</h1>
+      <h1>Lugares de entrega y devolucion de Arriendo</h1>
       <hr>
 
       <? $this->load->view('template/alert'); ?>
@@ -9,15 +9,14 @@
 
    <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-8">
 
          <table class="table table-striped">
 
             <thead>
                <th>ID</th>
                <th>locacion</th>
-               <th>Recargo Entrega</th>
-               <th>Recargo Entrega</th>
+               <th>Recargo </th>
                <th>Habilitado para entrega</th>
                <th>Habilitado para entrega</th>
                <th>Acciones</th>
@@ -30,8 +29,7 @@
                   <tr>
                      <td><?php echo $locacion->id_locacion;?></td>
                      <td><?php echo $locacion->locacion;?></td>
-                     <td>$<?php echo number_format($locacion->recargo_entrega, '0', ',','.') ;?></td>
-                     <td>$<?php echo number_format($locacion->recargo_devolucion, '0', ',','.') ;?></td>
+                     <td>$<?php echo number_format($locacion->recargo, '0', ',','.') ;?></td>
                      <td>
                         <?php if ($locacion->entrega == 1): ?>
                             <?php echo 'Sí' ?>
@@ -58,7 +56,7 @@
 
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
           <?php $this->load->view('locacion/nuevo'); ?>
       </div>
 

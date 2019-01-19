@@ -43,8 +43,8 @@
             <input type="text" name="locacion_entrega" value="<?php echo  $locacion_entrega ?>" hidden>
             <input type="text" name="locacion_devolucion" value="<?php echo  $locacion_devolucion ?>" hidden>
 
-            <div class="col-md-3" style="margin-bottom:13px;">
-                <div style="height:400px">
+            <div class="col-md-3" style="margin-bottom:60px;">
+                <div style="height:500px;">
                     <img src="<?php echo  base_url('uploads/' . $auto['info_auto']->id_modelo . '.jpg');?>" width="100%">
                     <h3><?php echo $auto['info_auto']->modelo;?><small> <?php echo $auto['info_auto']->marca;?></small></h3>
                     <h4>Precio: $<?php echo number_format( $auto['info_auto']->precio, 2, ',', '.');?></h4>

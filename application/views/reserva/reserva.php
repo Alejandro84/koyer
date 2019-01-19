@@ -80,6 +80,157 @@
       </div>
    </div>
    <hr>
+        <!--Informacion del vehiculo-->
+        <div class="row"><!--informacion del vehiculo-->
+      <div class="col-md-12">
+
+         <div class="row">
+              <div class="col-md-6">
+                  <h2>Información del vehiculo</h2>
+              </div>
+              <div class="col-md-6">
+                  <form action="<?php echo  site_url( 'reserva/cambiarauto' ); ?>" method="post">
+                      <div class="form-group form-inline pull-right">
+                          <select class="form-control" name="id_vehiculo">
+                              <option value="">Si desea cambiar el auto, seleccione uno aquí</option>
+                              <?php foreach ($autos_disponibles as $a ): ?>
+                                  <option value="<?php echo $a['info_auto']->id_vehiculo ?>"><?php echo $a['info_auto']->marca . ' ' . $a['info_auto']->modelo . ' (' . $a['info_auto']->patente . ')'?></option>
+                              <?php endforeach; ?>
+                          </select>
+                          <input type="hidden" name="id_reserva" value="<?php echo $reserva->id_reserva?>">
+                          <input type="submit" value="Cambiar" class="btn btn-success ">
+                      </div>
+
+                  </form>
+              </div>
+          </div>
+         
+         <table class="table table-striped table-bordered">
+
+            <thead>
+               <th>Modelo</th>
+               <th>Marca</th>
+               <th>Categoria</th>
+            </thead>
+
+            <tbody>
+               <tr>
+                  <td><?php echo $vehiculo->modelo;?></td>
+                  <td><?php echo $vehiculo->marca;?></td>
+                  <td><?php echo $vehiculo->categoria;?></td>
+               </tr>
+            </tbody>
+            <thead>
+               <th>Transmisión</th>
+               <th>Combustible</th>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><?php echo $vehiculo->transmision;?></td>
+                  <td><?php echo $vehiculo->combustible;?></td>
+               </tr>
+            </tbody>
+
+
+         </table>
+
+
+      </div>
+   </div>
+        <!-- FIN Informacion del vehiculo-->
+
+        <!--Informacion Extra-->
+    <div class="row">
+
+        <div class="col-md-6 col-xs-12">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Datos adicionales</h2>
+                </div>
+
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Nº de pasajeros</th>
+                            <th>Nº de Vuelo(para entregas en el aeropuerto)</th>
+                            <th>Hospedaje</th>
+                            <th>Dirección del hospedaje</th>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><?php echo $reserva->pasajeros?></td>
+                                <td><?php echo $reserva->nro_vuelo ?></td>   
+                                <td><?php echo $reserva->hospedaje?></td>
+                                <td><?php echo $reserva->direccion_hospedaje?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Comentario de la reserva</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $reserva->comentario?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-6 col-xs-12">
+        <?php $suma_extra = 0; ?>
+            <?php if ( ! $extras ):
+            else: ?>
+            <div class="row"><!-- Informacio de los extras-->
+                <div class="col-md-12">
+                    <h2>Extras</h2>
+
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <th>Extra</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        </thead>
+                        <tbody>
+                            <?php if ($extras) : foreach ($extras as $extra ): ?>
+                            
+                                <?php if ($extra->cantidad != null): ?>
+                                    <tr>
+                                    <td><?php echo  $extra->extra ?></td>
+                                    <td><?php echo  $extra->cantidad ?></td>
+                                    <td><?php echo  $extra->precio?></td>
+                                    <?php if ($extra->por_dia == 1 ): ?>
+                                            <td><?php echo  ($extra->precio * $extra->cantidad) * $dias ?> CLP</td>
+                                    <?php else: ?>
+                                            <td><?php echo  $extra->precio * $extra->cantidad  ?> CLP</td>
+                                    <?php endif; ?>
+
+                                    </tr>
+
+                                <?php endif; ?>
+
+
+                                <?php endforeach; endif;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+        
+        
+        <!--Informacion Extra-->
+
+
         <!--Informacion del cliente-->
     <div class="row">
         <div class="col-md-12">
@@ -181,147 +332,7 @@
     <!-- FIN Informacion del cliente-->
 
    <hr>
-   <div class="row"><!--informacion del vehiculo-->
-      <div class="col-md-12">
-
-         <div class="row">
-              <div class="col-md-6">
-                  <h2>Información del vehiculo</h2>
-              </div>
-              <div class="col-md-6">
-                  <form action="<?php echo  site_url( 'reserva/cambiarauto' ); ?>" method="post">
-                      <div class="form-group form-inline pull-right">
-                          <select class="form-control" name="id_vehiculo">
-                              <option value="">Si desea cambiar el auto, seleccione uno aquí</option>
-                              <?php foreach ($autos_disponibles as $a ): ?>
-                                  <option value="<?php echo $a['info_auto']->id_vehiculo ?>"><?php echo $a['info_auto']->marca . ' ' . $a['info_auto']->modelo . ' (' . $a['info_auto']->patente . ')'?></option>
-                              <?php endforeach; ?>
-                          </select>
-                          <input type="hidden" name="id_reserva" value="<?php echo $reserva->id_reserva?>">
-                          <input type="submit" value="Cambiar" class="btn btn-success ">
-                      </div>
-
-                  </form>
-              </div>
-          </div>
-         
-         <table class="table table-striped table-bordered">
-
-            <thead>
-               <th>Modelo</th>
-               <th>Marca</th>
-               <th>Categoria</th>
-            </thead>
-
-            <tbody>
-               <tr>
-                  <td><?php echo $vehiculo->modelo;?></td>
-                  <td><?php echo $vehiculo->marca;?></td>
-                  <td><?php echo $vehiculo->categoria;?></td>
-               </tr>
-            </tbody>
-            <thead>
-               <th>Transmisión</th>
-               <th>Combustible</th>
-            </thead>
-            <tbody>
-               <tr>
-                  <td><?php echo $vehiculo->transmision;?></td>
-                  <td><?php echo $vehiculo->combustible;?></td>
-               </tr>
-            </tbody>
-
-
-         </table>
-
-
-      </div>
-   </div>
-   <hr>
-
-    <div class="row">
-    
-        <div class="col-md-12">
-
-        <h2>Datos adicionales</h2>
-            
-        </div>
-
-        <div class="col-md-12">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <th>Nº de pasajeros</th>
-                    <th>Nº de Vuelo(para entregas en el aeropuerto)</th>
-                    <th>Hospedaje</th>
-                    <th>Dirección del hospedaje</th>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td><?php echo $reserva->pasajeros?></td>
-                        <td><?php echo $reserva->nro_vuelo ?></td>   
-                        <td><?php echo $reserva->hospedaje?></td>
-                        <td><?php echo $reserva->direccion_hospedaje?></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-md-12">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <th>Comentario de la reserva</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $reserva->comentario?></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    
-    </div>
-
-   <hr>
-   <?php $suma_extra = 0; ?>
-   <?php if ( ! $extras ):
-   else: ?>
-   <div class="row"><!-- Informacio de los extras-->
-      <div class="col-md-6">
-         <h2>Extras</h2>
-
-         <table class="table table-striped table-bordered">
-            <thead>
-               <th>Extra</th>
-               <th>Cantidad</th>
-               <th>Precio</th>
-            </thead>
-            <tbody>
-                <?php if ($extras) : foreach ($extras as $extra ): ?>
-                
-                    <?php if ($extra->cantidad != null): ?>
-                        <tr>
-                           <td><?php echo  $extra->extra ?></td>
-                           <td><?php echo  $extra->cantidad ?></td>
-                           <td><?php echo  $extra->precio?></td>
-                           <?php if ($extra->por_dia == 1 ): ?>
-                                 <td><?php echo  ($extra->precio * $extra->cantidad) * $dias ?> CLP</td>
-                           <?php else: ?>
-                                 <td><?php echo  $extra->precio * $extra->cantidad  ?> CLP</td>
-                           <?php endif; ?>
-
-                        </tr>
-
-                    <?php endif; ?>
-
-
-                      <?php endforeach; endif;?>
-            </tbody>
-         </table>
-      </div>
-   </div>
-   <hr>
-<?php endif; ?>
+   
    <div class="row">
       <div class="col-md-4">
             <h2>Precios</h2>
@@ -462,6 +473,7 @@
             </form>
         </div>
     </div>
-   
+    
+    <a href="<?php echo site_url('extra/anexo/'. $reserva->id_reserva)?>" class='btn btn-danger '>Contrato anexo</a>
  
 </div>

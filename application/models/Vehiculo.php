@@ -20,19 +20,20 @@ class Vehiculo extends CI_Model{
         $this->db->select('CO.combustible');
         $this->db->select('CA.categoria');
         $this->db->select('TA.precio');
+        $this->db->select('VE.comentario');
         $this->db->from('vehiculos as VE');
         $this->db->join('modelos as MO', 'VE.id_modelo = MO.id_modelo', 'left');
         $this->db->join('marcas as MA', 'VE.id_marca = MA.id_marca', 'left');
         $this->db->join('transmisiones as TR', 'VE.id_transmision = TR.id_transmision', 'left');
         $this->db->join('combustibles as CO', 'VE.id_combustible = CO.id_combustible', 'left');
         $this->db->join('categorias as CA', 'VE.id_categoria = CA.id_categoria', 'left');
-        $this->db->join('tarifas as TA', 'VE.id_tarifa = TA.id_tarifa', 'left');
+        $this->db->join('tarifas as TA', 'VE.id_modelo = TA.id_modelo', 'left');
         $this->db->where('VE.estado' , 1);
 
 
      $q = $this->db->get();
 
-     if ($q->num_rows() < 1) {
+     if ($q->num_rows() == 0) {
         return false;
      } else {
         return $q->result();
@@ -49,13 +50,14 @@ class Vehiculo extends CI_Model{
          $this->db->select('CO.combustible');
          $this->db->select('CA.categoria');
          $this->db->select('TA.precio');
+         $this->db->select('VE.comentario');
          $this->db->from('vehiculos as VE');
          $this->db->join('modelos as MO', 'VE.id_modelo = MO.id_modelo', 'left');
          $this->db->join('marcas as MA', 'VE.id_marca = MA.id_marca', 'left');
          $this->db->join('transmisiones as TR', 'VE.id_transmision = TR.id_transmision', 'left');
          $this->db->join('combustibles as CO', 'VE.id_combustible = CO.id_combustible', 'left');
          $this->db->join('categorias as CA', 'VE.id_categoria = CA.id_categoria', 'left');
-         $this->db->join('tarifas as TA', 'VE.id_tarifa = TA.id_tarifa', 'left');
+         $this->db->join('tarifas as TA', 'VE.id_modelo = TA.id_modelo', 'left');
          $this->db->where('VE.id_vehiculo' , $id);
 
      $q = $this->db->get();
@@ -131,7 +133,7 @@ class Vehiculo extends CI_Model{
       $this->db->join('transmisiones as TR', 'VE.id_transmision = TR.id_transmision', 'left');
       $this->db->join('combustibles as CO', 'VE.id_combustible = CO.id_combustible', 'left');
       $this->db->join('categorias as CA', 'VE.id_categoria = CA.id_categoria', 'left');
-      $this->db->join('tarifas as TA', 'VE.id_tarifa = TA.id_tarifa', 'left');
+      $this->db->join('tarifas as TA', 'VE.id_modelo = TA.id_modelo', 'left');
       $this->db->where( 'VE.estado', 0);
 
       $q = $this->db->get();
